@@ -1,0 +1,65 @@
+{% extends "layouts/ccs.html" %}
+{% set isLoggedOut = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+  {{ govukBackLink({
+    text: "Back",
+    href: "#"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="/v2/cashable-savings">
+
+      <span class="govuk-caption-m">Add a saving</span>
+
+        {{ govukRadios({
+          name: "cashable-savings",
+          fieldset: {
+            legend: {
+              text: "Do you want to add a cashable saving?",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          hint: {
+            text: "You can add multiple non-cashable and a non-monetisable savings later"
+          },
+          items: [
+            {
+              value: "yes",
+              text: "Yes"
+            },
+            {
+              value: "no",
+              text: "No"
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+        text: "Continue"
+      }) }}
+
+        <p>
+          <a href="">Cancel</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "layouts/ccs.html" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: { text: "Alpha" },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+    {{ govukBackLink({
+      text: "Back to contracts",
+      href: "/commercial-value-tool/contracts"
+    }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      
+      <h1 class="govuk-heading-l">Dashboard</h1>
+
+      {% include "includes/chart-comparison-dashboard.html" %}
+
+    </div>
+  </div>
+{% endblock %}

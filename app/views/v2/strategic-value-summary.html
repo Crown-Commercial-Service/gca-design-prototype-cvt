@@ -1,0 +1,156 @@
+{% extends "layouts/ccs.html" %}
+{% set isLoggedOut = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+  {{ govukBackLink({
+    text: "Back",
+    href: "#"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="/v2/strategic-value-summary">
+
+        {% set html %}
+        <h3 class="govuk-notification-banner__heading">
+            Your strategic value data has been recorded successfully.
+          </h3>
+        <p class="govuk-body">Below is a summary of the non-cashable and non-monetisable savings you have provided.</p>
+        {% endset %}
+
+        {{ govukNotificationBanner({
+          html: html,
+          type: "success"
+        }) }}
+
+        <h1 class="govuk-heading-l">Strategic value summary</h1>
+
+        {{ govukSummaryList({
+          card: {
+            title: {
+              text: "Contract"
+            }
+          },
+          rows: [
+            {
+              key: {
+                text: "Procurement identifier (OCID)"
+              },
+              value: {
+                html: "ocds-b5fd17-c1a2b3c4-3333-4000-a000-000000000003"
+              }
+            }
+          ]
+        }) }}
+
+        {{ govukSummaryList({
+          card: {
+            title: {
+              text: "Latest entry"
+            }
+          },
+          rows: [
+            {
+              key: {
+                text: "Savings type"
+              },
+              value: {
+                html: "Non-Cashable"
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "savings type"
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                text: "Non-Cashable category"
+              },
+              value: {
+                html: "Inflation avoidance"
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "non-cashable category"
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                text: "Saving value"
+              },
+              value: {
+                html: "£6"
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "saving value"
+                  }
+                ]
+              }
+            }
+          ]
+        }) }}
+
+        {{ govukRadios({
+          name: "addStrategicValue",
+          fieldset: {
+            legend: {
+              text: "Do you want to add another strategic value entry?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          hint: {
+            text: "You can add more non-cashable or non-monetisable savings before continuing to your results."
+          },
+          items: [
+            {
+              value: "yes",
+              text: "Yes, add another strategic value entry"
+            },
+            {
+              value: "no",
+              text: "No, continue to calculation results"
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+        text: "Continue"
+      }) }}
+
+        <p>
+          <a href="">Cancel</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

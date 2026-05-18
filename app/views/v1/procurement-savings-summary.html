@@ -1,0 +1,142 @@
+{% extends "layouts/ccs.html" %}
+{% set isLoggedOut = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+  {{ govukBackLink({
+    text: "Back",
+    href: "#"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="/v1/procurement-savings-summary">
+        <h1 class="govuk-heading-l">Procurement savings summary</h1>
+
+        <p>This is a placeholder for the procurement savings summary step.</p>
+
+        {{ govukSummaryList({
+          card: {
+            title: {
+              text: "Contract"
+            }
+          },
+          rows: [
+            {
+              key: {
+                text: "Procurement identifier (OCID)"
+              },
+              value: {
+                html: "ocds-b5fd17-c1a2b3c4-3333-4000-a000-000000000003"
+              }
+            }
+          ]
+        }) }}
+
+        {{ govukSummaryList({
+          card: {
+            title: {
+              text: "Your cashable savings data"
+            }
+          },
+          rows: [
+            {
+              key: {
+                text: "Savings type"
+              },
+              value: {
+                html: "Shared 'Cross Government' savings or rate-based reduction"
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "savings type"
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                text: "Baseline approach"
+              },
+              value: {
+                html: "Budget"
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "baseline approach"
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                text: "Baseline value"
+              },
+              value: {
+                html: "£6"
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "baseline value"
+                  }
+                ]
+              }
+            }
+          ]
+        }) }}
+
+        {{ govukRadios({
+          name: "addStrategicValue",
+          fieldset: {
+            legend: {
+              text: "Do you want to add strategic value information?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: "yes",
+              text: "Yes, I want to add strategic value information"
+            },
+            {
+              value: "no",
+              text: "No, continue to calculation results"
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+        text: "Continue"
+      }) }}
+
+        <p>
+          <a href="">Cancel</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "layouts/ccs.html" %}
+{% set isLoggedOut = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+  {{ govukBackLink({
+    text: "Back",
+    href: "#"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="/v1/baseline-information">
+        <h1 class="govuk-heading-l">Cashable Savings Baseline Information</h1>
+
+        <p>Provide the baseline approach and baseline value for your procurement to enable the calculation of your cashable savings.</p>
+
+        {{ govukSelect({
+            id: "savings-type",
+            name: "savings-type",
+            label: {
+              text: "Baseline Approach",
+              classes: "govuk-label--m"
+            },
+            hint: {
+              text: "The baseline approach is the method used to determine what the cost would have been without the savings achieved through this procurement"
+            },
+            items: [
+              {
+                value: "choose",
+                text: "Select an option",
+                selected: true
+              },
+              {
+                value: "budget",
+                text: "Budget"
+              },
+              {
+                value: "external-benchmark",
+                text: "External benchmark"
+              },
+              {
+                value: "market-intelligence",
+                text: "Market intelligence"
+              },
+              {
+                value: "median-bid",
+                text: "Median bid"
+              },
+              {
+                value: "previous-cost",
+                text: "Previous cost"
+              },
+              {
+                value: "should-cost-exercise",
+                text: "Should-cost exercise"
+              },
+              {
+                value: "other",
+                text: "Other"
+              }
+            ]
+          }) }}
+
+        {{ govukInput({
+            id: "cost-per-item",
+            name: "costPerItem",
+            label: {
+              text: "Baseline value",
+              classes: "govuk-label--m",
+              isPageHeading: false
+            },
+            hint: {
+              text: "Enter the amount in pounds sterling (GBP) established by the baseline approach, that would have been paid without this procurement."
+            },
+            prefix: {
+              text: "£"
+            },
+            classes: "govuk-input--width-10",
+            spellcheck: false
+          }) }}
+
+        {{ govukButton({
+        text: "Continue"
+      }) }}
+
+        <p>
+          <a href="">Cancel</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

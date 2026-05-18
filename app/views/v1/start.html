@@ -1,0 +1,118 @@
+{% extends "layouts/ccs.html" %}
+{% set isLoggedOut = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Commercial Value Dashboard</h1>
+    <p class="govuk-body-l">Track and compare the value of your procurement activity.</p>
+
+    <h2 class="govuk-heading-m">
+      What you'll get
+    </h2>
+
+    <ul class="govuk-list govuk-list--bullet">
+        <li>
+          <span class="govuk-!-font-weight-bold">Value comparison and analysis</span>
+          –
+          view your contract values and savings performance
+        </li>
+        <li>
+          <span class="govuk-!-font-weight-bold">Benchmarking insights</span>
+          –
+          Compare your procurement activity with similar procurements and peer organisations
+        </li>
+        <li>
+          <span class="govuk-!-font-weight-bold">Detailed reporting</span>
+          –
+          Graphical data visualisations and exportable summaries of your commercial value results
+        </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      How it works
+    </h2>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        <span class="govuk-!-font-weight-bold">Access the service through Welcome to GOV.UK One Login</span>
+        –
+        <a class="govuk-link" href="#">more information about GOV.UK One Login</a>
+      </li>
+      <li>
+        <span class="govuk-!-font-weight-bold">Once you register, any contract award notice data that is known about your organisation from the central digital platform will be pre-populated</span>
+        –
+        <a class="govuk-link" href="#">more information about the central digital platform (CDP)</a>
+      </li>
+      <li>
+        <span class="govuk-!-font-weight-bold">Input your savings data</span>
+        –
+        provide some details about your awarded contracts using our guided form or template file upload
+      </li>
+      <li>
+        <span class="govuk-!-font-weight-bold">View your results and get instant data insights</span>
+      </li>
+      <li>
+        <span class="govuk-!-font-weight-bold">Download your report</span>
+        –
+        save and share your findings
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      What you'll need
+    </h2>
+
+    <p class="govuk-body">
+      You'll need to access this service using your
+      <a class="govuk-link" href="#">GOV.UK One Login</a>
+      , and connect this service to your organisation's CDP notice data using your PPON buyer ID, or similar.
+    </p>
+
+    <p class="govuk-body">
+      Have your recently awarded contract details and associated savings methodologies to hand. Your savings information needs to include your baseline approach and baseline value.
+    </p>
+
+    <div class="govuk-inset-text">
+      <h2 class="govuk-heading-s">Time to complete</h2>
+        <p class="govuk-body">First time sign up: unknown</p>
+        <p class="govuk-body">Report your savings data: 5-10 minutes, depending on the amount of data you wish to report</p>
+        <p class="govuk-body">You can view and sort your data insights instantly, and return to view them at any time.</p>
+    </div>
+
+
+    {{ govukWarningText({
+      text: "Once you sign in, on-screen guidance is available to help you through the process. Look out for the Guidance button on the right-hand side of the screen.",
+      iconFallbackText: "Warning"
+    }) }}
+
+
+    {{ govukButton({
+      text: "Log in",
+      href: "sign-in",
+      isStartButton: true
+    }) }}
+    
+
+    <h3 class="govuk-heading-m">
+      Data privacy
+    </h3>
+    <p class="govuk-body">Your data is processed securely and used only for the purposes of commercial value calculations. You can export and delete your data at any time.</p>
+
+    <h3 class="govuk-heading-s">
+      Need help?
+    </h3>
+    <p class="govuk-body">
+      For guidance and support please
+      <a class="govuk-link" href="#">contact us</a>
+      , or visit our help page once you log in.
+    </p>
+  </div>
+</div>
+
+{% endblock %}

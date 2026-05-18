@@ -1,0 +1,101 @@
+//
+// For guidance on how to add CSS and SCSS see:
+// https://prototype-kit.service.gov.uk/docs/adding-css-javascript-and-images
+// 
+
+// Add extra styles here
+
+// testing this
+// testing this again
+
+
+//@import "node_modules/ccs-frontend/dist/ccs";
+
+@import "node_modules/ccs-frontend/dist/ccs/base";
+
+//@import "node_modules/govuk-frontend/dist/govuk";
+
+@import "node_modules/ccs-frontend/dist/ccs/overrides/index";
+
+@import "node_modules/ccs-frontend/dist/ccs/core/index";
+
+@import "node_modules/ccs-frontend/dist/ccs/components/index";
+
+// CCS OVERRIDES
+
+.govuk-button {
+    background-color: #bcca46;
+    color: #0b0c0c;
+}
+
+.govuk-button--secondary {
+    background-color: #f3f3f3;
+}
+
+.govuk-button:link, .govuk-button:visited, .govuk-button:active, .govuk-button:hover {
+    color: #0b0c0c;
+    text-decoration: none;
+}
+
+// savings report cards
+.savings-report-cards {
+    margin-top: 30px;
+    display: flex;
+}
+
+.savings-report-card .govuk-summary-card__content {
+    flex-grow: 1;
+}
+
+.savings-report-cards > .govuk-grid-column-one-third {
+    display: flex;
+}
+
+.savings-report-card__value {
+    font-weight: 700;
+    font-size: 2.25rem;
+    line-height: 1.1;
+}
+
+.savings-report-card--magenta.govuk-summary-card {
+    border-color: #ca357c;
+}
+
+.savings-report-card--teal.govuk-summary-card {
+    border-color: #158187;
+}
+
+.savings-report-card--purple.govuk-summary-card {
+    border-color: #54319f;
+}
+
+.savings-report-card.govuk-summary-card {
+    border-width: 3px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.savings-report-card--magenta .govuk-summary-card__title-wrapper {
+    background-color: #ca357c;
+    border-bottom-color: rgb(161.6, 42.4, 99.2);
+}
+
+.savings-report-card--teal .govuk-summary-card__title-wrapper {
+    background-color: #158187;
+    border-bottom-color: rgb(14.1346153846, 86.8269230769, 90.8653846154);
+}
+
+.savings-report-card--purple .govuk-summary-card__title-wrapper {
+    background-color: #54319f;
+    border-bottom-color: rgb(63.4038461538, 36.9855769231, 120.0144230769);
+}
+
+.savings-report-card .govuk-summary-card__title-wrapper {
+    color: #ffffff;
+    border-bottom-width: 3px; 
+}
+
+.savings-report-card .govuk-summary-card__title {
+    color: inherit;
+}

@@ -1,0 +1,66 @@
+{% extends "layouts/ccs.html" %}
+{% set isLoggedOut = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+	{{ govukBackLink({
+    text: "Back",
+    href: "#"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" action="dashboard">
+				<h1 class="govuk-heading-l">Sign in</h1>
+				<p>If you do not have an account, you can <a class="govuk-link" href="/v2/start">create one now</a>.</p>
+
+				{{ govukInput({
+        label: {
+          text: "Email address",
+          classes: "govuk-label--m",
+          isPageHeading: false,
+          spellcheck: "false",
+          autocomplete: "email"
+        },
+        id: "user_email",
+        name: "user[email]"
+      }) }}
+
+				{{ govukPasswordInput({
+        label: {
+          text: "Password",
+          classes: "govuk-label--m",
+          isPageHeading: false
+        },
+        id: "password-input",
+        name: "password",
+        button: {
+          classes: "govuk-button--secondary"
+        }
+      }) }}
+
+				{{ govukButton({
+        text: "Continue"
+      }) }}
+
+				<p>
+					<a href="/v2/forgot-password">Forgotten your password?</a>
+				</p>
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "layouts/ccs.html" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: { text: "Alpha" },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">Dashboard</h1>
+      <!--<p><strong>Welcome back, {{ user.name or "User" }}.</strong></p>-->
+      
+      <p>From your dashboard you can access your commercial value insights and reports.</p>
+
+      <p>To compare your contract savings you will need to add savings data to your awarded contracts.</p>
+
+    </div>
+  </div>
+      <div class="ccs-dashboard-section">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <h2 class="ccs-dashboard-section__heading govuk-heading-m">Contracts savings data</h2>
+            <hr class="ccs-dashboard-section__heading-section-break govuk-section-break govuk-section-break--visible">
+            <div class="govuk-grid-row ccs-dashboard-section__container">
+              <div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
+                <a class="ccs-dashboard-section__panel-title" href="/v2/contracts-completed">Completed (29)</a>
+                <p class="ccs-dashboard-section__panel-description">View calculated savings data for completed contracts.</p>
+              </div>
+              <div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
+                <a class="ccs-dashboard-section__panel-title" href="/v2/contracts-in-progress">In progress (5)</a>
+                <p class="ccs-dashboard-section__panel-description">Savings data is required for in-progress contracts.</p>
+              </div>
+              <!--
+              <div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
+                <a class="ccs-dashboard-section__panel-title" href="/v2/strategic-value-summary">View savings summary</a>
+                <p class="ccs-dashboard-section__panel-description">Check strategic and procurement savings totals.</p>
+              </div>
+              -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}
