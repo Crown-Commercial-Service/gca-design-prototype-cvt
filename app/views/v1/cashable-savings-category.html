@@ -28,8 +28,8 @@
 
         {% set savingsTypeHtml %}
         {{ govukSelect({
-            id: "savings-type",
-            name: "savings-type",
+            id: "savingsType",
+            name: "savingsType",
             label: {
               text: "Savings type",
               classes: "govuk-label--s"
@@ -76,7 +76,7 @@
         {% endset -%}
 
         {{ govukRadios({
-          name: "cashable-savings",
+          name: "cashableSavings",
           fieldset: {
             legend: {
               text: "Have you achieved cashable savings as a result of this contract award?",

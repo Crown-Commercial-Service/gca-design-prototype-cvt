@@ -46,20 +46,24 @@ const persistJourneyDataToContract = (req) => {
 
 	const updates = {}
 
-	if (sessionData['cashable-savings'] === 'yes') {
+	if (sessionData.cashableSavings === 'yes') {
 		updates.status = 'Completed'
 	}
 
-	if (sessionData['savings-type'] && sessionData['savings-type'] !== 'choose') {
-		updates.cashableSavingType = sessionData['savings-type']
+	if (sessionData.savingsType && sessionData.savingsType !== 'choose') {
+		updates.cashableSavingType = sessionData.savingsType
 	}
 
-	if (sessionData.costPerItem) {
-		updates.baselineValue = sessionData.costPerItem
+	if (sessionData.baselineType && sessionData.baselineType !== 'choose') {
+		updates.baselineApproach = sessionData.baselineType
 	}
 
-	if (sessionData['savings-value']) {
-		updates.nonCashableSavings = sessionData['savings-value']
+	if (sessionData.baselineValue) {
+		updates.baselineValue = sessionData.baselineValue
+	}
+
+	if (sessionData.savingsValue) {
+		updates.nonCashableSavings = sessionData.savingsValue
 	}
 
 	upsertContractData(ocid, updates)
@@ -156,7 +160,7 @@ router.post('/v1/contracts', (req, res) => {
 
 router.post('/v1/cashable-savings-category/:ocid', (req, res) => {
 	setActiveContractOcid(req, req.params.ocid)
-	const cashableSavings = getSessionData(req)['cashable-savings']
+	const cashableSavings = getSessionData(req).cashableSavings
 	if (cashableSavings === 'yes') {
 		return res.redirect(`/v1/baseline-information`)
 	}
@@ -170,7 +174,7 @@ router.post('/v1/baseline-information', (req, res) => {
 
 router.post('/v1/non-cashable', (req, res) => {
 	//console.log("testing")
-	const strategicValue = getSessionData(req)['strategic-value']
+	const strategicValue = getSessionData(req).strategicValue
 	if (strategicValue === 'non-cashable') {
 		return res.redirect(`/v1/non-cashable-savings-value`)
 	}

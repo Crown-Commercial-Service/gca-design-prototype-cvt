@@ -40,7 +40,7 @@
                 text: "Procurement identifier (OCID)"
               },
               value: {
-                html: "ocds-b5fd17-c1a2b3c4-3333-4000-a000-000000000003"
+                html: data['activeContractOcid'] or 'No procurement identifier entered'
               }
             }
           ]
@@ -58,7 +58,7 @@
                 text: "Savings type"
               },
               value: {
-                html: "Shared 'Cross Government' savings or rate-based reduction"
+                html: data['savingsType'] or 'No savings type entered'
               },
               actions: {
                 items: [
@@ -75,7 +75,7 @@
                 text: "Baseline approach"
               },
               value: {
-                html: "Budget"
+                html: data['baselineType'] or 'No baseline approach entered'
               },
               actions: {
                 items: [
@@ -92,7 +92,7 @@
                 text: "Baseline value"
               },
               value: {
-                html: "£6"
+                html: data['baselineValue'] or 'No baseline value entered'
               },
               actions: {
                 items: [

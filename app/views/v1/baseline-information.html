@@ -29,8 +29,8 @@
         <p>Provide the baseline approach and baseline value for your procurement to enable the calculation of your cashable savings.</p>
 
         {{ govukSelect({
-            id: "savings-type",
-            name: "savings-type",
+            id: "baselineType",
+            name: "baselineType",
             label: {
               text: "Baseline Approach",
               classes: "govuk-label--m"
@@ -76,8 +76,8 @@
           }) }}
 
         {{ govukInput({
-            id: "cost-per-item",
-            name: "costPerItem",
+            id: "baselineValue",
+            name: "baselineValue",
             label: {
               text: "Baseline value",
               classes: "govuk-label--m",

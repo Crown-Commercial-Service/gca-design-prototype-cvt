@@ -51,7 +51,7 @@
                 text: "Procurement identifier (OCID)"
               },
               value: {
-                html: "ocds-b5fd17-c1a2b3c4-3333-4000-a000-000000000003"
+                html: data['activeContractOcid'] or 'No procurement identifier entered'
               }
             }
           ]
@@ -69,7 +69,7 @@
                 text: "Savings type"
               },
               value: {
-                html: "Non-Cashable"
+                html: data['strategicValue'] or 'No strategic value type entered'
               },
               actions: {
                 items: [
@@ -86,7 +86,7 @@
                 text: "Non-Cashable category"
               },
               value: {
-                html: "Inflation avoidance"
+                html: data['nonCashableType'] or data['nonMonetisableType'] or 'No category entered'
               },
               actions: {
                 items: [
@@ -103,7 +103,7 @@
                 text: "Saving value"
               },
               value: {
-                html: "£6"
+                html: data['savingsValue'] or 'No saving value entered'
               },
               actions: {
                 items: [

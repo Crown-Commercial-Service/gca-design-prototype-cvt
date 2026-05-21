@@ -32,8 +32,8 @@
 
         {% set nonCashableTypeHtml %}
         {{ govukSelect({
-            id: "non-cashable-type",
-            name: "non-cashable-type",
+            id: "nonCashableType",
+            name: "nonCashableType",
             label: {
               text: "Savings type",
               classes: "govuk-label--s"
@@ -73,8 +73,8 @@
 
         {% set nonMonetisableTypeHtml %}
         {{ govukSelect({
-            id: "non-monetisable-type",
-            name: "non-monetisable-type",
+            id: "nonMonetisableType",
+            name: "nonMonetisableType",
             label: {
               text: "Savings type",
               classes: "govuk-label--s"
@@ -113,7 +113,7 @@
         {% endset -%}
 
         {{ govukRadios({
-          name: "strategic-value",
+          name: "strategicValue",
           fieldset: {
             legend: {
               text: "What type of strategic value have you achieved?",
