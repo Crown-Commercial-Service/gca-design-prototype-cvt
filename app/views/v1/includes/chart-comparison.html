@@ -1,0 +1,76 @@
+<div class="govuk-summary-card" data-controller="chart-comparison">
+    <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">Contract Savings Comparison</h2>
+    </div>
+    <div class="govuk-summary-card__content">
+        <p class="govuk-body">
+      This contract's cashable savings compared with a peer group average.
+    </p>
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-third">
+                {{ govukSelect({
+          id: "comparison-approach",
+          name: "comparison-approach",
+          label: { text: "Baseline approach" },
+          items: [
+            { value: "budget", text: "Budget", selected: true },
+            { value: "external_benchmark", text: "External benchmark" },
+            { value: "market_intelligence", text: "Market intelligence" },
+            { value: "median_bid", text: "Median bid" },
+            { value: "previous_cost", text: "Previous cost" },
+            { value: "should_cost_exercise", text: "Should-cost exercise" },
+            { value: "other", text: "Other" }
+          ]
+        }) }}
+            </div>
+            <div class="govuk-grid-column-one-third">
+                {{ govukSelect({
+          id: "comparison-average-type",
+          name: "comparison-average-type",
+          label: { text: "Average type" },
+          items: [
+            { value: "mean", text: "Mean", selected: true },
+            { value: "median", text: "Median" }
+          ]
+        }) }}
+            </div>
+            <div class="govuk-grid-column-one-third">
+                {{ govukSelect({
+          id: "comparison-value-format",
+          name: "comparison-value-format",
+          label: { text: "Value format" },
+          items: [
+            { value: "percentage", text: "Percentage (%)", selected: true },
+            { value: "absolute", text: "Absolute (£)" }
+          ]
+        }) }}
+            </div>
+        </div>
+
+        <svg viewBox="0 0 520 240" width="100%" role="img" aria-labelledby="chart-title chart-desc" xmlns="http://www.w3.org/2000/svg">
+            <title id="chart-title">Contract savings comparison</title>
+            <desc id="chart-desc">Static comparison chart showing peer average and selected contract cashable savings percentage.</desc>
+
+            <line x1="60" y1="20" x2="60" y2="200" stroke="#0b0c0c" stroke-width="1"/>
+            <line x1="60" y1="200" x2="490" y2="200" stroke="#0b0c0c" stroke-width="1"/>
+
+            <line x1="60" y1="155" x2="490" y2="155" stroke="#b1b4b6" stroke-width="1" stroke-dasharray="4 4"/>
+            <line x1="60" y1="110" x2="490" y2="110" stroke="#b1b4b6" stroke-width="1" stroke-dasharray="4 4"/>
+            <line x1="60" y1="65" x2="490" y2="65" stroke="#b1b4b6" stroke-width="1" stroke-dasharray="4 4"/>
+
+            <text x="45" y="204" text-anchor="end" class="govuk-body-s">0%</text>
+            <text x="45" y="159" text-anchor="end" class="govuk-body-s">10%</text>
+            <text x="45" y="114" text-anchor="end" class="govuk-body-s">20%</text>
+            <text x="45" y="69" text-anchor="end" class="govuk-body-s">30%</text>
+
+            <rect x="165" y="128" width="90" height="72" fill="#f47738" rx="2"/>
+            <text x="210" y="120" text-anchor="middle" class="govuk-body-s">Peer avg</text>
+            <text x="210" y="220" text-anchor="middle" class="govuk-body-s">14%</text>
+
+            <rect x="305" y="40" width="90" height="160" fill="#1d70b8" rx="2"/>
+            <text x="350" y="32" text-anchor="middle" class="govuk-body-s">This contract</text>
+            <text x="350" y="220" text-anchor="middle" class="govuk-body-s">{{ contract.cashableSavingsPercentage or "N/A" }}</text>
+        </svg>
+    </div>
+</div>

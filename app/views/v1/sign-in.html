@@ -1,4 +1,4 @@
-{% extends "layouts/ccs.html" %}
+{% extends "v1/layouts/ccs.html" %}
 {% set isLoggedOut = true %}
 
 {% block pageTitle %}
@@ -25,7 +25,7 @@
 		<div class="govuk-grid-column-two-thirds">
 			<form method="post" action="contracts">
 				<h1 class="govuk-heading-l">Sign in</h1>
-				<p>If you do not have an account, you can <a class="govuk-link" href="/v1/start">create one now</a>.</p>
+				<p>If you do not have an account, you can <a class="govuk-link" href="">create one now</a>.</p>
 
 				{{ govukInput({
         label: {
@@ -57,7 +57,7 @@
       }) }}
 
 				<p>
-					<a href="/v1/forgot-password">Forgotten your password?</a>
+					<a href="">Forgotten your password?</a>
 				</p>
 			</form>
 		</div>
