@@ -99,3 +99,36 @@
 .savings-report-card .govuk-summary-card__title {
     color: inherit;
 }
+
+.ccs-logo--gca .ccs-logo__svg {
+    display: none;
+}
+
+.ccs-logo--gca .ccs-logo__img {
+    display: block;
+    height: auto;
+}
+
+.ccs-header__logo .ccs-logo--gca .ccs-logo__img--stacked {
+    width: 132.22px;
+}
+
+.ccs-header__logo .ccs-logo--gca .ccs-logo__img--linear {
+    display: none;
+    width: 380px;
+    max-width: none;
+}
+
+.ccs-footer__logo .ccs-logo--gca .ccs-logo__img--footer {
+    width: 132.22px;
+}
+
+@media (min-width: 48.0625em) {
+    .ccs-header__logo .ccs-logo--gca .ccs-logo__img--stacked {
+        display: none;
+    }
+
+    .ccs-header__logo .ccs-logo--gca .ccs-logo__img--linear {
+        display: block;
+    }
+}
