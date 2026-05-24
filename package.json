@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@govuk-prototype-kit/common-templates": "3.0.0",
+    "@x-govuk/govuk-prototype-filters": "^1.4.4",
     "ccs-frontend": "^3.1.1",
     "govuk-frontend": "6.1.0",
     "govuk-prototype-kit": "13.19.1"

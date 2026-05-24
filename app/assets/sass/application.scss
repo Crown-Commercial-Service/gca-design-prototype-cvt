@@ -132,3 +132,20 @@
         display: block;
     }
 }
+
+// format session data
+
+.session-data-pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    margin: 0;
+    padding: 10px;
+}
+
+.null-value {
+    font-style: italic;
+    color: #666;
+    font-size: 0.9em;
+}

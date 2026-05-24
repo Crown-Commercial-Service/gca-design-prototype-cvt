@@ -1,0 +1,53 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Session data" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">Session data</h1>
+
+    <form method="post" action="clear-data">
+      <button class="govuk-button" type="submit">Clear session data</button>
+    </form>
+
+    <dl class="govuk-summary-list">
+      {% set sortedData = data | dictsort%}
+      {% for key, value in sortedData %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key" style="width: 40%">
+            <pre class="session-data-pre">{{ key | replace('"', '') }}</pre>
+          </dt>
+
+
+        <dd class="govuk-summary-list__value">
+        {% if value === null or value === undefined or value === "" or value === false or (value | length === 0) %}
+          <pre class="session-data-pre null-value">
+            {%- if value === null -%}null
+            {%- elif value === undefined -%}undefined
+            {%- elif value === "" -%}empty string
+            {%- elif value === false -%}false
+            {%- elif value | length === 0 -%}empty array/object
+            {%- endif %}
+          </pre>
+
+          {% elif value | isObject or value | isArray %}
+            {% set formattedValue = value | dump(2) | replace('"', ' ') | replace('{', '') | replace('}', '') | replace('[', '') | replace(']', '') | replace(',', '') | formatNestedData | safe %}
+              <pre class="session-data-pre">{{ formattedValue }}</pre>
+          {% else %}
+            <pre class="session-data-pre">{{ value | replace('"', '') }}</pre>
+          {% endif %}
+        </dd>
+      </div>
+      {% else %}
+          <p>No session data found.</p>
+      {% endfor %}
+    </dl>
+
+
+  
+  </div>
+</div>
+
+{% endblock %}

@@ -36,6 +36,8 @@ const upsertContractData = (ocid, updates) => {
 	}
 }
 
+
+
 const persistJourneyDataToContract = (req) => {
 	const sessionData = getSessionData(req)
 	const ocid = getActiveContractOcid(req)
