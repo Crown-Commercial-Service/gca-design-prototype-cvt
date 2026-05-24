@@ -6,28 +6,28 @@
 {% endblock %}
 
 {% block beforeContent %}
-	{{ govukPhaseBanner({
+  {{ govukPhaseBanner({
     tag: {
       text: "Alpha"
     },
     html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
   }) }}
 
-	{{ govukBackLink({
+  {{ govukBackLink({
     text: "Back",
-    href: "#"
+    href: "javascript:window.history.go(-1);"
   }) }}
 
 {% endblock %}
 
 {% block content %}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-two-thirds">
-			<form method="post" action="dashboard">
-				<h1 class="govuk-heading-l">Sign in</h1>
-				<p>If you do not have an account, you can <a class="govuk-link" href="/v2/start">create one now</a>.</p>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="dashboard">
+        <h1 class="govuk-heading-l">Sign in</h1>
+        <p>If you do not have an account, you can <a class="govuk-link" href="/v2/start">create one now</a>.</p>
 
-				{{ govukInput({
+        {{ govukInput({
         label: {
           text: "Email address",
           classes: "govuk-label--m",
@@ -39,7 +39,7 @@
         name: "user[email]"
       }) }}
 
-				{{ govukPasswordInput({
+        {{ govukPasswordInput({
         label: {
           text: "Password",
           classes: "govuk-label--m",
@@ -52,15 +52,15 @@
         }
       }) }}
 
-				{{ govukButton({
+        {{ govukButton({
         text: "Continue"
       }) }}
 
-				<p>
-					<a href="/v2/forgot-password">Forgotten your password?</a>
-				</p>
-			</form>
-		</div>
-	</div>
+        <p>
+          <a href="/v2/forgot-password">Forgotten your password?</a>
+        </p>
+      </form>
+    </div>
+  </div>
 
 {% endblock %}

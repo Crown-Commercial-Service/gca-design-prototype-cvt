@@ -13,9 +13,9 @@
     html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
   }) }}
   {#
-  {{ govukBackLink({
+  	{{ govukBackLink({
     text: "Back",
-    href: "#"
+    href: "javascript:window.history.go(-1);"
   }) }}
 #}
 {% endblock %}

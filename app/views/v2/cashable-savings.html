@@ -15,7 +15,7 @@
 
   {{ govukBackLink({
     text: "Back",
-    href: "#"
+    href: "javascript:window.history.go(-1);"
   }) }}
 
 {% endblock %}
@@ -25,7 +25,7 @@
     <div class="govuk-grid-column-two-thirds">
       <form method="post" action="/v2/cashable-savings">
 
-      <span class="govuk-caption-m">Add a saving</span>
+        <span class="govuk-caption-m">Add a saving</span>
 
         {{ govukRadios({
           name: "cashable-savings",

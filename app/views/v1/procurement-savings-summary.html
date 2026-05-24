@@ -15,7 +15,7 @@
 
   {{ govukBackLink({
     text: "Back",
-    href: "#"
+    href: "javascript:window.history.go(-1);"
   }) }}
 
 {% endblock %}
@@ -63,7 +63,7 @@
               actions: {
                 items: [
                   {
-                    href: "#",
+                    href: "cashable-savings-category",
                     text: "Change",
                     visuallyHiddenText: "savings type"
                   }
@@ -80,7 +80,7 @@
               actions: {
                 items: [
                   {
-                    href: "#",
+                    href: "baseline-information",
                     text: "Change",
                     visuallyHiddenText: "baseline approach"
                   }
@@ -97,7 +97,7 @@
               actions: {
                 items: [
                   {
-                    href: "#",
+                    href: "baseline-information",
                     text: "Change",
                     visuallyHiddenText: "baseline value"
                   }
