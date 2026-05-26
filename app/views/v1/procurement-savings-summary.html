@@ -6,14 +6,14 @@
 {% endblock %}
 
 {% block beforeContent %}
-  {{ govukPhaseBanner({
+	{{ govukPhaseBanner({
     tag: {
       text: "Alpha"
     },
     html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
   }) }}
 
-  {{ govukBackLink({
+	{{ govukBackLink({
     text: "Back",
     href: "javascript:window.history.go(-1);"
   }) }}
@@ -21,14 +21,14 @@
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <form method="post" action="/v1/procurement-savings-summary">
-        <h1 class="govuk-heading-l">Procurement savings summary</h1>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" action="/v1/procurement-savings-summary">
+				<h1 class="govuk-heading-l">Procurement savings summary</h1>
 
-        <p>This is a placeholder for the procurement savings summary step.</p>
+				<p>This is a placeholder for the procurement savings summary step.</p>
 
-        {{ govukSummaryList({
+				{{ govukSummaryList({
           card: {
             title: {
               text: "Contract"
@@ -46,7 +46,7 @@
           ]
         }) }}
 
-        {{ govukSummaryList({
+				{{ govukSummaryList({
           card: {
             title: {
               text: "Your cashable savings data"
@@ -92,7 +92,7 @@
                 text: "Baseline value"
               },
               value: {
-                html: data['baselineValue'] or 'No baseline value entered'
+                html: data['baselineValue'] | poundsWithCommas or 'No baseline value entered'
               },
               actions: {
                 items: [
@@ -107,7 +107,7 @@
           ]
         }) }}
 
-        {{ govukRadios({
+				{{ govukRadios({
           name: "addStrategicValue",
           fieldset: {
             legend: {
@@ -128,15 +128,15 @@
           ]
         }) }}
 
-        {{ govukButton({
+				{{ govukButton({
         text: "Continue"
       }) }}
 
-        <p>
-          <a href="">Cancel</a>
-        </p>
-      </form>
-    </div>
-  </div>
+				<p>
+					<a href="">Cancel</a>
+				</p>
+			</form>
+		</div>
+	</div>
 
 {% endblock %}

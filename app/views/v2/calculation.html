@@ -23,8 +23,6 @@
 			{% if contract %}
 				<h1 class="govuk-heading-l">Calculation results</h1>
 
-				
-
 				<h2 class="govuk-heading-m">A visual overview of your Savings Data summary/insights</h2>
 
 				<div class="govuk-grid-row savings-report-cards">
@@ -34,7 +32,7 @@
 								<h2 class="govuk-summary-card__title">Contract value</h2>
 							</div>
 							<div class="govuk-summary-card__content">
-								<p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ (contract.contractValueDisplay or contract.value) | toWholePounds }}</p>
+								<p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ (contract.contractValueDisplay or contract.value) | poundsWithCommas }}</p>
 							</div>
 						</div>
 					</div>
@@ -45,7 +43,7 @@
 								<h2 class="govuk-summary-card__title">Cashable savings</h2>
 							</div>
 							<div class="govuk-summary-card__content">
-								<p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ contract.cashableSavings | toWholePounds }}</p>
+								<p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ contract.cashableSavings | poundsWithCommas }}</p>
 								<p class="govuk-body-s govuk-!-margin-bottom-0">{{ contract.cashableSavingsPercentage }} of contract value</p>
 							</div>
 						</div>
@@ -57,7 +55,7 @@
 								<h2 class="govuk-summary-card__title">Non-cashable savings</h2>
 							</div>
 							<div class="govuk-summary-card__content">
-								<p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ contract.nonCashableSavings | toWholePounds }}</p>
+								<p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ contract.nonCashableSavings | poundsWithCommas }}</p>
 							</div>
 						</div>
 					</div>
@@ -90,7 +88,7 @@
                     },
                     {
                       key: { text: "Contract value (£)" },
-                      value: { text: (contract.contractValueDisplay or contract.value) | toWholePounds }
+                      value: { text: (contract.contractValueDisplay or contract.value) | poundsWithCommas }
                     },
                     {
                       key: { text: "Contract start date" },
@@ -138,7 +136,7 @@
                     },
                     {
                       key: { text: "Cashable saving value (£)" },
-                      value: { text: contract.cashableSavings | toWholePounds }
+                      value: { text: contract.cashableSavings | poundsWithCommas }
                     },
                     {
                       key: { text: "Cashable saving percentage" },

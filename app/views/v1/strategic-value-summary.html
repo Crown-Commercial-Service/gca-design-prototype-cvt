@@ -6,14 +6,14 @@
 {% endblock %}
 
 {% block beforeContent %}
-  {{ govukPhaseBanner({
+	{{ govukPhaseBanner({
     tag: {
       text: "Alpha"
     },
     html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
   }) }}
 
-  {{ govukBackLink({
+	{{ govukBackLink({
     text: "Back",
     href: "javascript:window.history.go(-1);"
   }) }}
@@ -21,25 +21,25 @@
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <form method="post" action="/v1/strategic-value-summary">
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" action="/v1/strategic-value-summary">
 
-        {% set html %}
-        <h3 class="govuk-notification-banner__heading">
+				{% set html %}
+				<h3 class="govuk-notification-banner__heading">
             Your strategic value data has been recorded successfully.
           </h3>
-        <p class="govuk-body">Below is a summary of the non-cashable and non-monetisable savings you have provided.</p>
-        {% endset %}
+				<p class="govuk-body">Below is a summary of the non-cashable and non-monetisable savings you have provided.</p>
+				{% endset %}
 
-        {{ govukNotificationBanner({
+				{{ govukNotificationBanner({
           html: html,
           type: "success"
         }) }}
 
-        <h1 class="govuk-heading-l">Strategic value summary</h1>
+				<h1 class="govuk-heading-l">Strategic value summary</h1>
 
-        {{ govukSummaryList({
+				{{ govukSummaryList({
           card: {
             title: {
               text: "Contract"
@@ -57,7 +57,7 @@
           ]
         }) }}
 
-        {{ govukSummaryList({
+				{{ govukSummaryList({
           card: {
             title: {
               text: "Latest entry"
@@ -103,8 +103,7 @@
                 text: "Saving value"
               },
               value: {
-                html: data['savingsValue'] or 'No saving value entered'
-              },
+                html: data['savingsValue'] | poundsWithCommas or 'No saving value entered'              },
               actions: {
                 items: [
                   {
@@ -118,7 +117,7 @@
           ]
         }) }}
 
-        {{ govukRadios({
+				{{ govukRadios({
           name: "addStrategicValue",
           fieldset: {
             legend: {
@@ -142,15 +141,15 @@
           ]
         }) }}
 
-        {{ govukButton({
+				{{ govukButton({
         text: "Continue"
       }) }}
 
-        <p>
-          <a href="">Cancel</a>
-        </p>
-      </form>
-    </div>
-  </div>
+				<p>
+					<a href="">Cancel</a>
+				</p>
+			</form>
+		</div>
+	</div>
 
 {% endblock %}

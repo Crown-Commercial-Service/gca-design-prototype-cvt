@@ -8,28 +8,18 @@ const addFilter = govukPrototypeKit.views.addFilter
 
 // Add your filters here
 
-addFilter('toWholePounds', (currencyValue) => {
-	if (typeof currencyValue !== 'string') return currencyValue
-
-	const normalizedValue = currencyValue.trim()
-	let numericValue
-
-	const poundMatch = normalizedValue.match(/^£([\d,]+)(\.\d{2})?$/)
-	if (poundMatch) {
-		numericValue = Number(poundMatch[1].replace(/,/g, '') + (poundMatch[2] || ''))
+// Filter: poundsWithCommas
+// Usage: {{ value | poundsWithCommas }}
+addFilter('poundsWithCommas', (value) => {
+	if (typeof value === 'string' && value.trim().toLowerCase() === 'not provided') {
+		return 'Not provided';
 	}
-
-	const gbpMatch = normalizedValue.match(/^GBP\s+([\d,]+)(\.\d{2})?$/i)
-	if (!poundMatch && gbpMatch) {
-		numericValue = Number(gbpMatch[1].replace(/,/g, '') + (gbpMatch[2] || ''))
+	if (typeof value !== 'number') {
+		value = Number(value);
 	}
-
-	if (Number.isNaN(numericValue) || typeof numericValue !== 'number') {
-		return currencyValue
-	}
-
-	return `£${new Intl.NumberFormat('en-GB', { maximumFractionDigits: 0 }).format(Math.round(numericValue))}`
-})
+	if (isNaN(value)) return 'Not provided';
+	return '£' + value.toLocaleString('en-GB');
+});
 
 addFilter('formatNestedData', (value) => {
 	if (!value) return value;
