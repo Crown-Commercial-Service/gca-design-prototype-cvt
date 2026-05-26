@@ -14,7 +14,9 @@ addFilter('poundsWithCommas', (value) => {
 	if (typeof value === 'string' && value.trim().toLowerCase() === 'not provided') {
 		return 'Not provided';
 	}
-	if (typeof value !== 'number') {
+	if (typeof value === 'string') {
+		// Remove commas if present
+		value = value.replace(/,/g, '');
 		value = Number(value);
 	}
 	if (isNaN(value)) return 'Not provided';
