@@ -178,7 +178,7 @@
               <td class="govuk-table__cell">{{ contract.title }}<br>
                 <span class="govuk-body-s" style="color: #484949" >{{ contract.ocid }}</span>
               </td>
-              <td class="govuk-table__cell">{{ contract.value }}</td>
+              <td class="govuk-table__cell">{{ contract.value | poundsWithCommas }}</td>
               <td class="govuk-table__cell">{{ contract.startDate }}</td>
               <td class="govuk-table__cell">{{ contract.endDate }}</td>
               <td class="govuk-table__cell">
