@@ -23,134 +23,10 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-l">Contracts completed</h1>
-      {#
-      <p>This page shows a summary list of your organisation's awarded contracts below. You can view, edit and report savings information for each of your contracts at any time. Your contracts and savings data recorded here power your dashboard and comparison insights.</p>
-
-      <p>The table of contract details is pre-populated based on your organisation's published Procurement Act 2023 awarded contract details notices. This data will initially appear with an "In progress" status; you can add your savings details by selecting the contract name link at any time.</p>
-
-      <p>Once you have successfully recorded your savings the line will be marked 'Complete'. Once complete, you can still revisit and edit a line to record more/different savings data if you wish.</p>
-
-      <div class="govuk-form-group govuk-password-input" data-module="govuk-password-input">
-        <label class="govuk-label" for="password-input">
-        Search contracts
-      </label>
-        <div id="event-name-hint" class="govuk-hint">
-        Search by contract name or procurement identifier (OCID).
-      </div>
-        <div class="govuk-input__wrapper">
-          <input class="govuk-input govuk-input govuk-!-width-one-half" id="contract-search-input" name="password"  spellcheck="false" autocomplete="current-password" autocapitalize="none">
-          <button type="button" class="govuk-button govuk-button--secondary" style="margin-left: 10px" data-module="govuk-button" aria-controls="contract-search-input">
-          Search
-        </button>
-        </div>
-      </div>
-
-      {% set filtersHtml %}
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-half">
-          <h3 class="govuk-heading-s">Contract start date</h3>
-          {{ govukDateInput({
-            id: "start_date_from",
-            namePrefix: "start_date_from",
-            fieldset: {
-              legend: {
-                text: "From",
-                classes: "govuk-fieldset__legend--s"
-              }
-            },
-            items: [
-              { name: "day", classes: "govuk-input--width-2" },
-              { name: "month", classes: "govuk-input--width-2" },
-              { name: "year", classes: "govuk-input--width-4" }
-            ]
-          }) }}
-          {{ govukDateInput({
-            id: "start_date_to",
-            namePrefix: "start_date_to",
-            fieldset: {
-              legend: {
-                text: "To",
-                classes: "govuk-fieldset__legend--s"
-              }
-            },
-            items: [
-              { name: "day", classes: "govuk-input--width-2" },
-              { name: "month", classes: "govuk-input--width-2" },
-              { name: "year", classes: "govuk-input--width-4" }
-            ]
-          }) }}
-        </div>
-        <div class="govuk-grid-column-one-half">
-          <h3 class="govuk-heading-s">Contract end date</h3>
-          {{ govukDateInput({
-            id: "end_date_from",
-            namePrefix: "end_date_from",
-            fieldset: {
-              legend: {
-                text: "From",
-                classes: "govuk-fieldset__legend--s"
-              }
-            },
-            items: [
-              { name: "day", classes: "govuk-input--width-2" },
-              { name: "month", classes: "govuk-input--width-2" },
-              { name: "year", classes: "govuk-input--width-4" }
-            ]
-          }) }}
-          {{ govukDateInput({
-            id: "end_date_to",
-            namePrefix: "end_date_to",
-            fieldset: {
-              legend: {
-                text: "To",
-                classes: "govuk-fieldset__legend--s"
-              }
-            },
-            items: [
-              { name: "day", classes: "govuk-input--width-2" },
-              { name: "month", classes: "govuk-input--width-2" },
-              { name: "year", classes: "govuk-input--width-4" }
-            ]
-          }) }}
-        </div>
-      </div>
+      <h1 class="govuk-heading-l">View awarded contract insights</h1>
+      <p>These are your awarded contracts where you have added savings data.</p>
+      <p>You can add more savings data to an awarded contract on the insights page.</p>
       
-
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-half">
-          <h3 class="govuk-heading-s">Contract value</h3>
-          {{ govukInput({
-            label: { text: "Minimum value" },
-            id: "value_min",
-            name: "value_min",
-            inputmode: "numeric",
-            classes: "govuk-input--width-10",
-            prefix: { text: "£" }
-          }) }}
-          {{ govukInput({
-            label: { text: "Maximum value" },
-            id: "value_max",
-            name: "value_max",
-            inputmode: "numeric",
-            classes: "govuk-input--width-10",
-            prefix: { text: "£" }
-          }) }}
-        </div>
-      </div>
-
-      {{ govukButton({
-        text: "Apply filters",
-        classes: "govuk-button--secondary",
-        type: "submit"
-      }) }}
-      {% endset %}
-
-      {{ govukDetails({
-      summaryText: "Show filters",
-      html: filtersHtml
-    }) }}
-    #}
 
       <table class="govuk-table">
         <thead class="govuk-table__head">
@@ -176,14 +52,14 @@
           {% for contract in contracts %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">{{ contract.title }}<br>
-                <span class="govuk-body-s" style="color: #484949" >{{ contract.ocid }}</span>
+                <!--<span class="govuk-body-s" style="color: #484949" >{{ contract.ocid }}</span>-->
               </td>
               <td class="govuk-table__cell">{{ contract.value | poundsWithCommas }}</td>
               <td class="govuk-table__cell">{{ contract.startDate }}</td>
               <td class="govuk-table__cell">{{ contract.endDate }}</td>
               <td class="govuk-table__cell">
                 <!--<a class="govuk-link govuk-link--no-visited-state" href="/v2/cashable-savings-category/{{ contract.ocid }}">Add savings</a>-->
-                <a class="govuk-link govuk-link--no-visited-state" href="/v2/calculation/{{ contract.ocid }}">View result</a>
+                <a class="govuk-link govuk-link--no-visited-state" href="/v2/calculation/{{ contract.ocid }}">View</a>
               </td>
             </tr>
           {% endfor %}

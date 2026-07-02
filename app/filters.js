@@ -55,3 +55,17 @@ addFilter('formatNestedData', (value) => {
 		}).join('\n').trim();
 })
 
+addFilter('nonCashableSavingsQuestion', (value) => {
+	const key = typeof value === 'string' ? value.trim() : ''
+
+	const questionByType = {
+		'Prevented a price rise': 'What is the estimated value of the price rise you prevented?',
+		'Got more for the same budget': 'What is the estimated value of getting more for the same budget?',
+		'Froze prices over time': 'What is the estimated value of freezing prices over time?',
+		'Managed demand better': 'What is the estimated value of managing demand better?',
+		Other: 'What is the estimated value of your other benefit?'
+	}
+
+	return questionByType[key] || 'What is the estimated cash value of this benefit?'
+})
+

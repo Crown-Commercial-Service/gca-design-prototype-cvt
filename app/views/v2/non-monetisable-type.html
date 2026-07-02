@@ -1,0 +1,82 @@
+{% extends "layouts/ccs.html" %}
+{% set isLoggedOut = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.go(-1);"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="/v2/non-monetisable-type">
+        <span class="govuk-caption-m">Add a saving</span>
+
+        {{ govukRadios({
+          name: "non-monetisable-type",
+          fieldset: {
+            legend: {
+              text: "Which benefit did you achieve?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          items: [
+            {
+              value: "Improved how services are delivered",
+              text: "Improved how services are delivered",
+              hint: {
+                text: "You made a service faster, better, or more reliable for the existing budget."
+              }
+            },
+            {
+              value: "Saved staff time or resources",
+              text: "Saved staff time or resources",
+              hint: {
+                text: "The contract reduces the need for extra headcount or physical infrastructure."
+              }
+            },
+            {
+              value: "Met official rules or policies",
+              text: "Met official rules or policies",
+              hint: {
+                text: "You fulfilled a legal requirement, government directive, or wider policy goal (like sustainability)."
+              }
+            },
+            {
+              value: "Boosted reputation or user satisfaction",
+              text: "Boosted reputation or user satisfaction",
+              hint: {
+                text: "You changed how you buy things so you only pay for what you actually need"
+              }
+            },
+            {
+              value: "Other",
+              text: "Other"
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+        text: "Continue"
+      }) }}
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

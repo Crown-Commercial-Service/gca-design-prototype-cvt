@@ -24,7 +24,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form method="post" action="/v2/strategic-value-summary">
-
+{#
         {% set html %}
         <h3 class="govuk-notification-banner__heading">
             Your strategic value data has been recorded successfully.
@@ -36,22 +36,30 @@
           html: html,
           type: "success"
         }) }}
-
-        <h1 class="govuk-heading-l">Strategic value summary</h1>
+#}
+        <h1 class="govuk-heading-l">Review your benefit savings</h1>
 
         {{ govukSummaryList({
           card: {
             title: {
-              text: "Contract"
+              text: "Contract details"
             }
           },
           rows: [
             {
               key: {
-                text: "Procurement identifier (OCID)"
+                text: "Contract title"
               },
               value: {
-                html: "ocds-b5fd17-c1a2b3c4-3333-4000-a000-000000000003"
+                html: contract.title
+              }
+            },
+            {
+              key: {
+                text: "Contract value"
+              },
+              value: {
+                html: contract.value
               }
             }
           ]
@@ -60,16 +68,16 @@
         {{ govukSummaryList({
           card: {
             title: {
-              text: "Latest entry"
+              text: "Your cashable savings data"
             }
           },
           rows: [
             {
               key: {
-                text: "Savings type"
+                text: "How did you make a saving?"
               },
               value: {
-                html: "Non-Cashable"
+                html: data['cashable-savings-type']
               },
               actions: {
                 items: [
@@ -83,34 +91,97 @@
             },
             {
               key: {
-                text: "Non-Cashable category"
+                text: "How did you calculate what the procurement would have cost?"
               },
               value: {
-                html: "Inflation avoidance"
+                html: data['baseline-approach']
               },
               actions: {
                 items: [
                   {
                     href: "#",
                     text: "Change",
-                    visuallyHiddenText: "non-cashable category"
+                    visuallyHiddenText: "baseline approach"
                   }
                 ]
               }
             },
             {
               key: {
-                text: "Saving value"
+                text: "What would this procurement have cost without these savings?"
               },
               value: {
-                html: "£6"
+                html: data['baseline-value'] or "£6"
               },
               actions: {
                 items: [
                   {
                     href: "#",
                     text: "Change",
-                    visuallyHiddenText: "saving value"
+                    visuallyHiddenText: "baseline value"
+                  }
+                ]
+              }
+            }
+          ]
+        }) }}
+
+        {% set savingsQuestionText = data['non-cashable-type'] | nonCashableSavingsQuestion %}
+
+        {{ govukSummaryList({
+          card: {
+            title: {
+              text: "Savings benefit 1"
+            }
+          },
+          rows: [
+            {
+              key: {
+                text: "Which other budget protection or benefits do you want to add?"
+              },
+              value: {
+                html: data['strategic-value']
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "savings type"
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                text: "What benefit did you achieve?"
+              },
+              value: {
+                html: data['non-cashable-type']
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "specific benefit"
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                text: savingsQuestionText
+              },
+              value: {
+                html: data['non-cashable-savings-value'] or "£10,000"
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "cash value of the benefit you achieved"
                   }
                 ]
               }
@@ -122,18 +193,18 @@
           name: "addStrategicValue",
           fieldset: {
             legend: {
-              text: "Do you want to add another strategic value entry?",
+              text: "Do you want to add another value benefit that is not a direct cost savings?",
               isPageHeading: true,
               classes: "govuk-fieldset__legend--m"
             }
           },
           hint: {
-            text: "You can add more non-cashable or non-monetisable savings before continuing to your results."
+            html: "<p>This includes things like budget protections, social benefits, or policy targets.</p>"
           },
           items: [
             {
               value: "yes",
-              text: "Yes, add another strategic value entry"
+              text: "Yes"
             },
             {
               value: "no",

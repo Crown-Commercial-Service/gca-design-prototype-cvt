@@ -23,20 +23,16 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form method="post" action="/v2/non-cashable-savings-value">
+      <form method="post" action="/v2/baseline-value">
         <span class="govuk-caption-m">Add a saving</span>
-        {% set savingsQuestionText = data['non-cashable-type'] | nonCashableSavingsQuestion %}
 
         {{ govukInput({
-            id: "non-cashable-savings-value",
-            name: "non-cashable-savings-value",
+            id: "cost-per-item",
+            name: "costPerItem",
             label: {
-              text: savingsQuestionText,
+              text: "What would this procurement have cost without these savings?",
               classes: "govuk-label--l",
               isPageHeading: true
-            },
-            hint: {
-              text: "Enter the value in GBP, excluding VAT."
             },
             prefix: {
               text: "£"
@@ -48,7 +44,6 @@
         {{ govukButton({
         text: "Continue"
         }) }}
-
       </form>
     </div>
   </div>

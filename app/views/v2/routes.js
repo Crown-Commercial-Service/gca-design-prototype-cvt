@@ -136,7 +136,7 @@ router.post('/v2/procurement-savings-summary', (req, res) => {
 	console.log("contract: ", contract)
 
 	if (addStrategicValue === 'yes') {
-		return res.redirect(`/v2/non-cashable`)
+		return res.redirect(`/v2/add-a-benefit`)
 	}
 
 	if (!ocid || !contract) {
@@ -170,33 +170,33 @@ router.post('/v2/cashable-savings/', (req, res) => {
 	//setActiveContractOcid(req, req.params.ocid)
 	const cashableSavings = req.session.data['cashable-savings']
 	if (cashableSavings === 'yes') {
-		res.redirect(`/v2/cashable-savings-category`)
+		return res.redirect(`/v2/cashable-savings-type`)
 	}
-	res.redirect(`/v2/non-cashable`)
+	return res.redirect(`/v2/non-cashable`)
+})
+
+router.post('/v2/cashable-savings-type', (req, res) => {
+	res.redirect(`/v2/baseline-approach`)
+})
+
+router.post('/v2/baseline-approach', (req, res) => {
+	res.redirect(`/v2/baseline-value`)
+})
+
+router.post('/v2/baseline-value', (req, res) => {
+	persistJourneyDataToContract(req)
+	res.redirect(`/v2/procurement-savings-summary`)
 })
 
 router.post('/v2/cashable-savings-category/:ocid', (req, res) => {
 	setActiveContractOcid(req, req.params.ocid)
 	const cashableSavings = getSessionData(req)['cashable-savings']
 	if (cashableSavings === 'yes') {
-		return res.redirect(`/v2/baseline-information`)
+		return res.redirect(`/v2/cashable-savings-type`)
 	}
-	res.redirect(`/v2/non-cashable`)
+	return res.redirect(`/v2/non-cashable`)
 })
 
-router.post('/v2/baseline-information', (req, res) => {
-	persistJourneyDataToContract(req)
-	res.redirect(`/v2/procurement-savings-summary`)
-})
-
-router.post('/v2/non-cashable', (req, res) => {
-	//console.log("testing")
-	const strategicValue = getSessionData(req)['strategic-value']
-	if (strategicValue === 'non-cashable') {
-		return res.redirect(`/v2/non-cashable-savings-value`)
-	}
-	res.redirect(`/v2/strategic-value-summary`)
-})
 
 router.post('/v2/strategic-value-summary', (req, res) => {
 	persistJourneyDataToContract(req)
@@ -211,6 +211,23 @@ router.post('/v2/strategic-value-summary', (req, res) => {
 	}
 
 	res.redirect(`/v2/calculation/${ocid}`)
+})
+
+router.post('/v2/add-a-benefit', (req, res) => {
+	//console.log("testing")
+	const strategicValue = getSessionData(req)['strategic-value']
+	if (strategicValue === 'non-cashable') {
+		return res.redirect(`/v2/non-cashable-type`)
+	}
+	res.redirect(`/v2/non-monetisable-type`)
+})
+
+router.post('/v2/non-cashable-type', (req, res) => {
+	res.redirect(`/v2/non-cashable-savings-value`)
+})
+
+router.post('/v2/non-monetisable-type', (req, res) => {
+	res.redirect(`/v2/strategic-value-summary`)
 })
 
 router.post('/v2/non-cashable-savings-value', (req, res) => {

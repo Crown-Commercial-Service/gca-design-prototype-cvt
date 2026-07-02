@@ -23,30 +23,31 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form method="post" action="/v2/cashable-savings">
-
-        <span class="govuk-caption-m">Add a saving</span>
+      <form method="post" action="/v2/add-a-benefit">
 
         {{ govukRadios({
-          name: "cashable-savings",
+          name: "strategic-value",
           fieldset: {
             legend: {
-              text: "Do you want to add a cashable saving?",
+              text: "Which other budget protection or benefits do you want to add?",
               isPageHeading: true,
               classes: "govuk-fieldset__legend--l"
             }
           },
-          hint: {
-            html: "<p>Cashable savings happen when you buy something for less money than you planned to spend, leaving you with leftover money that you can choose to spend on other different projects.</p><p>If you delay a project it might look like you are saving money this year, but because you still have to pay for it next year, it is not a real saving.</p>"
-          },
           items: [
             {
-              value: "yes",
-              text: "Yes"
+              value: "non-cashable",
+              text: "Protections that freeze prices or avoid cost increases",
+              hint: {
+                text: "For example: stopping a supplier price rise, or getting more features for the same budget"
+              }
             },
             {
-              value: "no",
-              text: "No"
+              value: "non-monetisable",
+              text: "Benefits that improve performance or meet policy goals",
+              hint: {
+                text: "For example: delivering better quality services, or meeting environmental guidelines"
+              }
             }
           ]
         }) }}
@@ -54,7 +55,6 @@
         {{ govukButton({
         text: "Continue"
       }) }}
-
 
       </form>
     </div>

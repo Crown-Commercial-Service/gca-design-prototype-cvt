@@ -23,38 +23,49 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form method="post" action="/v2/cashable-savings">
-
+      <form method="post" action="/v2/baseline-approach">
         <span class="govuk-caption-m">Add a saving</span>
 
         {{ govukRadios({
-          name: "cashable-savings",
+          name: "baseline-approach",
           fieldset: {
             legend: {
-              text: "Do you want to add a cashable saving?",
+              text: "How did you calculate what the procurement would have cost?",
               isPageHeading: true,
               classes: "govuk-fieldset__legend--l"
             }
           },
-          hint: {
-            html: "<p>Cashable savings happen when you buy something for less money than you planned to spend, leaving you with leftover money that you can choose to spend on other different projects.</p><p>If you delay a project it might look like you are saving money this year, but because you still have to pay for it next year, it is not a real saving.</p>"
-          },
           items: [
             {
-              value: "yes",
-              text: "Yes"
+              value: "Used our original budget allocation",
+              text: "Used our original budget allocation"
             },
             {
-              value: "no",
-              text: "No"
+              value: "Compared with industry standards",
+              text: "Compared with industry standards"
+            },
+            {
+              value: "Researched current market rates",
+              text: "Researched current market rates"
+            },
+            {
+              value: "Used the median of all competitive bids",
+              text: "Used the median of all competitive bids"
+            },
+            {
+              value: "Compared with our last contract",
+              text: "Compared with our last contract"
+            },
+            {
+              value: "Detailed cost modelling",
+              text: "Detailed cost modelling"
             }
           ]
         }) }}
 
         {{ govukButton({
         text: "Continue"
-      }) }}
-
+        }) }}
 
       </form>
     </div>
