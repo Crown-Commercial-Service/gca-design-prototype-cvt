@@ -1,0 +1,84 @@
+{% extends "v2/layouts/ccs.html" %}
+{% set isLoggedOut = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.go(-1);"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-m">Bulk savings data upload</span>
+      <h1 class="govuk-heading-l">Processing your savings data</h1>
+      <p class="govuk-body">We are now processing your savings data.</p>
+
+      <div class="cvt-loading" role="status" aria-live="polite" aria-label="Uploading and processing your savings data">
+        <span class="cvt-loading__spinner" aria-hidden="true"></span>
+        <span class="govuk-body cvt-loading__text">This should take a few seconds.</span>
+      </div>
+
+      <noscript>
+        <p class="govuk-body">JavaScript is required for automatic progress. Continue to the upload result.</p>
+        <p class="govuk-body">
+          <a class="govuk-link" href="/v2/bulk-upload-result">Continue</a>
+        </p>
+      </noscript>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="/v2/bulk-upload">Try uploading again</a> if processing fails.</p>
+    </div>
+  </div>
+
+  <style>
+    .cvt-loading {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .cvt-loading__spinner {
+      width: 38px;
+      height: 38px;
+      border: 4px solid #b1b4b6;
+      border-top-color: #1d70b8;
+      border-radius: 50%;
+      animation: cvt-spin 0.9s linear infinite;
+      flex: 0 0 auto;
+    }
+
+    .cvt-loading__text {
+      margin: 0;
+    }
+
+    @keyframes cvt-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
+  <script>
+    window.setTimeout(function () {
+      window
+        .location
+        .assign('/v2/bulk-upload-result')
+    }, 2500)
+  </script>
+
+{% endblock %}

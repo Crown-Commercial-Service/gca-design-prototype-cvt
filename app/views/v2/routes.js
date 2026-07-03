@@ -38,6 +38,24 @@ const upsertContractData = (ocid, updates) => {
 	}
 }
 
+const getBulkUploadReviewItems = () => {
+	const inProgressContracts = getContractsByStatus('In progress').slice(0, 3)
+
+	return inProgressContracts.map((contract, index) => {
+		const baselineValue = Number(contract.value) + 15000 + (index * 2500)
+		const cashableSavings = Math.max(Math.round(Number(contract.value) * 0.08), 3000)
+
+		return {
+			ocid: contract.ocid,
+			title: contract.title,
+			cashableSavings: String(cashableSavings),
+			baselineApproach: contract.baselineApproach || 'Budget',
+			baselineValue: String(baselineValue),
+			cashableSavingType: contract.cashableSavingType || 'Negotiated discount'
+		}
+	})
+}
+
 const persistJourneyDataToContract = (req) => {
 	const sessionData = getSessionData(req)
 	const ocid = getActiveContractOcid(req)
@@ -284,6 +302,100 @@ router.post('/v2/calculation/:ocid', (req, res) => {
 
 router.post('/v2/dashboard', (req, res) => {
 	res.redirect('/v2/dashboard')
+})
+
+router.post('/v2/bulk-upload', (req, res) => {
+	const sessionData = getSessionData(req)
+	const attemptCount = Number(sessionData.bulkUploadAttemptCount || 0) + 1
+
+	sessionData.bulkUploadAttemptCount = attemptCount
+	sessionData.bulkUploadPendingOutcome = attemptCount === 1 ? 'error' : 'success'
+
+	if (attemptCount === 1) {
+		sessionData.bulkUploadErrors = [
+			'Row 2: Missing a Procurement Identifier (OCID)',
+			"Row 5: 'maybe' is not a valid answer for cashable savings",
+			"Row 12: 'guess' is not a valid savings type",
+			'Row 19: Value cannot be a negative amount (-£200)'
+		]
+	} else {
+		sessionData.bulkUploadReviewItems = getBulkUploadReviewItems()
+	}
+
+	res.redirect('/v2/bulk-upload-processing')
+})
+
+router.get('/v2/bulk-upload-result', (req, res) => {
+	const sessionData = getSessionData(req)
+	const outcome = sessionData.bulkUploadPendingOutcome
+
+	if (!outcome) {
+		return res.redirect('/v2/bulk-upload')
+	}
+
+	delete sessionData.bulkUploadPendingOutcome
+
+	if (outcome === 'error') {
+		return res.redirect('/v2/bulk-upload-error')
+	}
+
+	return res.redirect('/v2/bulk-upload-review')
+})
+
+router.get('/v2/bulk-upload-error', (req, res) => {
+	const sessionData = getSessionData(req)
+	const uploadErrors = Array.isArray(sessionData.bulkUploadErrors) ? sessionData.bulkUploadErrors : []
+
+	return res.render('v2/bulk-upload-error', { uploadErrors })
+})
+
+router.get('/v2/bulk-upload-review', (req, res) => {
+	const sessionData = getSessionData(req)
+	const reviewItems = Array.isArray(sessionData.bulkUploadReviewItems) ? sessionData.bulkUploadReviewItems : []
+
+	if (reviewItems.length === 0) {
+		return res.redirect('/v2/bulk-upload')
+	}
+
+	return res.render('v2/bulk-upload-review', { reviewItems })
+})
+
+router.post('/v2/bulk-upload-review-confirm', (req, res) => {
+	const sessionData = getSessionData(req)
+	const reviewItems = Array.isArray(sessionData.bulkUploadReviewItems) ? sessionData.bulkUploadReviewItems : []
+
+	if (reviewItems.length === 0) {
+		return res.redirect('/v2/bulk-upload')
+	}
+
+	reviewItems.forEach((item) => {
+		upsertContractData(item.ocid, {
+			status: 'Completed',
+			cashableSavingType: item.cashableSavingType,
+			baselineApproach: item.baselineApproach,
+			baselineValue: item.baselineValue,
+			cashableSavings: item.cashableSavings
+		})
+	})
+
+	sessionData.bulkUploadAppliedCount = reviewItems.length
+	sessionData.bulkUploadUpdatedContracts = reviewItems.map((item) => ({
+		ocid: item.ocid,
+		title: item.title
+	}))
+	delete sessionData.bulkUploadReviewItems
+
+	return res.redirect('/v2/bulk-upload-success')
+})
+
+router.get('/v2/bulk-upload-success', (req, res) => {
+	const sessionData = getSessionData(req)
+	const appliedCount = Number(sessionData.bulkUploadAppliedCount || 0)
+	const updatedContracts = Array.isArray(sessionData.bulkUploadUpdatedContracts)
+		? sessionData.bulkUploadUpdatedContracts
+		: []
+
+	return res.render('v2/bulk-upload-success', { appliedCount, updatedContracts })
 })
 
 router.post('/v2/export', (req, res) => {

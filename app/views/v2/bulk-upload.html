@@ -1,0 +1,52 @@
+{% extends "v2/layouts/ccs.html" %}
+{% set isLoggedOut = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.go(-1);"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="/v2/bulk-upload">
+        <span class="govuk-caption-m">Bulk savings data upload</span>
+
+
+        {{ govukFileUpload({
+          id: "file-upload-1",
+          name: "fileUpload1",
+          label: {
+            text: "Upload a file",
+            isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+          },
+          hint: {
+            html: "<p>Your savings data must to be an .CSV file using the template provided.</p><p>Your .CSV template download contains your awarded contracts that have no savings data. Remove contracts that you do not want to add savings data.</p><p><a href=''>Download your savings data CSV template (CSV, 45KB)</a>.</p>"
+          }
+        }) }}
+        
+
+        {{ govukButton({
+        text: "Continue"
+      }) }}
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

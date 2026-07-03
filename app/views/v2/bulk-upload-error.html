@@ -1,0 +1,61 @@
+{% extends "v2/layouts/ccs.html" %}
+{% set isLoggedOut = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: [
+          {
+            text: "There are multiple errors with the savings data upload"
+          }
+        ]
+      }) }}
+
+      <span class="govuk-caption-m">Bulk savings data upload</span>
+      <h1 class="govuk-heading-l">Re-upload your savings data</h1>
+      <p class="govuk-body">You will need to fix the errors and re-upload your savings data.</p>
+
+      {% if uploadErrors and uploadErrors.length %}
+        <ul class="govuk-list">
+          {% for error in uploadErrors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+
+      <form method="post" action="/v2/bulk-upload">
+        {{ govukFileUpload({
+          id: "file-upload-retry",
+          name: "fileUploadRetry",
+          hint: {
+            html: "<p>Your savings data must to be an .CSV file using the template provided.</p><p>Your .CSV template download contains your awarded contracts that have no savings data. Remove contracts that you do not want to add savings data.</p><p><a href=''>Download your savings data CSV template (CSV, 45KB)</a>.</p>"
+          },
+          label: {
+            text: "Re-upload your savings data",
+            classes: "govuk-label--m"
+          }
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

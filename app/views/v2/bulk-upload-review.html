@@ -1,0 +1,80 @@
+{% extends "v2/layouts/ccs.html" %}
+{% set isLoggedOut = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+  {{ govukBackLink({
+    text: "Back",
+    href: "/v2/bulk-upload"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-m">Bulk savings data upload</span>
+      <h1 class="govuk-heading-l">Check your uploaded savings data before submitting</h1>
+      <p class="govuk-body">Review the contracts and savings data from your upload before applying changes.</p>
+
+      <form method="post" action="/v2/bulk-upload-review-confirm">
+        {% for item in reviewItems %}
+          {{ govukSummaryList({
+            card: {
+              title: {
+                text: item.title
+              }
+            },
+            rows: [
+              {
+                key: {
+                  text: "Procurement Identifier (OCID)"
+                },
+                value: {
+                  text: item.ocid
+                }
+              },
+              {
+                key: {
+                  text: "How did you make a saving?"
+                },
+                value: {
+                  text: item.cashableSavingType
+                }
+              },
+              {
+                key: {
+                  text: "How did you calculate what the procurement would have cost?"
+                },
+                value: {
+                  text: item.baselineApproach
+                }
+              },
+              {
+                key: {
+                  text: "What would this procurement have cost without these savings?"
+                },
+                value: {
+                  text: item.baselineValue | poundsWithCommas
+                }
+              }
+            ]
+          }) }}
+        {% endfor %}
+
+        {{ govukButton({
+          text: "Confirm and apply savings data"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}
