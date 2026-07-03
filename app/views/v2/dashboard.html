@@ -1,4 +1,4 @@
-{% extends "layouts/ccs.html" %}
+{% extends "v2/layouts/ccs.html" %}
 
 {% block pageTitle %}
   GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
@@ -27,11 +27,11 @@
         <hr class="ccs-dashboard-section__heading-section-break govuk-section-break govuk-section-break--visible">
         <div class="govuk-grid-row ccs-dashboard-section__container">
           <div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
-            <a class="ccs-dashboard-section__panel-title" href="/v2/contracts-completed">View insights (29)</a>
+            <a class="ccs-dashboard-section__panel-title" href="/v2/contracts-completed">View insights ({{ completedCount }})</a>
             <p class="ccs-dashboard-section__panel-description">Reports and insights are available for awarded contracts that have savings data.</p>
           </div>
           <div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
-            <a class="ccs-dashboard-section__panel-title" href="/v2/contracts-in-progress">Add savings data (5)</a>
+            <a class="ccs-dashboard-section__panel-title" href="/v2/contracts-in-progress">Add savings data ({{ inProgressCount }})</a>
             <p class="ccs-dashboard-section__panel-description">To view reports and insights, savings data needs to be added to awarded contracts.</p>
           </div>
           <!--
@@ -47,13 +47,17 @@
         <h2 class="ccs-dashboard-section__heading govuk-heading-m">Actions</h2>
         <hr class="ccs-dashboard-section__heading-section-break govuk-section-break govuk-section-break--visible">
         <ul class="govuk-list govuk-list--none">
-          <li><a class="govuk-link" href="">Bulk upload your savings data</a></li>
-          <li><a class="govuk-link" href="">View your organisation data</a></li>
+          <li>
+            <a class="govuk-link" href="">Bulk upload your savings data</a>
+          </li>
+          <li>
+            <a class="govuk-link" href="">View your organisation data</a>
+          </li>
         </ul>
       </div>
     </div>
   </div>
 
-    </div>
-  </div>
+</div>
+</div>
 {% endblock %}

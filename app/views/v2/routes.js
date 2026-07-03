@@ -107,22 +107,42 @@ router.get('/v2/calculation', (req, res) => {
 	return res.redirect(`/v2/calculation/${ocid}`)
 })
 
-// Unique: loads contract for cashable savings category page (In progress contracts)
-router.get('/v2/cashable-savings-category/:ocid', (req, res) => {
+// Unique: loads contract for cashable savings page (In progress contracts)
+router.get('/v2/cashable-savings/:ocid', (req, res) => {
 	const { ocid } = req.params
 	setActiveContractOcid(req, ocid)
 	const contract = findContractByOcid(ocid)
 
 	if (!contract) {
-		return res.status(404).render('v2/cashable-savings-category', { contract: null, ocid })
+		return res.status(404).render('v2/cashable-savings', { contract: null, ocid })
 	}
 
-	return res.render('v2/cashable-savings-category', { contract })
+	return res.render('v2/cashable-savings', { contract, ocid })
+})
+
+router.get('/v2/cashable-savings', (req, res) => {
+	const ocid = getActiveContractOcid(req)
+	const contract = ocid ? findContractByOcid(ocid) : null
+
+	if (!ocid || !contract) {
+		return res.redirect('/v2/contracts-in-progress')
+	}
+
+	return res.render('v2/cashable-savings', { contract, ocid })
+})
+
+// Backwards compatibility for older links
+router.get('/v2/cashable-savings-category/:ocid', (req, res) => {
+	return res.redirect(`/v2/cashable-savings/${req.params.ocid}`)
 })
 
 router.get('/v2/procurement-savings-summary', (req, res) => {
 	const ocid = getActiveContractOcid(req)
 	const contract = ocid ? findContractByOcid(ocid) : null
+
+	if (!ocid || !contract) {
+		return res.redirect('/v2/contracts-in-progress')
+	}
 
 	return res.render('v2/procurement-savings-summary', { contract, ocid })
 })
@@ -150,7 +170,18 @@ router.get('/v2/strategic-value-summary', (req, res) => {
 	const ocid = getActiveContractOcid(req)
 	const contract = ocid ? findContractByOcid(ocid) : null
 
+	if (!ocid || !contract) {
+		return res.redirect('/v2/contracts-in-progress')
+	}
+
 	return res.render('v2/strategic-value-summary', { contract, ocid })
+})
+
+router.get('/v2/dashboard', (req, res) => {
+	const completedCount = getContractsByStatus('Completed').length
+	const inProgressCount = getContractsByStatus('In progress').length
+
+	return res.render('v2/dashboard', { completedCount, inProgressCount })
 })
 
 // Form submissions — redirect to next page
@@ -167,12 +198,19 @@ router.post('/v2/contracts', (req, res) => {
 })
 
 router.post('/v2/cashable-savings/', (req, res) => {
-	//setActiveContractOcid(req, req.params.ocid)
+	if (!getActiveContractOcid(req) && req.body && req.body.ocid) {
+		setActiveContractOcid(req, req.body.ocid)
+	}
+
+	if (!getActiveContractOcid(req)) {
+		return res.redirect('/v2/contracts-in-progress')
+	}
+
 	const cashableSavings = req.session.data['cashable-savings']
 	if (cashableSavings === 'yes') {
 		return res.redirect(`/v2/cashable-savings-type`)
 	}
-	return res.redirect(`/v2/non-cashable`)
+	return res.redirect(`/v2/add-a-benefit`)
 })
 
 router.post('/v2/cashable-savings-type', (req, res) => {
@@ -194,7 +232,7 @@ router.post('/v2/cashable-savings-category/:ocid', (req, res) => {
 	if (cashableSavings === 'yes') {
 		return res.redirect(`/v2/cashable-savings-type`)
 	}
-	return res.redirect(`/v2/non-cashable`)
+	return res.redirect(`/v2/add-a-benefit`)
 })
 
 
@@ -202,15 +240,20 @@ router.post('/v2/strategic-value-summary', (req, res) => {
 	persistJourneyDataToContract(req)
 	const addStrategicValue = getSessionData(req)['addStrategicValue']
 	if (addStrategicValue === 'yes') {
-		return res.redirect(`/v2/non-cashable`)
+		return res.redirect(`/v2/add-a-benefit`)
 	}
 
-	const ocid = getActiveContractOcid(req)
+	let ocid = getActiveContractOcid(req)
+	if (!ocid && req.body && req.body.ocid) {
+		ocid = req.body.ocid
+		setActiveContractOcid(req, ocid)
+	}
+
 	if (!ocid) {
 		return res.redirect('/v2/contracts')
 	}
 
-	res.redirect(`/v2/calculation/${ocid}`)
+	return res.redirect(`/v2/calculation/${ocid}`)
 })
 
 router.post('/v2/add-a-benefit', (req, res) => {

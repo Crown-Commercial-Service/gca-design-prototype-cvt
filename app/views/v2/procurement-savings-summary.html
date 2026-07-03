@@ -1,4 +1,4 @@
-{% extends "layouts/ccs.html" %}
+{% extends "v2/layouts/ccs.html" %}
 {% set isLoggedOut = true %}
 
 {% block pageTitle %}
@@ -98,7 +98,7 @@
                 text: "What would this procurement have cost without these savings?"
               },
               value: {
-                html: data['baseline-value'] or "£6"
+                html: data['baseline-value'] | poundsWithCommas or "£6"
               },
               actions: {
                 items: [

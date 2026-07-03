@@ -1,4 +1,4 @@
-{% extends "layouts/ccs.html" %}
+{% extends "v2/layouts/ccs.html" %}
 {% set isLoggedOut = true %}
 
 {% block pageTitle %}
@@ -27,8 +27,8 @@
         <span class="govuk-caption-m">Add a saving</span>
 
         {{ govukInput({
-            id: "cost-per-item",
-            name: "costPerItem",
+            id: "baseline-value",
+            name: "baseline-value",
             label: {
               text: "What would this procurement have cost without these savings?",
               classes: "govuk-label--l",

@@ -1,4 +1,4 @@
-{% extends "layouts/ccs.html" %}
+{% extends "v2/layouts/ccs.html" %}
 {% set isLoggedOut = true %}
 
 {% block pageTitle %}
@@ -6,14 +6,14 @@
 {% endblock %}
 
 {% block beforeContent %}
-  {{ govukPhaseBanner({
+	{{ govukPhaseBanner({
     tag: {
       text: "Alpha"
     },
     html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
   }) }}
 
-  {{ govukBackLink({
+	{{ govukBackLink({
     text: "Back",
     href: "javascript:window.history.go(-1);"
   }) }}
@@ -21,13 +21,14 @@
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <form method="post" action="/v2/cashable-savings">
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" action="/v2/cashable-savings">
+				<input type="hidden" name="ocid" value="{{ ocid or contract.ocid }}">
 
-        <span class="govuk-caption-m">Add a saving</span>
+				<span class="govuk-caption-m">Add a saving</span>
 
-        {{ govukRadios({
+				{{ govukRadios({
           name: "cashable-savings",
           fieldset: {
             legend: {
@@ -51,13 +52,12 @@
           ]
         }) }}
 
-        {{ govukButton({
+				{{ govukButton({
         text: "Continue"
       }) }}
 
-
-      </form>
-    </div>
-  </div>
+			</form>
+		</div>
+	</div>
 
 {% endblock %}
