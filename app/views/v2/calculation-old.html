@@ -1,0 +1,184 @@
+{% extends "v2/layouts/ccs.html" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: { text: "Alpha" },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+	{% if contract %}
+		{{ govukBackLink({
+      text: "Back to contracts",
+      href: "/commercial-value-tool/contracts"
+    }) }}
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-three-quarters">
+			{% if contract %}
+				<h1 class="govuk-heading-l">Calculation results</h1>
+
+				<h2 class="govuk-heading-m">A visual overview of your Savings Data summary/insights</h2>
+
+				<div class="govuk-grid-row savings-report-cards">
+					<div class="govuk-grid-column-one-third">
+						<div class="govuk-summary-card savings-report-card savings-report-card--magenta">
+							<div class="govuk-summary-card__title-wrapper">
+								<h2 class="govuk-summary-card__title">Contract value</h2>
+							</div>
+							<div class="govuk-summary-card__content">
+								<p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ (contract.contractValueDisplay or contract.value) | poundsWithCommas }}</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="govuk-grid-column-one-third">
+						<div class="govuk-summary-card savings-report-card savings-report-card--teal">
+							<div class="govuk-summary-card__title-wrapper">
+								<h2 class="govuk-summary-card__title">Cashable savings</h2>
+							</div>
+							<div class="govuk-summary-card__content">
+								<p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ contract.cashableSavings | poundsWithCommas }}</p>
+								<p class="govuk-body-s govuk-!-margin-bottom-0">{{ contract.cashableSavingsPercentage }} of contract value</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="govuk-grid-column-one-third">
+						<div class="govuk-summary-card savings-report-card savings-report-card--purple">
+							<div class="govuk-summary-card__title-wrapper">
+								<h2 class="govuk-summary-card__title">Non-cashable savings</h2>
+							</div>
+							<div class="govuk-summary-card__content">
+								<p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ contract.nonCashableSavings | poundsWithCommas }}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				{% include "includes/chart-comparison.html" %}
+
+				<div class="govuk-grid-row">
+					<div class="govuk-grid-column-full">
+						<h2 class="govuk-heading-m">Calculation details</h2>
+
+						<div class="govuk-summary-card">
+							<div class="govuk-summary-card__title-wrapper">
+								<h2 class="govuk-summary-card__title">{{ contract.title }}</h2>
+							</div>
+							<div class="govuk-summary-card__content">
+								{{ govukSummaryList({
+                  rows: [
+                    {
+                      key: { text: "Procurement identifier (OCID)" },
+                      value: { text: contract.ocid }
+                    },
+                    {
+                      key: { text: "Tender ID" },
+                      value: { text: contract.tenderId }
+                    },
+                    {
+                      key: { text: "Organisation name" },
+                      value: { text: contract.organisationName }
+                    },
+                    {
+                      key: { text: "Contract value (£)" },
+                      value: { text: (contract.contractValueDisplay or contract.value) | poundsWithCommas }
+                    },
+                    {
+                      key: { text: "Contract start date" },
+                      value: { text: contract.startDate }
+                    },
+                    {
+                      key: { text: "Contract end date" },
+                      value: { text: contract.endDate }
+                    },
+                    {
+                      key: { text: "Contract title" },
+                      value: { text: contract.title }
+                    },
+                    {
+                      key: { text: "CPV code" },
+                      value: { text: contract.cpvCode }
+                    },
+                    {
+                      key: { text: "CPV description" },
+                      value: { text: contract.cpvDescription }
+                    }
+                  ]
+                }) }}
+							</div>
+						</div>
+
+						<div class="govuk-summary-card">
+							<div class="govuk-summary-card__title-wrapper">
+								<h2 class="govuk-summary-card__title">Cashable savings</h2>
+							</div>
+							<div class="govuk-summary-card__content">
+								{{ govukSummaryList({
+                  rows: [
+                    {
+                      key: { text: "Cashable saving type" },
+                      value: { text: contract.cashableSavingType }
+                    },
+                    {
+                      key: { text: "Baseline approach" },
+                      value: { text: contract.baselineApproach }
+                    },
+                    {
+                      key: { text: "Baseline value" },
+                      value: { text: contract.baselineValue }
+                    },
+                    {
+                      key: { text: "Cashable saving value (£)" },
+                      value: { text: contract.cashableSavings | poundsWithCommas }
+                    },
+                    {
+                      key: { text: "Cashable saving percentage" },
+                      value: { text: contract.cashableSavingsPercentage }
+                    }
+                  ]
+                }) }}
+							</div>
+						</div>
+
+						<div class="govuk-button-group">
+							<form method="post" action="/v1/export?ocid={{ contract.ocid }}" style="display: inline;">
+								{{ govukButton({
+								  text: "Download/Export Results",
+								  type: "submit"
+								}) }}
+							</form>
+							<form method="post" action="/v1/dashboard" style="display: inline;">
+								{{ govukButton({
+								  text: "Return to Dashboard",
+								  classes: "govuk-button--secondary",
+								  type: "submit"
+								}) }}
+							</form>
+							<form method="post" action="/v1/contracts" style="display: inline;">
+								{{ govukButton({
+								  text: "Return to Contracts",
+								  classes: "govuk-button--secondary",
+							  type: "submit"
+								}) }}
+							</form>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<h1 class="govuk-heading-l">Calculation</h1>
+				<p class="govuk-body">We could not find the selected contract{% if ocid %}: {{ ocid }}
+					{% endif %}.</p>
+				<p class="govuk-body">
+					<a class="govuk-link" href="/v1/contracts">Return to contracts list</a>
+				</p>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

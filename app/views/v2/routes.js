@@ -14,6 +14,35 @@ const findContractByOcid = (ocid) => contracts.find((item) => item.ocid === ocid
 
 const getContractsByStatus = (status) => contracts.filter((item) => item.status === status)
 
+const toNumber = (value) => {
+	if (typeof value === 'number') {
+		return Number.isFinite(value) ? value : 0
+	}
+
+	if (typeof value === 'string') {
+		const trimmed = value.trim()
+
+		if (trimmed.toLowerCase() === 'not provided') {
+			return 0
+		}
+
+		const parsed = Number(trimmed.replace(/[£,\s]/g, ''))
+		return Number.isFinite(parsed) ? parsed : 0
+	}
+
+	return 0
+}
+
+const getPercentage = (amount, total) => {
+	if (!total) {
+		return 0
+	}
+
+	return (amount / total) * 100
+}
+
+const formatPercentage = (value) => `${value.toFixed(1)}%`
+
 const setActiveContractOcid = (req, ocid) => {
 	if (!findContractByOcid(ocid)) {
 		return false
@@ -112,7 +141,47 @@ router.get('/v2/calculation/:ocid', (req, res) => {
 		return res.status(404).render('v2/calculation', { contract: null, ocid })
 	}
 
-	return res.render('v2/calculation', { contract })
+	const contractValue = toNumber(contract.contractValueDisplay || contract.value)
+	const cashableSavings = toNumber(contract.cashableSavings)
+	const nonCashableSavings = toNumber(contract.nonCashableSavings)
+	const totalSavings = cashableSavings + nonCashableSavings
+	const peerAverageSavingsPercentageValue = 10
+
+	const cashablePercentageOfContract = getPercentage(cashableSavings, contractValue)
+	const nonCashablePercentageOfContract = getPercentage(nonCashableSavings, contractValue)
+	const totalSavingsPercentageOfContract = getPercentage(totalSavings, contractValue)
+	const savingsPercentageDifferenceValue = cashablePercentageOfContract - peerAverageSavingsPercentageValue
+	const peerAverageSavingsValue = Math.round(contractValue * (peerAverageSavingsPercentageValue / 100))
+	const savingsDifferenceValue = Math.round(contractValue * (savingsPercentageDifferenceValue / 100))
+
+	const cashableShareOfTotal = getPercentage(cashableSavings, totalSavings)
+	const nonCashableShareOfTotal = getPercentage(nonCashableSavings, totalSavings)
+
+	const calculationMetrics = {
+		contractValue,
+		cashableSavings,
+		nonCashableSavings,
+		totalSavings,
+		peerAverageSavingsPercentageValue,
+		peerAverageSavingsPercentageWidthValue: peerAverageSavingsPercentageValue.toFixed(1),
+		peerAverageSavingsPercentage: formatPercentage(peerAverageSavingsPercentageValue),
+		cashablePercentageOfContract: formatPercentage(cashablePercentageOfContract),
+		cashablePercentageOfContractValue: cashablePercentageOfContract,
+		cashablePercentageOfContractWidthValue: cashablePercentageOfContract.toFixed(1),
+		nonCashablePercentageOfContract: formatPercentage(nonCashablePercentageOfContract),
+		totalSavingsPercentageOfContract: formatPercentage(totalSavingsPercentageOfContract),
+		totalSavingsPercentageOfContractValue: totalSavingsPercentageOfContract,
+		savingsPercentageDifferenceValue,
+		savingsPercentageDifference: formatPercentage(savingsPercentageDifferenceValue),
+		peerAverageSavingsValue,
+		savingsDifferenceValue,
+		cashableShareOfTotal: formatPercentage(cashableShareOfTotal),
+		nonCashableShareOfTotal: formatPercentage(nonCashableShareOfTotal),
+		cashableShareOfTotalWidth: cashableShareOfTotal.toFixed(1),
+		nonCashableShareOfTotalWidth: nonCashableShareOfTotal.toFixed(1)
+	}
+
+	return res.render('v2/calculation', { contract, calculationMetrics })
 })
 
 router.get('/v2/calculation', (req, res) => {
@@ -236,7 +305,9 @@ router.post('/v2/cashable-savings-type', (req, res) => {
 })
 
 router.post('/v2/baseline-approach', (req, res) => {
-	res.redirect(`/v2/baseline-value`)
+	persistJourneyDataToContract(req)
+	//res.redirect(`/v2/baseline-value`)
+	res.redirect(`/v2/procurement-savings-summary`)
 })
 
 router.post('/v2/baseline-value', (req, res) => {
@@ -302,6 +373,16 @@ router.post('/v2/calculation/:ocid', (req, res) => {
 
 router.post('/v2/dashboard', (req, res) => {
 	res.redirect('/v2/dashboard')
+})
+
+router.post('/v2/add-a-saving', (req, res) => {
+	if (req.session.data['savings-data-method'] === 'single-contract') {
+		return res.redirect('/v2/contracts-in-progress')
+	} else if (req.session.data['savings-data-method'] === 'bulk-upload') {
+		return res.redirect('/v2/bulk-upload')
+	}
+
+	//res.redirect('/v2/dashboard')
 })
 
 router.post('/v2/bulk-upload', (req, res) => {

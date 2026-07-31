@@ -25,14 +25,15 @@
     <div class="govuk-grid-column-two-thirds">
       <form method="post" action="/v2/baseline-approach">
         <span class="govuk-caption-m">Add a saving</span>
+        <h1 class="govuk-heading-l">How did you calculate what this procurement would have cost?</h1>
 
         {{ govukRadios({
           name: "baseline-approach",
           fieldset: {
             legend: {
-              text: "How did you calculate what the procurement would have cost?",
-              isPageHeading: true,
-              classes: "govuk-fieldset__legend--l"
+              text: "Select how you estimated the cost",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--m"
             }
           },
           items: [
@@ -62,6 +63,21 @@
             }
           ]
         }) }}
+
+        {{ govukInput({
+            id: "baseline-value",
+            name: "baseline-value",
+            label: {
+              text: "What would this procurement have cost without these savings?",
+              classes: "govuk-label--m",
+              isPageHeading: false
+            },
+            prefix: {
+              text: "£"
+            },
+            classes: "govuk-input--width-10",
+            spellcheck: false
+          }) }}
 
         {{ govukButton({
         text: "Continue"

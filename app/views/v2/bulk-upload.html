@@ -36,9 +36,70 @@
               classes: "govuk-fieldset__legend--l"
           },
           hint: {
-            html: "<p>Your savings data must to be an .CSV file using the template provided.</p><p>Your .CSV template download contains your awarded contracts that have no savings data. Remove contracts that you do not want to add savings data.</p><p><a href=''>Download your savings data CSV template (CSV, 45KB)</a>.</p>"
+            html: "<p>Your savings data must be an .CSV file using the template provided.</p><p>Your .CSV template download contains your awarded contracts that have no savings data. Remove contracts that you do not want to add savings data.</p><p><a href='/public/files/commercial-value-template.csv'>Download your savings data CSV template (CSV, 14KB)</a>.</p>"
           }
         }) }}
+
+        <details class="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              How to fill in your savings data .CSV template
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            <p>You should fill in your savings data .CSV template carefully, following the instructions provided.</p>
+
+            <p>Remove any rows that you do not want to add savings data for.</p>
+
+            <p>You can only add savings data for contracts that are included in the template.</p>
+
+            <h3>How did you make a saving?</h3>
+            <p>Enter one of the following options:</p>
+            <ul>
+              <li>Reduced supplier margins or discounted rates</li>
+              <li>Collaborative procurement</li>
+              <li>Re-tendered an existing contract</li>
+              <li>Reduced quantities purchased</li>
+              <li>Cancelled a planned procurement</li>
+              <li>Reduced the contract scope</li>
+              <li>Organisational changes</li>
+            </ul>
+
+            <h3>How did you calculate the saving?</h3>
+            <p>Enter one of the following options:</p>
+            <ul>
+              <li>Used our original budget allocation</li>
+              <li>Compared with industry standards</li>
+              <li>Researched current market rates</li>
+              <li>Used the median of all competitive bids</li>
+              <li>Compared with our last contract</li>
+              <li>Detailed cost modelling</li>
+            </ul>
+
+            <h3>Add a budget / price benefit</h3>
+            <p>Enter one of the following options:</p>
+            <ul>
+              <li>Prevented a price rise</li>
+              <li>Prevented a price rise</li>
+              <li>Froze prices over time</li>
+              <li>Managed demand better</li>
+              <li>Other</li>
+            </ul>
+
+            <h3>Add a performance / policy benefit</h3>
+            <p>Enter one of the following options:</p>
+            <ul>
+              <li>Improved how services are delivered</li>
+              <li>Saved staff time or resources</li>
+              <li>Met official rules or policies</li>
+              <li>Boosted reputation or user satisfaction</li>
+              <li>Other</li>
+            </ul>
+            <p>Step 3 - save the .CSV file and upload it using the form above.</p>
+          </div>
+        </details>
+
+
         
 
         {{ govukButton({
