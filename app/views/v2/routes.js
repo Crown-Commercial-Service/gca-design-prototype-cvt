@@ -250,7 +250,7 @@ router.post('/v2/procurement-savings-summary', (req, res) => {
 		return res.redirect('/v2/contracts')
 	}
 
-	return res.redirect(`/v2/calculation/${ocid}`)
+	return res.redirect(`/v2/declaration`)
 })
 
 router.get('/v2/strategic-value-summary', (req, res) => {
@@ -342,7 +342,7 @@ router.post('/v2/strategic-value-summary', (req, res) => {
 		return res.redirect('/v2/contracts')
 	}
 
-	return res.redirect(`/v2/calculation/${ocid}`)
+	return res.redirect(`/v2/declaration`)
 })
 
 router.post('/v2/add-a-benefit', (req, res) => {
@@ -365,6 +365,10 @@ router.post('/v2/non-monetisable-type', (req, res) => {
 router.post('/v2/non-cashable-savings-value', (req, res) => {
 	persistJourneyDataToContract(req)
 	res.redirect(`/v2/strategic-value-summary`)
+})
+
+router.post('/v2/declaration/', (req, res) => {
+	return res.redirect(`/v2/calculation/`)
 })
 
 router.post('/v2/calculation/:ocid', (req, res) => {

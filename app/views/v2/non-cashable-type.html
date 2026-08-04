@@ -1,5 +1,5 @@
 {% extends "v2/layouts/ccs.html" %}
-{% set isLoggedOut = true %}
+{% set isLoggedIn = true %}
 
 {% block pageTitle %}
   GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
@@ -25,7 +25,7 @@
     <div class="govuk-grid-column-two-thirds">
       <form method="post" action="/v2/non-cashable-type">
         <span class="govuk-caption-m">Add a saving</span>
-        
+
         {{ govukRadios({
           name: "non-cashable-type",
           fieldset: {

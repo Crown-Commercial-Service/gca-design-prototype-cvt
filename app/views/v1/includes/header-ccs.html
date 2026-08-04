@@ -347,7 +347,7 @@
         <nav aria-label="Menu" class="govuk-service-navigation__wrapper">
           <button name="button" type="button" class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle" aria-controls="navigation" aria-hidden="true" hidden="">Menu</button>
           <ul id="navigation" class="govuk-service-navigation__list">
-            {% if isLoggedOut %}
+            {% if isLoggedOut or not isLoggedIn %}
               <li class="govuk-service-navigation__item">
                 <a class="govuk-service-navigation__link" href="">Create account</a>
               </li>

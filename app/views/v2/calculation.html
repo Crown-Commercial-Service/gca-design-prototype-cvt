@@ -1,4 +1,5 @@
 {% extends "v2/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
 
 {% block pageTitle %}
   GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
@@ -11,8 +12,8 @@
   }) }}
 	{% if contract %}
 		{{ govukBackLink({
-      text: "Back to contracts",
-      href: "/commercial-value-tool/contracts"
+      text: "Back to dashboard",
+      href: "/v2/dashboard"
     }) }}
 	{% endif %}
 {% endblock %}
@@ -223,105 +224,18 @@
 
 				{% endcall %}
 
-				{#
-				<div class="govuk-grid-row">
-					<div class="govuk-grid-column-full">
-						<h2 class="govuk-heading-m">Calculation details</h2>
 
-						<div class="govuk-summary-card">
-							<div class="govuk-summary-card__title-wrapper">
-								<h2 class="govuk-summary-card__title">{{ contract.title }}</h2>
-							</div>
-							<div class="govuk-summary-card__content">
-								{{ govukSummaryList({
-                  rows: [
-                    {
-                      key: { text: "Procurement identifier (OCID)" },
-                      value: { text: contract.ocid }
-                    },
-                    {
-                      key: { text: "Tender ID" },
-                      value: { text: contract.tenderId }
-                    },
-                    {
-                      key: { text: "Organisation name" },
-                      value: { text: contract.organisationName }
-                    },
-                    {
-                      key: { text: "Contract value (£)" },
-                      value: { text: (contract.contractValueDisplay or contract.value) | poundsWithCommas }
-                    },
-                    {
-                      key: { text: "Contract start date" },
-                      value: { text: contract.startDate }
-                    },
-                    {
-                      key: { text: "Contract end date" },
-                      value: { text: contract.endDate }
-                    },
-                    {
-                      key: { text: "Contract title" },
-                      value: { text: contract.title }
-                    },
-                    {
-                      key: { text: "CPV code" },
-                      value: { text: contract.cpvCode }
-                    },
-                    {
-                      key: { text: "CPV description" },
-                      value: { text: contract.cpvDescription }
-                    }
-                  ]
-                }) }}
-							</div>
-						</div>
-
-						<div class="govuk-summary-card">
-							<div class="govuk-summary-card__title-wrapper">
-								<h2 class="govuk-summary-card__title">Cashable savings</h2>
-							</div>
-							<div class="govuk-summary-card__content">
-								{{ govukSummaryList({
-                  rows: [
-                    {
-                      key: { text: "Cashable saving type" },
-                      value: { text: contract.cashableSavingType }
-                    },
-                    {
-                      key: { text: "Baseline approach" },
-                      value: { text: contract.baselineApproach }
-                    },
-                    {
-                      key: { text: "Baseline value" },
-                      value: { text: contract.baselineValue }
-                    },
-                    {
-                      key: { text: "Cashable saving value (£)" },
-                      value: { text: contract.cashableSavings | poundsWithCommas }
-                    },
-                    {
-                      key: { text: "Cashable saving percentage" },
-                      value: { text: contract.cashableSavingsPercentage }
-                    }
-                  ]
-                }) }}
-							</div>
-						</div>
-#}
 				<div class="govuk-button-group">
-					<form method="post" action="/v1/export?ocid={{ contract.ocid }}" style="display: inline;">
+					
 						{{ govukButton({
 								  text: "Add a new saving",
 								  type: "submit"
 								}) }}
-					</form>
-					<form method="post" action="/v1/dashboard" style="display: inline;">
+					
 						{{ govukButton({
 								  text: "Download results",
-								  classes: "govuk-button--secondary",
-								  type: "submit"
+								  classes: "govuk-button--secondary"
 								}) }}
-					</form>
 				</div>
 			</div>
 		</div>
