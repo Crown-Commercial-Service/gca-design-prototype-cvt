@@ -398,10 +398,10 @@ router.post('/v2/bulk-upload', (req, res) => {
 
 	if (attemptCount === 1) {
 		sessionData.bulkUploadErrors = [
-			'Row 2: Missing a Procurement Identifier (OCID)',
-			"Row 5: 'maybe' is not a valid answer for cashable savings",
-			"Row 12: 'guess' is not a valid savings type",
-			'Row 19: Value cannot be a negative amount (-£200)'
+			'Row 2: Missing OCID. Enter a valid 42-character identifier',
+			"Row 5: Cashable saving must be either 'Yes' or 'No'.",
+			"Row 12: Must match an approved calculation method: 'Budget', 'Market rates', or 'Benchmarking'.",
+			"Row 19: Negative value not allowed. Must be £0 or greater."
 		]
 	} else {
 		sessionData.bulkUploadReviewItems = getBulkUploadReviewItems()
@@ -470,6 +470,10 @@ router.post('/v2/bulk-upload-review-confirm', (req, res) => {
 	}))
 	delete sessionData.bulkUploadReviewItems
 
+	return res.redirect('/v2/declaration-bulk')
+})
+
+router.post('/v2/declaration-bulk', (req, res) => {
 	return res.redirect('/v2/bulk-upload-success')
 })
 
