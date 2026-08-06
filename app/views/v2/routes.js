@@ -78,6 +78,9 @@ const getBulkUploadReviewItems = () => {
 			ocid: contract.ocid,
 			title: contract.title,
 			cashableSavings: String(cashableSavings),
+			otherValueBenefits: contract.nonCashableSavings && contract.nonCashableSavings !== 'Not provided'
+				? contract.nonCashableSavings
+				: '',
 			baselineApproach: contract.baselineApproach || 'Budget',
 			baselineValue: String(baselineValue),
 			cashableSavingType: contract.cashableSavingType || 'Negotiated discount'
@@ -443,6 +446,17 @@ router.get('/v2/bulk-upload-review', (req, res) => {
 	}
 
 	return res.render('v2/bulk-upload-review', { reviewItems })
+})
+
+router.get('/v2/bulk-upload-review-table', (req, res) => {
+	const sessionData = getSessionData(req)
+	const reviewItems = Array.isArray(sessionData.bulkUploadReviewItems) ? sessionData.bulkUploadReviewItems : []
+
+	if (reviewItems.length === 0) {
+		return res.redirect('/v2/bulk-upload')
+	}
+
+	return res.render('v2/bulk-upload-review-table', { reviewItems })
 })
 
 router.post('/v2/bulk-upload-review-confirm', (req, res) => {

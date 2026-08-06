@@ -322,3 +322,33 @@
 .peer-benchmark-chart__tick:nth-child(5) {
     right: 0;
 }
+
+.bulk-upload-review-table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 30px;
+    border: 0;
+}
+
+.bulk-upload-review-table:focus,
+.bulk-upload-review-table:focus-visible,
+.bulk-upload-review-table:focus-within {
+    outline: 3px solid #ffdd00;
+    box-shadow: 0 0 0 6px #0b0c0c;
+}
+
+.bulk-upload-review-table .govuk-table {
+    min-width: 1100px;
+    margin-bottom: 0;
+}
+
+.bulk-upload-review-table .govuk-table__header,
+.bulk-upload-review-table .govuk-table__cell {
+    vertical-align: top;
+    white-space: normal;
+}
+
+.bulk-upload-review-table .govuk-table__header:first-child,
+.bulk-upload-review-table .govuk-table__cell:first-child {
+    min-width: 220px;
+}
