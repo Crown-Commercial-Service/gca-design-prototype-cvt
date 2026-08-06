@@ -97,6 +97,7 @@ const persistJourneyDataToContract = (req) => {
 	}
 
 	const updates = {}
+	const contract = findContractByOcid(ocid)
 
 	if (sessionData['cashable-savings'] === 'yes') {
 		updates.status = 'Completed'
@@ -110,6 +111,15 @@ const persistJourneyDataToContract = (req) => {
 	const baselineValue = sessionData['baseline-value'] || sessionData.costPerItem
 	if (baselineValue) {
 		updates.baselineValue = baselineValue
+
+		if (contract) {
+			const baselineAmount = toNumber(baselineValue)
+			const contractAmount = toNumber(contract.contractValueDisplay || contract.value)
+			const cashableSavings = Math.max(Math.round(baselineAmount - contractAmount), 0)
+
+			updates.cashableSavings = String(cashableSavings)
+			updates.cashableSavingsPercentage = formatPercentage(getPercentage(cashableSavings, contractAmount))
+		}
 	}
 
 	const nonCashableSavingsValue = sessionData['non-cashable-savings-value'] || sessionData['savings-value']
