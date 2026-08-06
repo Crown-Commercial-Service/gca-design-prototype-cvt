@@ -6,14 +6,14 @@
 {% endblock %}
 
 {% block beforeContent %}
-	{{ govukPhaseBanner({
+  {{ govukPhaseBanner({
     tag: {
       text: "Alpha"
     },
     html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
   }) }}
 
-	{{ govukBackLink({
+  {{ govukBackLink({
     text: "Back",
     href: "javascript:window.history.go(-1);"
   }) }}
@@ -21,12 +21,12 @@
 {% endblock %}
 
 {% block content %}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-two-thirds">
-			<form method="post" action="/v2/declaration">
-				<input type="hidden" name="ocid" value="{{ ocid or contract.ocid }}">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="/v2/declaration">
+        <input type="hidden" name="ocid" value="{{ ocid or contract.ocid }}">
 
-				<span class="govuk-caption-m">Add a saving</span>
+        <span class="govuk-caption-m">Add a saving</span>
         <h1 class="govuk-heading-l">Confirm how your data will be used</h1>
 
         <p>Before your savings and value benefits are calculated and saved to the tool, you must review and accept how this data is stored and shared across public sector peer groups.</p>
@@ -35,8 +35,8 @@
 
         <p>By submitting this entry, you confirm that:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>the baseline costs and savings figures are accurate to the best of your knowledge</li>
-          <li>calculations are based on recognized baseline methodologies (such as budget allocations, market rates, or previous contract comparisons)</li>
+          <li>the baseline value and savings figures are accurate to the best of your knowledge</li>
+          <li>calculations are based on your baseline approach (how you calculated the saving), such as budget allocations, market rates, or previous contract comparisons</li>
         </ul>
 
         <h2 class="govuk-heading-m">How your data is used for peer benchmarks</h2>
@@ -50,15 +50,12 @@
 
         <p>By continuing, you agree that the commercial data you have provided is accurate and can be used for public sector benchmarking.</p>
 
-
-
-
-				{{ govukButton({
+        {{ govukButton({
         text: "Agree and view calculation results"
       }) }}
 
-			</form>
-		</div>
-	</div>
+      </form>
+    </div>
+  </div>
 
 {% endblock %}

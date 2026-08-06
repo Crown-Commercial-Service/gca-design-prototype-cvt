@@ -66,7 +66,7 @@
 				<p>You achieved a total of {{ calculationMetrics.totalSavings | poundsWithCommas }} in savings and value benefits on this {{ calculationMetrics.contractValue | poundsWithCommas }} contract.</p>
 				<ul class="govuk-list govuk-list--bullet">
 					<li>Cashable savings: {{ calculationMetrics.cashableSavings | poundsWithCommas }} ({{ calculationMetrics.cashablePercentageOfContract }} of contract value)</li>
-					<li>Other value benefits: {{ calculationMetrics.nonCashableSavings | poundsWithCommas }} ({{ calculationMetrics.nonCashablePercentageOfContract }} of contract value)</li>
+					<li>Benefit savings: {{ calculationMetrics.nonCashableSavings | poundsWithCommas }} ({{ calculationMetrics.nonCashablePercentageOfContract }} of contract value)</li>
 				</ul>
 
 				<div>
@@ -80,7 +80,7 @@
 						<span class="govuk-body-m govuk-!-margin-right-6">
 							<span style="background-color: #0C5FA3; height: 8px; width: 8px; display: inline-block; position: relative; bottom: 2px;"></span> Cashable savings ({{ calculationMetrics.cashableShareOfTotal }})</span>
 						<span class="govuk-body-m">
-							<span style="background-color: #C0DCF4; height: 8px; width: 8px; display: inline-block; position: relative; bottom: 2px;"></span> Non-cash value ({{ calculationMetrics.nonCashableShareOfTotal }})</span>
+							<span style="background-color: #C0DCF4; height: 8px; width: 8px; display: inline-block; position: relative; bottom: 2px;"></span> Benefit savings ({{ calculationMetrics.nonCashableShareOfTotal }})</span>
 					</div>
 				</div>
 
@@ -195,7 +195,7 @@
 				</div>
 
 
-				<p>Your calculated cash value is above average. Your physical cash savings of {{ calculationMetrics.cashableSavings | poundsWithCommas }} are higher than the average peer saving of {{ calculationMetrics.peerAverageSavingsValue | poundsWithCommas }}.</p>
+				<p>Your cashable savings are above average. Your physical cash savings of {{ calculationMetrics.cashableSavings | poundsWithCommas }} are higher than the average peer saving of {{ calculationMetrics.peerAverageSavingsValue | poundsWithCommas }}.</p>
 
 				<p><span class="govuk-tag govuk-tag--green" style="max-width: 100%;">Top 25% of similar procurements for social and environmental value</span></p>
 
@@ -205,7 +205,7 @@
 					Summary
 				</h2>
 				<ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-4">
-					<li>Overall, this contract delivered both cashable savings and additional non-cashable value.</li>
+					<li>Overall, this contract delivered both cashable savings and additional benefit savings.</li>
 					<li>The contract returned measurable savings and wider value benefits.</li>
 				</ul>
 
