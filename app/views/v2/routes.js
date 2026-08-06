@@ -102,16 +102,19 @@ const persistJourneyDataToContract = (req) => {
 		updates.status = 'Completed'
 	}
 
-	if (sessionData['savings-type'] && sessionData['savings-type'] !== 'choose') {
-		updates.cashableSavingType = sessionData['savings-type']
+	const cashableSavingType = sessionData['cashable-savings-type'] || sessionData['savings-type']
+	if (cashableSavingType && cashableSavingType !== 'choose') {
+		updates.cashableSavingType = cashableSavingType
 	}
 
-	if (sessionData.costPerItem) {
-		updates.baselineValue = sessionData.costPerItem
+	const baselineValue = sessionData['baseline-value'] || sessionData.costPerItem
+	if (baselineValue) {
+		updates.baselineValue = baselineValue
 	}
 
-	if (sessionData['savings-value']) {
-		updates.nonCashableSavings = sessionData['savings-value']
+	const nonCashableSavingsValue = sessionData['non-cashable-savings-value'] || sessionData['savings-value']
+	if (nonCashableSavingsValue) {
+		updates.nonCashableSavings = nonCashableSavingsValue
 	}
 
 	upsertContractData(ocid, updates)
