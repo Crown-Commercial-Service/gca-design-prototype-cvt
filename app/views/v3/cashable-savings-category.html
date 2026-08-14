@@ -1,0 +1,119 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+	{{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.go(-1);"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" action="/v3/cashable-savings-category/{{ contract.ocid }}">
+				<h1 class="govuk-heading-l">Cashable Savings</h1>
+
+				{% set savingsTypeHtml %}
+				{{ govukSelect({
+            id: "savings-type",
+            name: "savings-type",
+            label: {
+              text: "Savings type",
+              classes: "govuk-label--s"
+            },
+            hint: {
+              text: "Select the type of cashable savings achieved"
+            },
+            items: [
+              {
+                value: "choose",
+                text: "Select a cashable savings type",
+                selected: true
+              },
+              {
+                value: "margin-reduction",
+                text: "Margin reduction/rate discount"
+              },
+              {
+                value: "shared-savings",
+                text: "Shared 'Cross Government' savings or rate-based reduction"
+              },
+              {
+                value: "contract-recompete",
+                text: "Contract recompete"
+              },
+              {
+                value: "volume-reduction",
+                text: "Volume reduction"
+              },
+              {
+                value: "cancellation",
+                text: "Cancellation"
+              },
+              {
+                value: "de-scoping",
+                text: "De-scoping"
+              },
+              {
+                value: "departmental-reform",
+                text: "Departmental reform"
+              }
+            ]
+          }) }}
+				{% endset -%}
+
+				{{ govukRadios({
+          name: "cashable-savings",
+          fieldset: {
+            legend: {
+              text: "Have you achieved cashable savings as a result of this contract award?",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          hint: {
+            text: "Select one option"
+          },
+          items: [
+            {
+              value: "yes",
+              text: "Yes",
+              conditional: {
+                html: savingsTypeHtml
+              }
+            },
+            {
+              value: "no",
+              text: "No",
+              hint: {
+                text: "Proceed to non-cashable savings and strategic value"
+              }
+            }
+          ]
+        }) }}
+
+				{{ govukButton({
+        text: "Continue"
+      }) }}
+
+				<p>
+					<a href="">Cancel</a>
+				</p>
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+	{{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.go(-1);"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" action="/v3/declaration-bulk">
+				<input type="hidden" name="ocid" value="{{ ocid or contract.ocid }}">
+
+				<span class="govuk-caption-m">Add a saving</span>
+				<h1 class="govuk-heading-l">Confirm how your data will be used</h1>
+
+				<p>Before the savings data from your file is calculated and added to the tool, you must review and accept how this data is stored and shared across public sector peer groups.</p>
+
+				<h2 class="govuk-heading-m">Accurate and truthful reporting</h2>
+
+				<p>By submitting this entry, you confirm that:</p>
+				<ul class="govuk-list govuk-list--bullet">
+					<li>the baseline value and savings figures for all uploaded contracts are accurate to the best of your knowledge</li>
+					<li>calculations are based on your baseline approach (how you calculated the saving), such as budget allocations, market rates, or previous contract comparisons</li>
+					<li>you have reviewed the uploaded file summary and verified the total values</li>
+				</ul>
+
+				<h2 class="govuk-heading-m">How your data is used for peer benchmarks</h2>
+
+				<p>To help public sector bodies benchmark commercial performance:</p>
+				<ul class="govuk-list govuk-list--bullet">
+					<li>your figures will be aggregated to calculate sector and regional averages</li>
+					<li>individual contract details are filtered so high-level trends can be compared fairly</li>
+					<li>statistical guardrails automatically review extreme outliers to protect benchmark integrity</li>
+				</ul>
+
+				<p>By continuing, you agree that the commercial data you have provided is accurate and can be used for public sector benchmarking.</p>
+
+				{{ govukButton({
+        text: "Agree and submit bulk savings data"
+      }) }}
+
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

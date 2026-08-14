@@ -1,0 +1,148 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+	{{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.go(-1);"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" action="/v3/procurement-savings-summary">
+				<h1 class="govuk-heading-l">Review your procurement savings</h1>
+
+				{{ govukSummaryList({
+          card: {
+            title: {
+              text: "Contract details"
+            }
+          },
+          rows: [
+            {
+              key: {
+                text: "Contract title"
+              },
+              value: {
+                html: contract.title
+              }
+            },
+            {
+              key: {
+                text: "Contract value"
+              },
+              value: {
+                html: contract.value
+              }
+            }
+          ]
+        }) }}
+
+				{{ govukSummaryList({
+          card: {
+            title: {
+              text: "Your cashable savings data"
+            }
+          },
+          rows: [
+            {
+              key: {
+                text: "How did you make a saving?"
+              },
+              value: {
+                html: data['cashable-savings-type']
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "savings type"
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                text: "How did you calculate what this procurement would have cost?"
+              },
+              value: {
+                html: data['baseline-approach']
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "baseline approach"
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                text: "What would this procurement have cost without these savings?"
+              },
+              value: {
+                html: data['baseline-value'] | poundsWithCommas or "£6"
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "baseline value"
+                  }
+                ]
+              }
+            }
+          ]
+        }) }}
+
+				{{ govukRadios({
+          name: "addStrategicValue",
+          fieldset: {
+            legend: {
+              text: "Do you want to add a value benefit that is not a direct cost savings?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          hint: {
+            html: "<p>This includes things like budget protections, social benefits, or policy targets.</p>"
+          },
+          items: [
+            {
+              value: "yes",
+              text: "Yes"
+            },
+            {
+              value: "no",
+              text: "No, continue to calculation results"
+            }
+          ]
+        }) }}
+
+				{{ govukButton({
+        text: "Continue"
+      }) }}
+
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

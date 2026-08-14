@@ -1,0 +1,89 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+	{#
+  	{{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.go(-1);"
+  }) }}
+#}
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-full">
+			<h1 class="govuk-heading-l">View awarded contract insights</h1>
+			<p>These are your awarded contracts where you have added savings data.</p>
+			<p>You can add more savings data to an awarded contract on the insights page.</p>
+
+			<table class="govuk-table">
+				<thead class="govuk-table__head">
+					<tr class="govuk-table__row">
+						<th style="width: 50%"  class="govuk-table__header" scope="col">
+							<a class="govuk-link govuk-link--no-visited-state" href="/v3/contracts?direction=asc&amp;sort=title">Title</a>
+						</th>
+						<th class="govuk-table__header" scope="col">
+							<a class="govuk-link govuk-link--no-visited-state" href="/v3/contracts?direction=asc&amp;sort=amount">Value</a>
+						</th>
+						<th aria-sort="descending" class="govuk-table__header" scope="col">
+							<a class="govuk-link govuk-link--no-visited-state" href="/v3/contracts?direction=asc&amp;sort=start_date">Start Date</a>
+						</th>
+						<th class="govuk-table__header" scope="col">
+							<a class="govuk-link govuk-link--no-visited-state" href="/v3/contracts?direction=asc&amp;sort=end_date">End Date</a>
+						</th>
+						<th class="govuk-table__header" scope="col">
+							<a class="govuk-link govuk-link--no-visited-state" href="/v3/contracts?direction=asc&amp;sort=end_date">Action</a>
+						</th>
+					</tr>
+				</thead>
+				<tbody class="govuk-table__body">
+					{% for contract in contracts %}
+						<tr class="govuk-table__row">
+							<td class="govuk-table__cell">{{ contract.title }}<br>
+								<!--<span class="govuk-body-s" style="color: #484949" >{{ contract.ocid }}</span>-->
+							</td>
+							<td class="govuk-table__cell">{{ contract.value | poundsWithCommas }}</td>
+							<td class="govuk-table__cell">{{ contract.startDate }}</td>
+							<td class="govuk-table__cell">{{ contract.endDate }}</td>
+							<td class="govuk-table__cell">
+								<!--<a class="govuk-link govuk-link--no-visited-state" href="/v3/cashable-savings-category/{{ contract.ocid }}">Add savings</a>-->
+								<a class="govuk-link govuk-link--no-visited-state" href="/v3/calculation/{{ contract.ocid }}">View</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+			{{ govukPagination({
+      next: {
+        href: "#"
+      },
+      items: [
+        {
+          number: 1,
+          href: "#"
+        },
+        {
+          number: 2,
+          current: true,
+          href: "#"
+        }
+      ]
+    }) }}
+
+		</div>
+	</div>
+
+{% endblock %}

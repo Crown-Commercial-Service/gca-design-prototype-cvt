@@ -1,0 +1,79 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+	{{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.go(-1);"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" action="/v3/cashable-savings-type">
+
+				<span class="govuk-caption-m">Add a saving</span>
+
+				{{ govukRadios({
+          name: "cashable-savings-type",
+          fieldset: {
+            legend: {
+              text: "How did you make a saving?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          items: [
+            {
+              value: "Reduced supplier margins or discounted rates",
+              text: "Reduced supplier margins or discounted rates"
+            },
+            {
+              value: "Collaborative procurement",
+              text: "Collaborative procurement"
+            },
+            {
+              value: "Re-tendered an existing contract",
+              text: "Re-tendered an existing contract"
+            },
+            {
+              value: "Reduced quantities purchased",
+              text: "Reduced quantities purchased"
+            },
+            {
+              value: "Cancelled a planned procurement",
+              text: "Cancelled a planned procurement"
+            },
+            {
+              value: "Reduced the contract scope",
+              text: "Reduced the contract scope"
+            },
+            {
+              value: "Organisational changes",
+              text: "Organisational changes"
+            }
+          ]
+        }) }}
+
+				{{ govukButton({
+        text: "Continue"
+      }) }}
+
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

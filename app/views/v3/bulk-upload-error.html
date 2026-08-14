@@ -1,0 +1,124 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+{% endblock %}
+
+{% block content %}
+	{% set csvErrors = uploadErrors if uploadErrors and uploadErrors.length else 
+		["Row 2: Missing OCID. Enter a valid 42-character identifier", "Row 5: Cashable saving must be either 'Yes' or 'No'.", "Row 12: Must match an approved baseline approach: 'Budget', 'Market rates', or 'Benchmarking'.", "Row 19: Negative value not allowed. Must be £0 or greater."] %}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+				<h2 class="govuk-error-summary__title" id="error-summary-title">
+          There is a problem
+        </h2>
+				<div class="govuk-error-summary__body">
+					<ul class="govuk-list govuk-error-summary__list">
+						{% for error in csvErrors %}
+							<li>
+								<a href="#file-upload-retry">{{ error }}</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+
+			<span class="govuk-caption-m">Bulk savings data upload</span>
+			<h1 class="govuk-heading-l">Re-upload your savings data</h1>
+			<p class="govuk-body">You will need to fix the errors and re-upload your savings data.</p>
+
+			<form method="post" action="/v3/bulk-upload">
+				{{ govukFileUpload({
+          id: "file-upload-retry",
+          name: "fileUploadRetry",
+          hint: {
+            html: "<p>Your savings data must be an .CSV file using the template provided.</p><p>Your .CSV template download contains your awarded contracts that have no savings data. Remove contracts that you do not want to add savings data.</p><p><a href='/public/files/commercial-value-template.csv'>Download your savings data CSV template (CSV, 14KB)</a>.</p>"
+          },
+          label: {
+            text: "Re-upload your savings data",
+            classes: "govuk-label--m"
+          },
+          errorMessage: {
+            html: "<span class='govuk-visually-hidden'>Error:</span>" + (csvErrors | join('<br>'))
+          },
+          javascript: true
+        }) }}
+
+				<details class="govuk-details">
+					<summary class="govuk-details__summary">
+						<span class="govuk-details__summary-text">
+              How to fill in your savings data .CSV template
+            </span>
+					</summary>
+					<div class="govuk-details__text">
+						<p>You should fill in your savings data .CSV template carefully, following the instructions provided.</p>
+
+						<p>Remove any rows that you do not want to add savings data for.</p>
+
+						<p>You can only add savings data for contracts that are included in the template.</p>
+
+						<h3>Cashable saving type (How did you make a saving?)</h3>
+						<p>Enter one of the following options:</p>
+						<ul>
+							<li>Reduced supplier margins or discounted rates</li>
+							<li>Collaborative procurement</li>
+							<li>Re-tendered an existing contract</li>
+							<li>Reduced quantities purchased</li>
+							<li>Cancelled a planned procurement</li>
+							<li>Reduced the contract scope</li>
+							<li>Organisational changes</li>
+						</ul>
+
+						<h3>Baseline approach (How did you calculate the saving?)</h3>
+						<p>Enter one of the following options:</p>
+						<ul>
+							<li>Used our original budget allocation</li>
+							<li>Compared with industry standards</li>
+							<li>Researched current market rates</li>
+							<li>Used the median of all competitive bids</li>
+							<li>Compared with our last contract</li>
+							<li>Detailed cost modelling</li>
+						</ul>
+
+						<h3>Add a budget / price benefit</h3>
+						<p>Enter one of the following options:</p>
+						<ul>
+							<li>Prevented a price rise</li>
+							<li>Prevented a price rise</li>
+							<li>Froze prices over time</li>
+							<li>Managed demand better</li>
+							<li>Other</li>
+						</ul>
+
+						<h3>Add a performance / policy benefit</h3>
+						<p>Enter one of the following options:</p>
+						<ul>
+							<li>Improved how services are delivered</li>
+							<li>Saved staff time or resources</li>
+							<li>Met official rules or policies</li>
+							<li>Boosted reputation or user satisfaction</li>
+							<li>Other</li>
+						</ul>
+						<p>Step 3 - save the .CSV file and upload it using the form above.</p>
+					</div>
+				</details>
+
+				{{ govukButton({
+          text: "Continue"
+        }) }}
+			</form>
+		</div>
+	</div>
+{% endblock %}

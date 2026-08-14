@@ -1,0 +1,265 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: { text: "Alpha" },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+	{% if contract %}
+		{{ govukBackLink({
+      text: "Back to dashboard",
+      href: "/v3/dashboard"
+    }) }}
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-three-quarters">
+			{% if contract %}
+				<span class="govuk-caption-m">{{ contract.title | truncate(50) }} ({{ contract.cpvCode }})</span>
+				<h1 class="govuk-heading-l">Calculation results</h1>
+
+				<h2 class="govuk-heading-m">Your savings summary</h2>
+
+				<div class="govuk-grid-row savings-report-cards">
+					<div class="govuk-grid-column-one-third">
+						<div class="govuk-summary-card savings-report-card savings-report-card--magenta">
+							<div class="govuk-summary-card__title-wrapper">
+								<h2 class="govuk-summary-card__title">Contract value</h2>
+							</div>
+							<div class="govuk-summary-card__content">
+								<p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ (contract.contractValueDisplay or contract.value) | poundsWithCommas }}</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="govuk-grid-column-one-third">
+						<div class="govuk-summary-card savings-report-card savings-report-card--teal">
+							<div class="govuk-summary-card__title-wrapper">
+								<h2 class="govuk-summary-card__title">Cashable savings</h2>
+							</div>
+							<div class="govuk-summary-card__content">
+								<p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ contract.cashableSavings | poundsWithCommas }}</p>
+								<p class="govuk-body-s govuk-!-margin-bottom-0">{{ calculationMetrics.cashablePercentageOfContract }} of contract value</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="govuk-grid-column-one-third">
+						<div class="govuk-summary-card savings-report-card savings-report-card--purple">
+							<div class="govuk-summary-card__title-wrapper">
+								<h2 class="govuk-summary-card__title">Benefit savings</h2>
+							</div>
+							<div class="govuk-summary-card__content">
+								<p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ contract.nonCashableSavings | poundsWithCommas }}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<p>You achieved a total of {{ calculationMetrics.totalSavings | poundsWithCommas }} in savings and value benefits on this {{ calculationMetrics.contractValue | poundsWithCommas }} contract.</p>
+				<ul class="govuk-list govuk-list--bullet">
+					<li>Cashable savings: {{ calculationMetrics.cashableSavings | poundsWithCommas }} ({{ calculationMetrics.cashablePercentageOfContract }} of contract value)</li>
+					<li>Benefit savings: {{ calculationMetrics.nonCashableSavings | poundsWithCommas }} ({{ calculationMetrics.nonCashablePercentageOfContract }} of contract value)</li>
+				</ul>
+
+				<div>
+					<p class="govuk-body-m govuk-!-margin-bottom-2">
+						<strong>Savings breakdown ({{ calculationMetrics.totalSavings | poundsWithCommas }} total)</strong>
+					</p>
+					<div style="background-color: #C0DCF4; height: 20px; width: 100%; position: relative;">
+						<div style="background-color: #0C5FA3; height: 20px; width: {{ calculationMetrics.cashableShareOfTotalWidth }}%; position: absolute; top: 0; left: 0;">&nbsp;</div>
+					</div>
+					<div class="govuk-!-margin-top-2 govuk-!-margin-bottom-6">
+						<span class="govuk-body-m govuk-!-margin-right-6">
+							<span style="background-color: #0C5FA3; height: 8px; width: 8px; display: inline-block; position: relative; bottom: 2px;"></span> Cashable savings ({{ calculationMetrics.cashableShareOfTotal }})</span>
+						<span class="govuk-body-m">
+							<span style="background-color: #C0DCF4; height: 8px; width: 8px; display: inline-block; position: relative; bottom: 2px;"></span> Benefit savings ({{ calculationMetrics.nonCashableShareOfTotal }})</span>
+					</div>
+				</div>
+
+				<hr>
+
+				<h2 class="govuk-heading-m govuk-!-margin-top-6">Filter peer benchmark:</h2>
+
+				<!-- make the filters a form that submits to the same page and updates the peer benchmark data -->
+				<!-- make the filters and the button inline and the button is a primary button -->
+				<div class="peer-benchmark-filters">
+					<div class="peer-benchmark-filters__item">
+						{{ govukSelect({
+						  id: "region",
+						  name: "region",
+						  label: {
+						    text: "Region"
+						  },
+						  items: [
+						    {
+						      value: "All UK",
+						      text: "All UK"
+						    },
+							{
+						      value: "All UK excluding London",
+						      text: "All UK excluding London",
+							  selected: true
+						    },
+						    {
+						      value: "London",
+						      text: "London"
+						    },
+						    {
+						      value: "England",
+						      text: "England"
+						    },
+							{
+						      value: "Scotland",
+						      text: "Scotland"
+						    },
+						    {
+						      value: "Northern Ireland",
+						      text: "Northern Ireland"
+						    },
+							{
+						      value: "Wales",
+						      text: "Wales"
+						    }
+						  ]
+						}) }}
+					</div>
+					<div class="peer-benchmark-filters__item">
+						{{ govukSelect({
+						  id: "org-type",
+						  name: "org-type",
+						  label: {
+						    text: "Org type"
+						  },
+						  items: [
+						    {
+						      value: "Local authority",
+						      text: "Local authority",
+							  selected: true
+						    },
+						    {
+						      value: "Combined authority",
+						      text: "Combined authority"
+						    },
+							{
+						      value: "Central government",
+						      text: "Central government"
+						    },
+						    {
+						      value: "NHS",
+						      text: "NHS"
+						    },
+						    {
+						      value: "Other public sector",
+						      text: "Other"
+						    }
+						  ]
+						}) }}
+					</div>
+					<div class="peer-benchmark-filters__item peer-benchmark-filters__item--button">
+						{{ govukButton({
+						  text: "Apply filters"
+						}) }}
+					</div>
+				</div>
+
+				<p>Showing comparison against 24 Local Authority contracts outside London:</p>
+
+				<h2 class="govuk-heading-m">How your savings compare to your peers</h2>
+
+				<p>You saved {{ calculationMetrics.savingsPercentageDifference }} more than your peers. Your calculated cashable savings rate of {{ calculationMetrics.cashablePercentageOfContract }} is higher than the peer average of {{ calculationMetrics.peerAverageSavingsPercentage }}. This means you saved an extra {{ calculationMetrics.savingsDifferenceValue | poundsWithCommas }} on this contract compared to the average peer procurement.</p>
+
+				<div class="peer-benchmark-chart govuk-!-margin-bottom-6" aria-hidden="true">
+					<div class="peer-benchmark-chart__key" aria-hidden="true">
+						<span class="peer-benchmark-chart__key-item">
+							<span class="peer-benchmark-chart__key-icon peer-benchmark-chart__key-icon--peer"></span>
+							<span class="govuk-body-m govuk-!-margin-0">Peer average ({{ calculationMetrics.peerAverageSavingsPercentage }})</span>
+						</span>
+						<span class="peer-benchmark-chart__key-item">
+							<span class="peer-benchmark-chart__key-icon peer-benchmark-chart__key-icon--you"></span>
+							<span class="govuk-body-m govuk-!-margin-0">Calculated savings ({{ calculationMetrics.cashablePercentageOfContract }})</span>
+						</span>
+					</div>
+
+					<div class="peer-benchmark-chart__labels" aria-hidden="true">
+						<span class="govuk-body-s peer-benchmark-chart__label">0%</span>
+						<span class="govuk-body-s peer-benchmark-chart__label">5%</span>
+						<span class="govuk-body-s peer-benchmark-chart__label">10%</span>
+						<span class="govuk-body-s peer-benchmark-chart__label">15%</span>
+						<span class="govuk-body-s peer-benchmark-chart__label peer-benchmark-chart__label--end">20%</span>
+					</div>
+					<div class="peer-benchmark-chart__track" aria-hidden="true">
+						<span class="peer-benchmark-chart__tick"></span>
+						<span class="peer-benchmark-chart__tick"></span>
+						<span class="peer-benchmark-chart__tick"></span>
+						<span class="peer-benchmark-chart__tick"></span>
+						<span class="peer-benchmark-chart__tick"></span>
+						<span class="peer-benchmark-chart__marker peer-benchmark-chart__marker--peer" style="--marker-left: calc({{ calculationMetrics.peerAverageSavingsPercentageWidthValue }}% * 5);">
+							<span class="peer-benchmark-chart__marker-dot"></span>
+						</span>
+						<span class="peer-benchmark-chart__marker peer-benchmark-chart__marker--you" style="--marker-left: calc({{ calculationMetrics.cashablePercentageOfContractWidthValue }}% * 5);">
+							<span class="peer-benchmark-chart__marker-dot"></span>
+						</span>
+					</div>
+				</div>
+
+				<p>Your cashable savings are above average. Your physical cash savings of {{ calculationMetrics.cashableSavings | poundsWithCommas }} are higher than the average peer saving of {{ calculationMetrics.peerAverageSavingsValue | poundsWithCommas }}.</p>
+
+				<p>
+					<span class="govuk-tag govuk-tag--green" style="max-width: 100%;">Top 25% of similar procurements for social and environmental value</span></p>
+
+				<h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+					Summary
+				</h2>
+				<ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-4">
+					<li>Overall, this contract delivered both cashable savings and additional benefit savings.</li>
+					<li>The contract returned measurable savings and wider value benefits.</li>
+				</ul>
+
+				<hr>
+
+				<p class="govuk-body-s govuk-!-margin-top-4">To ensure a fair comparison, we matched your data against public sector organisations buying Environmental monitoring services (CPV 90711500) who also used a Budget baseline to calculate their savings.</p>
+
+				{% call govukDetails({summaryText: "About this peer benchmark data"}) %}
+				<p>Peer comparisons are generated using self-reported savings data submitted by public sector organisations.</p>
+
+				<ul class="govuk-list govuk-list--bullet">
+					<li>Self-reported data: Figures are based on values submitted by participating procurement teams and verified against baseline methodologies.</li>
+					<li>Data integrity: To ensure accuracy, extreme outliers or unverified entries are automatically reviewed and excluded from peer benchmarks.</li>
+					<li>Data usage: Your individual figures are used to calculate sector averages to help public bodies benchmark commercial value.</li>
+				</ul>
+
+				{% endcall %}
+
+				<div class="govuk-button-group">
+
+					{{ govukButton({
+								  text: "Add a new saving",
+								  type: "submit"
+								}) }}
+
+					{{ govukButton({
+								  text: "Download results",
+								  classes: "govuk-button--secondary"
+								}) }}
+				</div>
+			</div>
+		</div>
+	{% else %}
+		<h1 class="govuk-heading-l">Calculation</h1>
+		<p class="govuk-body">We could not find the selected contract{% if ocid %}: {{ ocid }}
+			{% endif %}.</p>
+		<p class="govuk-body">
+			<a class="govuk-link" href="/v3/contracts-completed">Return to contracts list</a>
+		</p>
+	{% endif %}
+</div>
+</div>
+{% endblock %}

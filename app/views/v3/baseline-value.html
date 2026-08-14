@@ -1,0 +1,51 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+	{{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.go(-1);"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" action="/v3/baseline-value">
+				<span class="govuk-caption-m">Add a saving</span>
+
+				{{ govukInput({
+            id: "baseline-value",
+            name: "baseline-value",
+            label: {
+              text: "What would this procurement have cost without these savings?",
+              classes: "govuk-label--l",
+              isPageHeading: true
+            },
+            prefix: {
+              text: "£"
+            },
+            classes: "govuk-input--width-10",
+            spellcheck: false
+          }) }}
+
+				{{ govukButton({
+        text: "Continue"
+        }) }}
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

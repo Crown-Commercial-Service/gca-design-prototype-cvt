@@ -1,0 +1,100 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+	{{ govukBackLink({
+    text: "Back",
+    href: "/v3/bulk-upload"
+  }) }}
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-full">
+			<span class="govuk-caption-m">Bulk savings data upload</span>
+			<h1 class="govuk-heading-l">Check your uploaded savings data before submitting</h1>
+			<p class="govuk-body">Review the contracts and savings data from your upload before applying changes.</p>
+			<p class="govuk-body govuk-!-margin-bottom-7">
+        This is the compact check your answers version. For larger uploads, you can also
+        <a class="govuk-link" href="/v3/bulk-upload-review-table">view a scrollable table version</a>.
+      </p>
+
+			<form method="post" action="/v3/bulk-upload-review-confirm">
+				{% for item in reviewItems %}
+					<h2 class="govuk-heading-m govuk-!-margin-bottom-3">{{ item.title }}</h2>
+					{{ govukSummaryList({
+            rows: [
+              {
+                key: {
+                  text: "Procurement Identifier (OCID)"
+                },
+                value: {
+                  text: item.ocid
+                }
+              },
+              {
+                key: {
+                  text: "Cashable saving type"
+                },
+                value: {
+                  text: item.cashableSavingType
+                }
+              },
+              {
+                key: {
+                  text: "Baseline approach"
+                },
+                value: {
+                  text: item.baselineApproach
+                }
+              },
+              {
+                key: {
+                  text: "Baseline value"
+                },
+                value: {
+                  text: item.baselineValue | poundsWithCommas
+                }
+              },
+              {
+                key: {
+                  text: "Cashable savings"
+                },
+                value: {
+                  text: item.cashableSavings | poundsWithCommas
+                }
+              },
+              {
+                key: {
+                  text: "Benefit savings"
+                },
+                value: {
+                  text: item.otherValueBenefits | poundsWithCommas if item.otherValueBenefits else "None added"
+                }
+              }
+            ]
+          }) }}
+
+					{% if not loop.last %}
+						<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+					{% endif %}
+				{% endfor %}
+
+				{{ govukButton({
+          text: "Continue"
+        }) }}
+			</form>
+		</div>
+	</div>
+{% endblock %}

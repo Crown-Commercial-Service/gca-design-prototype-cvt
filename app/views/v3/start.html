@@ -1,0 +1,50 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = false %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-xl">Commercial Value Tool</h1>
+			<p>You can use this service to:
+
+    <ul class="govuk-list govuk-list--bullet">
+					<li>track, compare and analyze the value of your contract values and savings performance</li>
+					<li>benchmark insights that compares your procurement activity with similar procurements and peer organisations</li>
+					<li>view and share detailed reporting and graphical data visualisations and exportable summaries of your commercial value results</li>
+				</ul>
+
+				<h2 class="govuk-heading-m">
+      Before you start
+    </h2>
+
+				<p>To use this service, you will need:</p>
+
+				<ul class="govuk-list govuk-list--bullet">
+					<li>a <a class="govuk-link" href="#">GOV.UK One Login</a>
+					</li>
+					<li>contract award notice data from the <a class="govuk-link" href="#">Central Digital Platform (CDP)</a>
+					</li>
+					<li>details of any direct cash savings made against your contract budget</li>
+					<li>details of any price protections, budget freezes, or performance benefits achieved</li>
+				</ul>
+
+				{{ govukButton({
+      text: "Log in",
+      href: "sign-in",
+      isStartButton: true
+    }) }}
+
+				<h3 class="govuk-heading-m">Data privacy</h3>
+				<p>Your data is processed securely and used only for the purposes of commercial value calculations. You can export and delete your data at any time.</p>
+
+				<h3 class="govuk-heading-m">Need help?</h3>
+				<p>For guidance and support please <a class="govuk-link" href="#">contact us</a>, or visit our help page once you log in.</p>
+			</div>
+		</div>
+
+	{% endblock %}

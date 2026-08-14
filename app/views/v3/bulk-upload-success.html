@@ -1,0 +1,49 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			{{ govukPanel({
+        titleText: "Savings data uploaded",
+        html: "Your data has been processed and applied"
+      }) }}
+
+			{% if appliedCount > 0 %}
+				<p class="govuk-body">
+					<strong>{{ appliedCount }}</strong> contracts were updated with savings data.</p>
+			{% endif %}
+
+			<h2 class="govuk-heading-m">What happens next</h2>
+			<p class="govuk-body">You can now view the insight reports for the updated contracts.</p>
+
+			{% if updatedContracts and updatedContracts.length %}
+				<ul class="govuk-list">
+					{% for contract in updatedContracts %}
+						<li>
+							<a class="govuk-link" href="/v3/calculation/{{ contract.ocid }}">View {{ contract.title }} insights</a>
+						</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+
+			{{ govukButton({
+        text: "Return to dashboard",
+        href: "/v3/dashboard"
+      }) }}
+		</div>
+	</div>
+{% endblock %}

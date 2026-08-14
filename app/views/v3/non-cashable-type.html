@@ -1,0 +1,82 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+	{{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.go(-1);"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" action="/v3/non-cashable-type">
+				<span class="govuk-caption-m">Add a saving</span>
+
+				{{ govukRadios({
+          name: "non-cashable-type",
+          fieldset: {
+            legend: {
+              text: "Which budget or price protections did you achieve?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          items: [
+            {
+              value: "Prevented a price rise",
+              text: "Prevented a price rise",
+              hint: {
+                text: "You stopped a supplier from putting prices up, or avoided extra fees"
+              }
+            },
+            {
+              value: "Got more for the same budget",
+              text: "Got more for the same budget",
+              hint: {
+                text: "You negotiated extra features, goods, or services for no extra cost"
+              }
+            },
+            {
+              value: "Froze prices over time",
+              text: "Froze prices over time",
+              hint: {
+                text: "You locked in a set price so it won't go up with inflation next year"
+              }
+            },
+            {
+              value: "Managed demand better",
+              text: "Managed demand better",
+              hint: {
+                text: "You changed how you buy things so you only pay for what you actually need"
+              }
+            },
+            {
+              value: "Other",
+              text: "Other"
+            }
+          ]
+        }) }}
+
+				{{ govukButton({
+        text: "Continue"
+      }) }}
+
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

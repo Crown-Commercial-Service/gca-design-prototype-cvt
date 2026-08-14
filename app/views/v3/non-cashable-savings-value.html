@@ -1,0 +1,56 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+	{{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.go(-1);"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" action="/v3/non-cashable-savings-value">
+				<span class="govuk-caption-m">Add a saving</span>
+				{% set savingsQuestionText = data['non-cashable-type'] | nonCashableSavingsQuestion %}
+
+				{{ govukInput({
+            id: "non-cashable-savings-value",
+            name: "non-cashable-savings-value",
+            label: {
+              text: savingsQuestionText,
+              classes: "govuk-label--l",
+              isPageHeading: true
+            },
+            hint: {
+              text: "Enter the value in GBP, excluding VAT."
+            },
+            prefix: {
+              text: "£"
+            },
+            classes: "govuk-input--width-10",
+            spellcheck: false
+          }) }}
+
+				{{ govukButton({
+        text: "Continue"
+        }) }}
+
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: { text: "Alpha" },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-l">Dashboard</h1>
+			<!--<p><strong>Welcome back, {{ user.name or "User" }}.</strong></p>-->
+			<p>From your dashboard you can access your commercial value insights and reports.</p>
+			<p>To compare your contract savings you will need to add savings data to your awarded contracts.</p>
+		</div>
+	</div>
+	<div class="ccs-dashboard-section">
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-full">
+				<h2 class="ccs-dashboard-section__heading govuk-heading-m">Contracts savings data</h2>
+				<hr class="ccs-dashboard-section__heading-section-break govuk-section-break govuk-section-break--visible">
+				<div class="govuk-grid-row ccs-dashboard-section__container">
+					<div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
+						<a class="ccs-dashboard-section__panel-title" href="/v3/contracts-completed">View insights ({{ completedCount }})</a>
+						<p class="ccs-dashboard-section__panel-description">Reports and insights are available for awarded contracts that have savings data.</p>
+					</div>
+					<div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
+						<a class="ccs-dashboard-section__panel-title" href="/v3/contracts-in-progress">Add savings data ({{ inProgressCount }})</a>
+						<p class="ccs-dashboard-section__panel-description">To view reports and insights, savings data needs to be added to awarded contracts.</p>
+					</div>
+					<!--
+          <div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
+            <a class="ccs-dashboard-section__panel-title" href="/v3/strategic-value-summary">View savings summary</a>
+            <p class="ccs-dashboard-section__panel-description">Check strategic and procurement savings totals.</p>
+          </div>
+          -->
+				</div>
+			</div>
+
+			<div class="govuk-grid-column-full">
+				<h2 class="ccs-dashboard-section__heading govuk-heading-m">Actions</h2>
+				<hr class="ccs-dashboard-section__heading-section-break govuk-section-break govuk-section-break--visible">
+				<ul class="govuk-list govuk-list--none">
+					<li>
+						<a class="govuk-link" href="/v3/bulk-upload">Bulk upload your savings data</a>
+					</li>
+					<li>
+						<a class="govuk-link" href="/v3/organisation-data">View your organisation data</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+</div>
+</div>
+{% endblock %}

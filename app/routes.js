@@ -13,6 +13,7 @@ const originalContracts = JSON.parse(JSON.stringify(contracts))
 
 router.use('/', require('./views/v1/routes'))
 router.use('/', require('./views/v2/routes'))
+router.use('/', require('./views/v3/routes'))
 
 // sessions data
 

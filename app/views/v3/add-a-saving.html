@@ -1,0 +1,63 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+	{{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.go(-1);"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" action="/v3/add-a-saving">
+
+				{{ govukRadios({
+          name: "savings-data-method",
+          fieldset: {
+            legend: {
+              text: "How do you want to add your savings data?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          items: [
+            {
+              value: "single-contract",
+              text: "Add savings data for a single contract",
+              hint: {
+                text: "Use our online step-by-step form. Recommended if you are entering data for 1 or 2 contracts."
+              }
+            },
+            {
+              value: "bulk-upload",
+              text: "Bulk upload using a CSV template",
+              hint: {
+                text: "Download our template, add your details, and upload multiple contracts at once. Recommended if you have 3 or more contracts."
+              }
+            }
+          ]
+        }) }}
+
+				{{ govukButton({
+        text: "Continue"
+      }) }}
+
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

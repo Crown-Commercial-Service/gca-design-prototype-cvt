@@ -1,0 +1,63 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+	{{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.go(-1);"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" action="/v3/add-a-benefit">
+
+				{{ govukRadios({
+          name: "strategic-value",
+          fieldset: {
+            legend: {
+              text: "Which other budget protection or benefits do you want to add?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          items: [
+            {
+              value: "non-cashable",
+              text: "Protections that freeze prices or avoid cost increases",
+              hint: {
+                text: "For example: stopping a supplier price rise, or getting more features for the same budget"
+              }
+            },
+            {
+              value: "non-monetisable",
+              text: "Benefits that improve performance or meet policy goals",
+              hint: {
+                text: "For example: delivering better quality services, or meeting environmental guidelines"
+              }
+            }
+          ]
+        }) }}
+
+				{{ govukButton({
+        text: "Continue"
+      }) }}
+
+			</form>
+		</div>
+	</div>
+
+{% endblock %}
