@@ -6,57 +6,61 @@
 {% endblock %}
 
 {% block beforeContent %}
-	{{ govukPhaseBanner({
+  {{ govukPhaseBanner({
     tag: { text: "Alpha" },
     html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
   }) }}
 {% endblock %}
 
 {% block content %}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-two-thirds">
-			<h1 class="govuk-heading-l">Dashboard</h1>
-			<!--<p><strong>Welcome back, {{ user.name or "User" }}.</strong></p>-->
-			<p>From your dashboard you can add commercial savings data and view insights comparing your contract performance against your peers.</p>
-			<p>To compare your contract savings you will need to add savings data to your awarded contracts individually or by using our bulk upload template.</p>
-		</div>
-	</div>
-	<div class="ccs-dashboard-section">
-		<div class="govuk-grid-row">
-			<div class="govuk-grid-column-full">
-				<h2 class="ccs-dashboard-section__heading govuk-heading-m">Your organisation</h2>
-				<hr class="ccs-dashboard-section__heading-section-break govuk-section-break govuk-section-break--visible">
-				<div class="govuk-grid-row ccs-dashboard-section__container">
-					<div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
-						<a class="ccs-dashboard-section__panel-title">Total contracts</a>
-						<p class="ccs-dashboard-section__panel-description" style="font-size:2em;font-weight:600;">12</p>
-					</div>
-					<div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
-						<a class="ccs-dashboard-section__panel-title">Total cash saved</a>
-						<p class="ccs-dashboard-section__panel-description" style="font-size:2em;font-weight:600;">£142,000</p>
-					</div>
-					<div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
-						<a class="ccs-dashboard-section__panel-title">Benefit savings</a>
-						<p class="ccs-dashboard-section__panel-description" style="font-size:2em;font-weight:600;">£18,200</p>
-					</div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">Dashboard</h1>
+      <p>This dashboard shows savings and benefits recorded by your organisation. It does not show individual contributions.</p>
+      <p>You can add savings data and view insights comparing your organisation's contract performance against its peers.</p>
+    </div>
+  </div>
+  <div class="ccs-dashboard-section">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h2 class="ccs-dashboard-section__heading govuk-heading-m">Your organisation's commercial value</h2>
+        <hr class="ccs-dashboard-section__heading-section-break govuk-section-break govuk-section-break--visible">
+        <div class="govuk-grid-row ccs-dashboard-section__container">
+          <div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
+            <p class="ccs-dashboard-section__panel-title">Contracts with savings data</p>
+            <p class="ccs-dashboard-section__panel-description" style="font-size:2em;font-weight:600;">12</p>
+          </div>
+          <div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
+            <p class="ccs-dashboard-section__panel-title">Cash savings</p>
+            <p class="ccs-dashboard-section__panel-description" style="font-size:2em;font-weight:600;">£142,000</p>
+            <p class="govuk-body-s">Reductions against the contract budget.</p>
+          </div>
+          <div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
+            <p class="ccs-dashboard-section__panel-title">Non-cashable benefits</p>
+            <p class="ccs-dashboard-section__panel-description" style="font-size:2em;font-weight:600;">£18,200</p>
+            <p class="govuk-body-s">The estimated value of benefits, such as price protections.</p>
+          </div>
 
-				</div>
-			</div>
+        </div>
+      </div>
 
-			<div class="govuk-grid-column-full">
-				<h2 class="ccs-dashboard-section__heading govuk-heading-m">Actions</h2>
-				<hr class="ccs-dashboard-section__heading-section-break govuk-section-break govuk-section-break--visible">
-				<ul class="govuk-list govuk-list--none">
-					<li>
-						<a class="govuk-link" href="/v3/add-a-saving">Add savings data</a>
-					</li>
-					<li>
-						<a class="govuk-link" href="/v3/contracts-completed">View insights and reports</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
+      <div class="govuk-grid-column-full">
+        <h2 class="ccs-dashboard-section__heading govuk-heading-m">Actions</h2>
+        <hr class="ccs-dashboard-section__heading-section-break govuk-section-break govuk-section-break--visible">
+        <div class="govuk-button-group">
+          {{ govukButton({
+						text: "Add savings data",
+						href: "/v3/add-a-saving"
+					}) }}
+          {{ govukButton({
+						text: "View insights and reports",
+						href: "/v3/contracts-completed",
+						classes: "govuk-button--secondary"
+					}) }}
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 </div>
