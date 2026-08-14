@@ -407,40 +407,13 @@ router.post('/v3/add-a-saving', (req, res) => {
 
 router.post('/v3/bulk-upload', (req, res) => {
 	const sessionData = getSessionData(req)
-	const attemptCount = Number(sessionData.bulkUploadAttemptCount || 0) + 1
-
-	sessionData.bulkUploadAttemptCount = attemptCount
-	sessionData.bulkUploadPendingOutcome = attemptCount === 1 ? 'error' : 'success'
-
-	if (attemptCount === 1) {
-		sessionData.bulkUploadErrors = [
-			'Row 2: Missing OCID. Enter a valid 42-character identifier',
-			"Row 5: Cashable saving must be either 'Yes' or 'No'.",
-			"Row 12: Must match an approved calculation method: 'Budget', 'Market rates', or 'Benchmarking'.",
-			"Row 19: Negative value not allowed. Must be £0 or greater."
-		]
-	} else {
-		sessionData.bulkUploadReviewItems = getBulkUploadReviewItems()
-	}
+	sessionData.bulkUploadReviewItems = getBulkUploadReviewItems()
 
 	res.redirect('/v3/bulk-upload-processing')
 })
 
 router.get('/v3/bulk-upload-result', (req, res) => {
-	const sessionData = getSessionData(req)
-	const outcome = sessionData.bulkUploadPendingOutcome
-
-	if (!outcome) {
-		return res.redirect('/v3/bulk-upload')
-	}
-
-	delete sessionData.bulkUploadPendingOutcome
-
-	if (outcome === 'error') {
-		return res.redirect('/v3/bulk-upload-error')
-	}
-
-	return res.redirect('/v3/bulk-upload-review')
+	res.redirect('/v3/bulk-upload-review')
 })
 
 router.get('/v3/bulk-upload-error', (req, res) => {
