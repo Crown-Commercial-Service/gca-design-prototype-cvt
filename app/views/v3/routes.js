@@ -197,7 +197,23 @@ router.get('/v3/calculation/:ocid', (req, res) => {
 		nonCashableShareOfTotalWidth: nonCashableShareOfTotal.toFixed(1)
 	}
 
-	return res.render('v3/calculation', { contract, calculationMetrics })
+	const calculationView = ['1', '2', '3'].includes(req.query.view)
+		? `v3/calculation-${req.query.view}`
+		: 'v3/calculation'
+
+	return res.render(calculationView, { contract, calculationMetrics })
+})
+
+router.get('/v3/calculation-1/:ocid', (req, res) => {
+	res.redirect(`/v3/calculation/${req.params.ocid}?view=1`)
+})
+
+router.get('/v3/calculation-2/:ocid', (req, res) => {
+	res.redirect(`/v3/calculation/${req.params.ocid}?view=2`)
+})
+
+router.get('/v3/calculation-3/:ocid', (req, res) => {
+	res.redirect(`/v3/calculation/${req.params.ocid}?view=3`)
 })
 
 router.get('/v3/calculation', (req, res) => {

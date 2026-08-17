@@ -1,0 +1,121 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}Calculation results - {{ serviceName }}{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({ tag: { text: "Alpha" }, html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.' }) }}
+	{{ govukBackLink({ text: "Back to dashboard", href: "/v3/dashboard" }) }}
+{% endblock %}
+
+{% block content %}
+	{% if contract %}
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-full">
+				<span class="govuk-caption-m">{{ contract.title | truncate(50) }}</span>
+				<h1 class="govuk-heading-l">Calculation results</h1>
+
+				<div class="calculation-hero govuk-!-margin-bottom-7">
+					<div>
+						<p class="govuk-body-s govuk-!-margin-bottom-1">Total value created</p>
+						<p class="calculation-hero__value">{{ calculationMetrics.totalSavings | poundsWithCommas }}</p>
+						<p class="govuk-body">Across cash savings and other benefits on a {{ calculationMetrics.contractValue | poundsWithCommas }} contract.</p>
+					</div>
+					<div class="calculation-hero__result">
+						<p class="govuk-body-s govuk-!-margin-bottom-1">Cash savings compared with peer organisations</p>
+						<p class="govuk-heading-m govuk-!-margin-bottom-1">{{ calculationMetrics.cashablePercentageOfContract }} compared with {{ calculationMetrics.peerAverageSavingsPercentage }}</p>
+						<p class="govuk-body-s govuk-!-margin-bottom-0">{{ calculationMetrics.savingsDifferenceValue | poundsWithCommas }} more than the average similar procurement</p>
+					</div>
+				</div>
+
+				<h2 class="govuk-heading-m">What makes up the total value</h2>
+				<p>{{ calculationMetrics.cashableShareOfTotal }} of the total value is cash savings. The remaining {{ calculationMetrics.nonCashableShareOfTotal }} is the estimated value of other benefits.</p>
+				<div class="value-breakdown-chart" aria-hidden="true"><span class="value-breakdown-chart__cash" style="width: {{ calculationMetrics.cashableShareOfTotalWidth }}%;"></span><span class="value-breakdown-chart__benefits" style="width: {{ calculationMetrics.nonCashableShareOfTotalWidth }}%;"></span></div>
+				<div class="value-breakdown-chart__key govuk-!-margin-bottom-7"><span><i class="value-breakdown-chart__swatch value-breakdown-chart__swatch--cash"></i>Cash savings: {{ calculationMetrics.cashableSavings | poundsWithCommas }}</span><span><i class="value-breakdown-chart__swatch value-breakdown-chart__swatch--benefits"></i>Other benefits: {{ calculationMetrics.nonCashableSavings | poundsWithCommas }}</span></div>
+
+				<section class="calculation-filter-panel">
+					<h2 class="govuk-heading-m">Refine the comparison</h2>
+					<form class="calculation-filter-grid">
+						<div class="govuk-form-group"><label class="govuk-label" for="location">Location</label><select class="govuk-select" id="location"><option>England</option><option>England - North West</option><option>England - North West - Greater Manchester</option></select></div>
+						<div class="govuk-form-group"><label class="govuk-label" for="type">Organisation type</label><select class="govuk-select" id="type"><option>Local authority</option><option>Combined authority</option><option>Central government</option></select></div>
+						<div class="calculation-filter-grid__button">{{ govukButton({ text: "Update comparison", classes: "govuk-button--secondary" }) }}</div>
+					</form>
+				</section>
+
+				{% set benchmarkChartHtml %}
+					<p><strong>Your contract's cash savings rate is {{ calculationMetrics.cashablePercentageOfContract }}. The peer average is {{ calculationMetrics.peerAverageSavingsPercentage }}.</strong> Your contract is above the average for this comparison group.</p>
+					<div class="benchmark-plot" aria-hidden="true">
+						<h3 class="benchmark-plot__heading">Cash savings rate</h3>
+						<div class="benchmark-chart-area">
+							<div class="benchmark-axis" aria-hidden="true"><span></span><div><span>0%</span><span>5%</span><span>10%</span><span>15%</span><span>20%</span></div></div>
+							<div class="benchmark-bar"><div class="benchmark-bar__label">Peer average</div><div class="benchmark-bar__track"><span class="benchmark-bar__fill benchmark-bar__fill--average" style="width: calc({{ calculationMetrics.peerAverageSavingsPercentageWidthValue }}% * 5);"><strong>{{ calculationMetrics.peerAverageSavingsPercentage }}</strong></span></div></div>
+							<div class="benchmark-bar"><div class="benchmark-bar__label">Your contract</div><div class="benchmark-bar__track"><span class="benchmark-bar__fill benchmark-bar__fill--contract" style="width: calc({{ calculationMetrics.cashablePercentageOfContractWidthValue }}% * 5);"><strong>{{ calculationMetrics.cashablePercentageOfContract }}</strong></span></div></div>
+						</div>
+					</div>
+				{% endset %}
+				{% set benchmarkDataHtml %}
+					<table class="govuk-table">
+						<caption class="govuk-table__caption govuk-table__caption--s">Benchmark data</caption>
+						<thead class="govuk-table__head"><tr class="govuk-table__row"><th class="govuk-table__header" scope="col">Measure</th><th class="govuk-table__header govuk-table__header--numeric" scope="col">Rate</th><th class="govuk-table__header govuk-table__header--numeric" scope="col">Value</th></tr></thead>
+						<tbody class="govuk-table__body"><tr class="govuk-table__row"><th class="govuk-table__header" scope="row">Your contract</th><td class="govuk-table__cell govuk-table__cell--numeric">{{ calculationMetrics.cashablePercentageOfContract }}</td><td class="govuk-table__cell govuk-table__cell--numeric">{{ calculationMetrics.cashableSavings | poundsWithCommas }}</td></tr><tr class="govuk-table__row"><th class="govuk-table__header" scope="row">Peer average</th><td class="govuk-table__cell govuk-table__cell--numeric">{{ calculationMetrics.peerAverageSavingsPercentage }}</td><td class="govuk-table__cell govuk-table__cell--numeric">{{ calculationMetrics.peerAverageSavingsValue | poundsWithCommas }}</td></tr></tbody>
+					</table>
+				{% endset %}
+
+				<section class="calculation-visual-section">
+						<h2 class="govuk-heading-m">Where this contract sits</h2>
+						<p>A peer organisation is a similar public body. This comparison covers 24 comparable local authority procurements.</p>
+						{{ govukTabs({ items: [
+							{ label: "Chart", id: "benchmark-chart", panel: { html: benchmarkChartHtml } },
+							{ label: "Data table", id: "benchmark-data", panel: { html: benchmarkDataHtml } }
+						] }) }}
+				</section>
+
+				{% call govukDetails({summaryText: "How we calculate and check peer benchmarks"}) %}
+					<p>Peer results use checked, self-reported data for the same procurement category and baseline approach. We review and exclude unusual values before calculating the average.</p>
+				{% endcall %}
+
+				<h2 class="govuk-heading-m">Download or share</h2>
+				<div class="govuk-button-group">
+					{{ govukButton({ text: "Download PDF summary", href: "#" }) }}
+					{{ govukButton({ text: "Download Excel data", href: "#", classes: "govuk-button--secondary" }) }}
+				</div>
+			</div>
+		</div>
+	{% else %}
+		<h1 class="govuk-heading-l">Calculation</h1>
+		<p class="govuk-body">We could not find the selected contract.</p>
+	{% endif %}
+
+	<style>
+		.calculation-hero { background: #e7f2fb; border-left: 8px solid #1d70b8; display: grid; gap: 24px; grid-template-columns: 1.2fr 1fr; padding: 28px; }
+		.calculation-hero__value { font-size: 48px; font-weight: 700; line-height: 1; margin: 0 0 16px; }
+		.calculation-hero__result { border-left: 1px solid #b1b4b6; padding-left: 24px; }
+		.value-breakdown-chart { display: flex; height: 28px; margin: 16px 0; overflow: hidden; width: 100%; }
+		.value-breakdown-chart__cash { background: #158187; }
+		.value-breakdown-chart__benefits { background: #ca357c; }
+		.value-breakdown-chart__key { display: flex; flex-wrap: wrap; font-family: "GDS Transport", Arial, sans-serif; font-size: 19px; gap: 24px; }
+		.value-breakdown-chart__swatch { display: inline-block; font-style: normal; height: 12px; margin-right: 6px; width: 12px; }
+		.value-breakdown-chart__swatch--cash { background: #158187; }
+		.value-breakdown-chart__swatch--benefits { background: #ca357c; }
+		.calculation-visual-section { border-top: 6px solid #158187; margin: 0 0 48px; padding: 32px 0 0; }
+		.benchmark-plot { background: #ffffff; margin: 24px 0; padding: 8px 0; }
+		.benchmark-plot__heading { font-size: 24px; line-height: 1.25; margin: 0 0 24px; }
+		.benchmark-axis { align-items: end; display: grid; grid-template-columns: 130px 1fr; margin-bottom: 8px; }
+		.benchmark-axis > div { display: flex; justify-content: space-between; }
+		.benchmark-axis span { font-size: 16px; }
+		.benchmark-chart-area { position: relative; }
+		.benchmark-chart-area::before { background-image: linear-gradient(to right, #b1b4b6 1px, transparent 1px); background-size: 25% 100%; content: ""; inset: 24px 0 10px 130px; pointer-events: none; position: absolute; z-index: 0; }
+		.benchmark-bar { display: grid; grid-template-columns: 130px 1fr; margin-bottom: 24px; }
+		.benchmark-bar { position: relative; z-index: 1; }
+		.benchmark-bar__label { align-self: center; padding-right: 16px; text-align: right; white-space: nowrap; }
+		.benchmark-bar:last-child { margin-bottom: 0; }
+		.benchmark-bar__track { height: 32px; position: relative; }
+		.benchmark-bar__fill { align-items: center; box-sizing: border-box; color: #ffffff; display: flex; height: 100%; justify-content: flex-end; min-width: max-content; padding: 0 8px; position: relative; z-index: 1; }
+		.benchmark-bar__fill--average { background: #505a5f; }
+		.benchmark-bar__fill--contract { background: #ca357c; }
+		.calculation-filter-panel { background: #e7f2fb; border-top: 6px solid #1d70b8; margin: 0 0 32px; padding: 32px 30px 16px; }
+		.calculation-filter-grid { align-items: end; display: grid; gap: 16px; grid-template-columns: repeat(3, max-content); }
+		.calculation-filter-grid__button { margin-bottom: 0; }
+		@media (max-width: 40.0525em) { .calculation-hero { grid-template-columns: 1fr; } .calculation-hero__result { border-left: 0; border-top: 1px solid #b1b4b6; padding-left: 0; padding-top: 24px; } .calculation-filter-grid { grid-template-columns: 1fr; } .calculation-hero__value { font-size: 40px; } .calculation-filter-panel { padding-left: 20px; padding-right: 20px; } .benchmark-axis, .benchmark-bar { grid-template-columns: 92px 1fr; } .benchmark-axis span { font-size: 14px; } .benchmark-bar__label { padding-right: 8px; } }
+	</style>
+{% endblock %}

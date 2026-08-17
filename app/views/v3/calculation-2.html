@@ -1,0 +1,73 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}Calculation results - {{ serviceName }}{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({ tag: { text: "Alpha" }, html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.' }) }}
+	{{ govukBackLink({ text: "Back to dashboard", href: "/v3/dashboard" }) }}
+{% endblock %}
+
+{% block content %}
+	{% if contract %}
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-full">
+				<span class="govuk-caption-m">{{ contract.title | truncate(50) }}</span>
+				<h1 class="govuk-heading-l">Calculation results</h1>
+				<p class="govuk-body-l">See the value achieved by this contract and compare its cash savings with similar public sector procurements.</p>
+				<div class="govuk-grid-row savings-report-cards govuk-!-margin-bottom-6">
+					<div class="govuk-grid-column-one-third"><div class="govuk-summary-card savings-report-card savings-report-card--magenta"><div class="govuk-summary-card__title-wrapper"><h2 class="govuk-summary-card__title">Contract value</h2></div><div class="govuk-summary-card__content"><p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ calculationMetrics.contractValue | poundsWithCommas }}</p></div></div></div>
+					<div class="govuk-grid-column-one-third"><div class="govuk-summary-card savings-report-card savings-report-card--teal"><div class="govuk-summary-card__title-wrapper"><h2 class="govuk-summary-card__title">Cash savings</h2></div><div class="govuk-summary-card__content"><p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ calculationMetrics.cashableSavings | poundsWithCommas }}</p><p class="govuk-body-s govuk-!-margin-bottom-0">{{ calculationMetrics.cashablePercentageOfContract }}</p></div></div></div>
+					<div class="govuk-grid-column-one-third"><div class="govuk-summary-card savings-report-card savings-report-card--purple"><div class="govuk-summary-card__title-wrapper"><h2 class="govuk-summary-card__title">Other benefits</h2></div><div class="govuk-summary-card__content"><p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ calculationMetrics.nonCashableSavings | poundsWithCommas }}</p><p class="govuk-body-s govuk-!-margin-bottom-0">{{ calculationMetrics.nonCashablePercentageOfContract }}</p></div></div></div>
+				</div>
+
+				{{ govukTabs({
+					items: [
+						{
+							label: "Overview",
+							id: "overview",
+							panel: {
+								html: '<h2 class="govuk-heading-m">Value achieved</h2><div class="govuk-inset-text">This contract achieved <strong>' + (calculationMetrics.totalSavings | poundsWithCommas) + '</strong> in cash savings and other benefits.</div><p>The chart shows ' + calculationMetrics.cashableShareOfTotal + ' of total value is cash savings and ' + calculationMetrics.nonCashableShareOfTotal + ' is other benefits.</p><div class="savings-breakdown-chart" aria-hidden="true"><span style="width: ' + calculationMetrics.cashableShareOfTotalWidth + '%;"></span></div><p class="govuk-body-s"><span class="savings-breakdown-chart__key savings-breakdown-chart__key--cash"></span> Cash savings <span class="savings-breakdown-chart__key savings-breakdown-chart__key--benefit"></span> Other benefits</p><h3 class="govuk-heading-s">What this means</h3><p>Your cash savings reduced the contract budget. Other benefits are the estimated value of outcomes such as price protections and performance improvements.</p>'
+							}
+						},
+						{
+							label: "Compare with peer organisations",
+							id: "benchmark",
+							panel: {
+								html: '<h2 class="govuk-heading-m">Peer organisation benchmark</h2><p>A peer organisation is a similar public body, not an individual colleague. We found 24 comparable local authority procurements.</p><form><div class="govuk-form-group"><label class="govuk-label" for="location">Location</label><select class="govuk-select" id="location"><option>England</option><option>North West</option><option>Greater Manchester</option></select></div><div class="govuk-form-group"><label class="govuk-label" for="peer-type">Organisation type</label><select class="govuk-select" id="peer-type"><option>Local authority</option><option>Combined authority</option><option>Central government</option></select></div><button class="govuk-button govuk-button--secondary" type="button">Update comparison</button></form><h3 class="govuk-heading-s">Comparison result</h3><p>Your cash savings rate is <strong>' + calculationMetrics.cashablePercentageOfContract + '</strong>, compared with an average of <strong>' + calculationMetrics.peerAverageSavingsPercentage + '</strong>.</p><div class="peer-benchmark-chart" aria-hidden="true"><div class="peer-benchmark-chart__key"><span class="peer-benchmark-chart__key-item"><span class="peer-benchmark-chart__key-icon peer-benchmark-chart__key-icon--peer"></span>Peer average (' + calculationMetrics.peerAverageSavingsPercentage + ')</span><span class="peer-benchmark-chart__key-item"><span class="peer-benchmark-chart__key-icon peer-benchmark-chart__key-icon--you"></span>Your contract (' + calculationMetrics.cashablePercentageOfContract + ')</span></div><div class="peer-benchmark-chart__labels"><span class="peer-benchmark-chart__label">0%</span><span class="peer-benchmark-chart__label">5%</span><span class="peer-benchmark-chart__label">10%</span><span class="peer-benchmark-chart__label">15%</span><span class="peer-benchmark-chart__label peer-benchmark-chart__label--end">20%</span></div><div class="peer-benchmark-chart__track"><span class="peer-benchmark-chart__tick"></span><span class="peer-benchmark-chart__tick"></span><span class="peer-benchmark-chart__tick"></span><span class="peer-benchmark-chart__tick"></span><span class="peer-benchmark-chart__tick"></span><span class="peer-benchmark-chart__marker peer-benchmark-chart__marker--peer" style="--marker-left: calc(' + calculationMetrics.peerAverageSavingsPercentageWidthValue + '% * 5);"><span class="peer-benchmark-chart__marker-dot"></span></span><span class="peer-benchmark-chart__marker peer-benchmark-chart__marker--you" style="--marker-left: calc(' + calculationMetrics.cashablePercentageOfContractWidthValue + '% * 5);"><span class="peer-benchmark-chart__marker-dot"></span></span></div></div><p>You saved <strong>' + (calculationMetrics.savingsDifferenceValue | poundsWithCommas) + ' more</strong> than the average similar procurement.</p>'
+							}
+						},
+						{
+							label: "Calculation details",
+							id: "details",
+							panel: {
+								html: '<h2 class="govuk-heading-m">How we calculated the result</h2><dl class="govuk-summary-list"><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Baseline approach</dt><dd class="govuk-summary-list__value">' + (contract.baselineApproach or 'Budget') + '</dd></div><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Cash savings rate</dt><dd class="govuk-summary-list__value">Cash savings divided by contract value: ' + calculationMetrics.cashablePercentageOfContract + '</dd></div><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key">Comparison group</dt><dd class="govuk-summary-list__value">Public sector contracts in the same procurement category with the same baseline approach</dd></div></dl><p>Unit-level data is not available for this contract. The comparison is based on the total contract value.</p>'
+							}
+						}
+					]
+				}) }}
+
+				<h2 class="govuk-heading-m">Download or share</h2>
+				<div class="govuk-button-group">
+					{{ govukButton({ text: "Download PDF summary", href: "#" }) }}
+					{{ govukButton({ text: "Download Excel data", href: "#", classes: "govuk-button--secondary" }) }}
+				</div>
+			</div>
+		</div>
+	{% else %}
+		<h1 class="govuk-heading-l">Calculation</h1>
+		<p class="govuk-body">We could not find the selected contract.</p>
+	{% endif %}
+
+	<style>
+		.savings-breakdown-chart { background: #d2e2f1; display: flex; height: 24px; margin: 20px 0 12px; width: 100%; }
+		.savings-breakdown-chart span { background: #158187; display: block; height: 100%; }
+		.savings-breakdown-chart__key { display: inline-block; height: 12px; margin: 0 6px 0 20px; width: 12px; }
+		.savings-breakdown-chart__key:first-child { margin-left: 0; }
+		.savings-breakdown-chart__key--cash { background: #158187; }
+		.savings-breakdown-chart__key--benefit { background: #d2e2f1; }
+		.peer-benchmark-chart { background: #e7f2fb; border-left: 6px solid #1d70b8; margin: 28px 0; padding: 24px; }
+		.peer-benchmark-chart__track { height: 14px; }
+		.peer-benchmark-chart__marker-dot { height: 22px; width: 22px; }
+	</style>
+{% endblock %}
