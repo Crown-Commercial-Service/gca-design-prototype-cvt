@@ -1,78 +1,139 @@
 {% extends "v3/layouts/ccs.html" %}
 {% set isLoggedIn = true %}
 
-{% block pageTitle %}Calculation results - {{ serviceName }}{% endblock %}
+{% block pageTitle %}Calculation results - {{ serviceName }}
+{% endblock %}
 
 {% block beforeContent %}
-	{{ govukPhaseBanner({ tag: { text: "Alpha" }, html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.' }) }}
-	{{ govukBackLink({ text: "Back to dashboard", href: "/v3/dashboard" }) }}
+    {{ govukPhaseBanner({ tag: { text: "Alpha" }, html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.' }) }}
+    {{ govukBackLink({ text: "Back to dashboard", href: "/v3/dashboard" }) }}
 {% endblock %}
 
 {% block content %}
-	{% if contract %}
-		<div class="govuk-grid-row">
-			<div class="govuk-grid-column-two-thirds">
-				<span class="govuk-caption-m">{{ contract.title | truncate(50) }}</span>
-				<h1 class="govuk-heading-l">Calculation results</h1>
-				<p class="govuk-body-l">This contract delivered {{ calculationMetrics.totalSavings | poundsWithCommas }} in cash savings and other benefits.</p>
+    {% if contract %}
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <span class="govuk-caption-m">{{ contract.title | truncate(50) }}</span>
+                <h1 class="govuk-heading-l">Calculation results</h1>
+                <p class="govuk-body-l">This contract delivered {{ calculationMetrics.totalSavings | poundsWithCommas }} in cash savings and other benefits.</p>
 
-				<h2 class="govuk-heading-m">Savings summary</h2>
-				<div class="govuk-grid-row savings-report-cards govuk-!-margin-bottom-4">
-					<div class="govuk-grid-column-one-third"><div class="govuk-summary-card savings-report-card savings-report-card--magenta"><div class="govuk-summary-card__title-wrapper"><h3 class="govuk-summary-card__title">Contract value</h3></div><div class="govuk-summary-card__content"><p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ calculationMetrics.contractValue | poundsWithCommas }}</p></div></div></div>
-					<div class="govuk-grid-column-one-third"><div class="govuk-summary-card savings-report-card savings-report-card--teal"><div class="govuk-summary-card__title-wrapper"><h3 class="govuk-summary-card__title">Cash savings</h3></div><div class="govuk-summary-card__content"><p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ calculationMetrics.cashableSavings | poundsWithCommas }}</p><p class="govuk-body-s govuk-!-margin-bottom-0">{{ calculationMetrics.cashablePercentageOfContract }} of contract value</p></div></div></div>
-					<div class="govuk-grid-column-one-third"><div class="govuk-summary-card savings-report-card savings-report-card--purple"><div class="govuk-summary-card__title-wrapper"><h3 class="govuk-summary-card__title">Other benefits</h3></div><div class="govuk-summary-card__content"><p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ calculationMetrics.nonCashableSavings | poundsWithCommas }}</p><p class="govuk-body-s govuk-!-margin-bottom-0">{{ calculationMetrics.nonCashablePercentageOfContract }} of contract value</p></div></div></div>
-				</div>
-				<p class="govuk-body-s">The chart shows {{ calculationMetrics.cashableShareOfTotal }} of total value is cash savings and {{ calculationMetrics.nonCashableShareOfTotal }} is other benefits.</p>
-				<div class="savings-breakdown-chart" aria-hidden="true"><span style="width: {{ calculationMetrics.cashableShareOfTotalWidth }}%;"></span></div>
-				<p class="govuk-body-s govuk-!-margin-bottom-7"><span class="savings-breakdown-chart__key savings-breakdown-chart__key--cash"></span> Cash savings <span class="savings-breakdown-chart__key savings-breakdown-chart__key--benefit"></span> Other benefits</p>
+                <h2 class="govuk-heading-m">Savings summary</h2>
+                <div class="govuk-grid-row savings-report-cards govuk-!-margin-bottom-4">
+                    <div class="govuk-grid-column-one-third">
+                        <div class="govuk-summary-card savings-report-card savings-report-card--magenta">
+                            <div class="govuk-summary-card__title-wrapper">
+                                <h3 class="govuk-summary-card__title">Contract value</h3>
+                            </div>
+                            <div class="govuk-summary-card__content">
+                                <p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ calculationMetrics.contractValue | poundsWithCommas }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-grid-column-one-third">
+                        <div class="govuk-summary-card savings-report-card savings-report-card--teal">
+                            <div class="govuk-summary-card__title-wrapper">
+                                <h3 class="govuk-summary-card__title">Cash savings</h3>
+                            </div>
+                            <div class="govuk-summary-card__content">
+                                <p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ calculationMetrics.cashableSavings | poundsWithCommas }}</p>
+                                <p class="govuk-body-s govuk-!-margin-bottom-0">{{ calculationMetrics.cashablePercentageOfContract }} of contract value</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-grid-column-one-third">
+                        <div class="govuk-summary-card savings-report-card savings-report-card--purple">
+                            <div class="govuk-summary-card__title-wrapper">
+                                <h3 class="govuk-summary-card__title">Other benefits</h3>
+                            </div>
+                            <div class="govuk-summary-card__content">
+                                <p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ calculationMetrics.nonCashableSavings | poundsWithCommas }}</p>
+                                <p class="govuk-body-s govuk-!-margin-bottom-0">{{ calculationMetrics.nonCashablePercentageOfContract }} of contract value</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="govuk-body-s">The chart shows {{ calculationMetrics.cashableShareOfTotal }} of total value is cash savings and {{ calculationMetrics.nonCashableShareOfTotal }} is other benefits.</p>
+                <div class="savings-breakdown-chart" aria-hidden="true">
+                    <span style="width: {{ calculationMetrics.cashableShareOfTotalWidth }}%;"></span></div>
+                <p class="govuk-body-s govuk-!-margin-bottom-7">
+                    <span class="savings-breakdown-chart__key savings-breakdown-chart__key--cash"></span> Cash savings <span class="savings-breakdown-chart__key savings-breakdown-chart__key--benefit"></span> Other benefits</p>
 
-				<h2 class="govuk-heading-m">Compare with similar organisations</h2>
-				<p>A peer organisation is another public body with a similar procurement. It does not mean individual colleagues.</p>
+                <h2 class="govuk-heading-m">Compare with similar organisations</h2>
+                <p>A peer organisation is another public body with a similar procurement. It does not mean individual colleagues.</p>
 
-				<form class="govuk-!-margin-bottom-6" action="" method="get">
-					<div class="govuk-form-group">
-						<label class="govuk-label" for="country">Location</label>
-						<select class="govuk-select" id="country" name="country"><option>England</option></select>
-					</div>
-					<div class="govuk-form-group">
-						<label class="govuk-label" for="region">Region</label>
-						<select class="govuk-select" id="region" name="region"><option>North West</option><option>All England</option></select>
-					</div>
-					<div class="govuk-form-group">
-						<label class="govuk-label" for="authority-type">Organisation type</label>
-						<select class="govuk-select" id="authority-type" name="authority-type"><option>Local authority</option><option>Combined authority</option><option>Central government</option></select>
-					</div>
-					{{ govukButton({ text: "Update comparison", classes: "govuk-button--secondary" }) }}
-				</form>
+                <form class="govuk-!-margin-bottom-6" action="" method="get">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="country">Location</label>
+                        <select class="govuk-select" id="country" name="country">
+                            <option>England</option>
+                        </select>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="region">Region</label>
+                        <select class="govuk-select" id="region" name="region">
+                            <option>North West</option>
+                            <option>All England</option>
+                        </select>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="authority-type">Organisation type</label>
+                        <select class="govuk-select" id="authority-type" name="authority-type">
+                            <option>Local authority</option>
+                            <option>Combined authority</option>
+                            <option>Central government</option>
+                        </select>
+                    </div>
+                    {{ govukButton({ text: "Update comparison", classes: "govuk-button--secondary" }) }}
+                </form>
 
-				<h3 class="govuk-heading-s">Your comparison</h3>
-				<p>Your cash savings rate is {{ calculationMetrics.cashablePercentageOfContract }}. The average for 24 similar local authority procurements in the North West is {{ calculationMetrics.peerAverageSavingsPercentage }}.</p>
-				<p><strong>You saved {{ calculationMetrics.savingsDifferenceValue | poundsWithCommas }} more in cash savings than the average similar procurement.</strong></p>
-				<div class="peer-benchmark-chart govuk-!-margin-bottom-6" aria-hidden="true">
-					<div class="peer-benchmark-chart__key"><span class="peer-benchmark-chart__key-item"><span class="peer-benchmark-chart__key-icon peer-benchmark-chart__key-icon--peer"></span><span>Peer average ({{ calculationMetrics.peerAverageSavingsPercentage }})</span></span><span class="peer-benchmark-chart__key-item"><span class="peer-benchmark-chart__key-icon peer-benchmark-chart__key-icon--you"></span><span>Your contract ({{ calculationMetrics.cashablePercentageOfContract }})</span></span></div>
-					<div class="peer-benchmark-chart__labels"><span class="peer-benchmark-chart__label">0%</span><span class="peer-benchmark-chart__label">5%</span><span class="peer-benchmark-chart__label">10%</span><span class="peer-benchmark-chart__label">15%</span><span class="peer-benchmark-chart__label peer-benchmark-chart__label--end">20%</span></div>
-					<div class="peer-benchmark-chart__track"><span class="peer-benchmark-chart__tick"></span><span class="peer-benchmark-chart__tick"></span><span class="peer-benchmark-chart__tick"></span><span class="peer-benchmark-chart__tick"></span><span class="peer-benchmark-chart__tick"></span><span class="peer-benchmark-chart__marker peer-benchmark-chart__marker--peer" style="--marker-left: calc({{ calculationMetrics.peerAverageSavingsPercentageWidthValue }}% * 5);"><span class="peer-benchmark-chart__marker-dot"></span></span><span class="peer-benchmark-chart__marker peer-benchmark-chart__marker--you" style="--marker-left: calc({{ calculationMetrics.cashablePercentageOfContractWidthValue }}% * 5);"><span class="peer-benchmark-chart__marker-dot"></span></span></div>
-				</div>
+                <h3 class="govuk-heading-s">Your comparison</h3>
+                <p>Your cash savings rate is {{ calculationMetrics.cashablePercentageOfContract }}. The average for 24 similar local authority procurements in the North West is {{ calculationMetrics.peerAverageSavingsPercentage }}.</p>
+                <p>
+                    <strong>You saved {{ calculationMetrics.savingsDifferenceValue | poundsWithCommas }} more in cash savings than the average similar procurement.</strong>
+                </p>
+                <div class="peer-benchmark-chart govuk-!-margin-bottom-6" aria-hidden="true">
+                    <div class="peer-benchmark-chart__key">
+                        <span class="peer-benchmark-chart__key-item">
+                            <span class="peer-benchmark-chart__key-icon peer-benchmark-chart__key-icon--peer"></span>
+                            <span>Peer average ({{ calculationMetrics.peerAverageSavingsPercentage }})</span></span>
+                        <span class="peer-benchmark-chart__key-item">
+                            <span class="peer-benchmark-chart__key-icon peer-benchmark-chart__key-icon--you"></span>
+                            <span>Your contract ({{ calculationMetrics.cashablePercentageOfContract }})</span></span></div>
+                    <div class="peer-benchmark-chart__labels">
+                        <span class="peer-benchmark-chart__label">0%</span>
+                        <span class="peer-benchmark-chart__label">5%</span>
+                        <span class="peer-benchmark-chart__label">10%</span>
+                        <span class="peer-benchmark-chart__label">15%</span>
+                        <span class="peer-benchmark-chart__label peer-benchmark-chart__label--end">20%</span></div>
+                    <div class="peer-benchmark-chart__track">
+                        <span class="peer-benchmark-chart__tick"></span>
+                        <span class="peer-benchmark-chart__tick"></span>
+                        <span class="peer-benchmark-chart__tick"></span>
+                        <span class="peer-benchmark-chart__tick"></span>
+                        <span class="peer-benchmark-chart__tick"></span>
+                        <span class="peer-benchmark-chart__marker peer-benchmark-chart__marker--peer" style="--marker-left: calc({{ calculationMetrics.peerAverageSavingsPercentageWidthValue }}% * 5);">
+                            <span class="peer-benchmark-chart__marker-dot"></span></span>
+                        <span class="peer-benchmark-chart__marker peer-benchmark-chart__marker--you" style="--marker-left: calc({{ calculationMetrics.cashablePercentageOfContractWidthValue }}% * 5);">
+                            <span class="peer-benchmark-chart__marker-dot"></span></span></div>
+                </div>
 
-				{% call govukDetails({summaryText: "How we created this comparison"}) %}
-					<p>We compare contracts in the same procurement category and with the same baseline approach. We exclude entries that have not been checked or are unusually high or low.</p>
-				{% endcall %}
+                {% call govukDetails({summaryText: "How we created this comparison"}) %}
+                <p>We compare contracts in the same procurement category and with the same baseline approach. We exclude entries that have not been checked or are unusually high or low.</p>
+                {% endcall %}
 
-				<h2 class="govuk-heading-m govuk-!-margin-top-6">Download or share</h2>
-				<div class="govuk-button-group">
-					{{ govukButton({ text: "Download PDF summary", href: "#" }) }}
-					{{ govukButton({ text: "Download Excel data", href: "#", classes: "govuk-button--secondary" }) }}
-				</div>
-			</div>
-		</div>
-	{% else %}
-		<h1 class="govuk-heading-l">Calculation</h1>
-		<p class="govuk-body">We could not find the selected contract.</p>
-	{% endif %}
+                <h2 class="govuk-heading-m govuk-!-margin-top-6">Download or share</h2>
+                <div class="govuk-button-group">
+                    {{ govukButton({ text: "Download PDF summary", href: "#" }) }}
+                    {{ govukButton({ text: "Download Excel data", href: "#", classes: "govuk-button--secondary" }) }}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h1 class="govuk-heading-l">Calculation</h1>
+        <p class="govuk-body">We could not find the selected contract.</p>
+    {% endif %}
 {% endblock %}
 
-{% block pageScripts %}
-{% endblock %}
+{% block pageScripts %}{% endblock %}
 
-{% block bodyEnd %}
-{% endblock %}
+{% block bodyEnd %}{% endblock %}

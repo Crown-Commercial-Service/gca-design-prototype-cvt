@@ -1,27 +1,57 @@
 {% extends "v3/layouts/ccs.html" %}
 {% set isLoggedIn = true %}
 
-{% block pageTitle %}Calculation results - {{ serviceName }}{% endblock %}
+{% block pageTitle %}Calculation results - {{ serviceName }}
+{% endblock %}
 
 {% block beforeContent %}
-	{{ govukPhaseBanner({ tag: { text: "Alpha" }, html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.' }) }}
-	{{ govukBackLink({ text: "Back to dashboard", href: "/v3/dashboard" }) }}
+    {{ govukPhaseBanner({ tag: { text: "Alpha" }, html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.' }) }}
+    {{ govukBackLink({ text: "Back to dashboard", href: "/v3/dashboard" }) }}
 {% endblock %}
 
 {% block content %}
-	{% if contract %}
-		<div class="govuk-grid-row">
-			<div class="govuk-grid-column-full">
-				<span class="govuk-caption-m">{{ contract.title | truncate(50) }}</span>
-				<h1 class="govuk-heading-l">Calculation results</h1>
-				<p class="govuk-body-l">See the value achieved by this contract and compare its cash savings with similar public sector procurements.</p>
-				<div class="govuk-grid-row savings-report-cards govuk-!-margin-bottom-6">
-					<div class="govuk-grid-column-one-third"><div class="govuk-summary-card savings-report-card savings-report-card--magenta"><div class="govuk-summary-card__title-wrapper"><h2 class="govuk-summary-card__title">Contract value</h2></div><div class="govuk-summary-card__content"><p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ calculationMetrics.contractValue | poundsWithCommas }}</p></div></div></div>
-					<div class="govuk-grid-column-one-third"><div class="govuk-summary-card savings-report-card savings-report-card--teal"><div class="govuk-summary-card__title-wrapper"><h2 class="govuk-summary-card__title">Cash savings</h2></div><div class="govuk-summary-card__content"><p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ calculationMetrics.cashableSavings | poundsWithCommas }}</p><p class="govuk-body-s govuk-!-margin-bottom-0">{{ calculationMetrics.cashablePercentageOfContract }}</p></div></div></div>
-					<div class="govuk-grid-column-one-third"><div class="govuk-summary-card savings-report-card savings-report-card--purple"><div class="govuk-summary-card__title-wrapper"><h2 class="govuk-summary-card__title">Other benefits</h2></div><div class="govuk-summary-card__content"><p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ calculationMetrics.nonCashableSavings | poundsWithCommas }}</p><p class="govuk-body-s govuk-!-margin-bottom-0">{{ calculationMetrics.nonCashablePercentageOfContract }}</p></div></div></div>
-				</div>
+    {% if contract %}
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <span class="govuk-caption-m">{{ contract.title | truncate(50) }}</span>
+                <h1 class="govuk-heading-l">Calculation results</h1>
+                <p class="govuk-body-l">See the value achieved by this contract and compare its cash savings with similar public sector procurements.</p>
+                <div class="govuk-grid-row savings-report-cards govuk-!-margin-bottom-6">
+                    <div class="govuk-grid-column-one-third">
+                        <div class="govuk-summary-card savings-report-card savings-report-card--magenta">
+                            <div class="govuk-summary-card__title-wrapper">
+                                <h2 class="govuk-summary-card__title">Contract value</h2>
+                            </div>
+                            <div class="govuk-summary-card__content">
+                                <p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ calculationMetrics.contractValue | poundsWithCommas }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-grid-column-one-third">
+                        <div class="govuk-summary-card savings-report-card savings-report-card--teal">
+                            <div class="govuk-summary-card__title-wrapper">
+                                <h2 class="govuk-summary-card__title">Cash savings</h2>
+                            </div>
+                            <div class="govuk-summary-card__content">
+                                <p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ calculationMetrics.cashableSavings | poundsWithCommas }}</p>
+                                <p class="govuk-body-s govuk-!-margin-bottom-0">{{ calculationMetrics.cashablePercentageOfContract }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-grid-column-one-third">
+                        <div class="govuk-summary-card savings-report-card savings-report-card--purple">
+                            <div class="govuk-summary-card__title-wrapper">
+                                <h2 class="govuk-summary-card__title">Other benefits</h2>
+                            </div>
+                            <div class="govuk-summary-card__content">
+                                <p class="govuk-body-l savings-report-card__value govuk-!-margin-bottom-0">{{ calculationMetrics.nonCashableSavings | poundsWithCommas }}</p>
+                                <p class="govuk-body-s govuk-!-margin-bottom-0">{{ calculationMetrics.nonCashablePercentageOfContract }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-				{{ govukTabs({
+                {{ govukTabs({
 					items: [
 						{
 							label: "Overview",
@@ -47,27 +77,58 @@
 					]
 				}) }}
 
-				<h2 class="govuk-heading-m">Download or share</h2>
-				<div class="govuk-button-group">
-					{{ govukButton({ text: "Download PDF summary", href: "#" }) }}
-					{{ govukButton({ text: "Download Excel data", href: "#", classes: "govuk-button--secondary" }) }}
-				</div>
-			</div>
-		</div>
-	{% else %}
-		<h1 class="govuk-heading-l">Calculation</h1>
-		<p class="govuk-body">We could not find the selected contract.</p>
-	{% endif %}
+                <h2 class="govuk-heading-m">Download or share</h2>
+                <div class="govuk-button-group">
+                    {{ govukButton({ text: "Download PDF summary", href: "#" }) }}
+                    {{ govukButton({ text: "Download Excel data", href: "#", classes: "govuk-button--secondary" }) }}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h1 class="govuk-heading-l">Calculation</h1>
+        <p class="govuk-body">We could not find the selected contract.</p>
+    {% endif %}
 
-	<style>
-		.savings-breakdown-chart { background: #d2e2f1; display: flex; height: 24px; margin: 20px 0 12px; width: 100%; }
-		.savings-breakdown-chart span { background: #158187; display: block; height: 100%; }
-		.savings-breakdown-chart__key { display: inline-block; height: 12px; margin: 0 6px 0 20px; width: 12px; }
-		.savings-breakdown-chart__key:first-child { margin-left: 0; }
-		.savings-breakdown-chart__key--cash { background: #158187; }
-		.savings-breakdown-chart__key--benefit { background: #d2e2f1; }
-		.peer-benchmark-chart { background: #e7f2fb; border-left: 6px solid #1d70b8; margin: 28px 0; padding: 24px; }
-		.peer-benchmark-chart__track { height: 14px; }
-		.peer-benchmark-chart__marker-dot { height: 22px; width: 22px; }
-	</style>
+    <style>
+        .savings-breakdown-chart {
+            background: #d2e2f1;
+            display: flex;
+            height: 24px;
+            margin: 20px 0 12px;
+            width: 100%;
+        }
+        .savings-breakdown-chart span {
+            background: #158187;
+            display: block;
+            height: 100%;
+        }
+        .savings-breakdown-chart__key {
+            display: inline-block;
+            height: 12px;
+            margin: 0 6px 0 20px;
+            width: 12px;
+        }
+        .savings-breakdown-chart__key:first-child {
+            margin-left: 0;
+        }
+        .savings-breakdown-chart__key--cash {
+            background: #158187;
+        }
+        .savings-breakdown-chart__key--benefit {
+            background: #d2e2f1;
+        }
+        .peer-benchmark-chart {
+            background: #e7f2fb;
+            border-left: 6px solid #1d70b8;
+            margin: 28px 0;
+            padding: 24px;
+        }
+        .peer-benchmark-chart__track {
+            height: 14px;
+        }
+        .peer-benchmark-chart__marker-dot {
+            height: 22px;
+            width: 22px;
+        }
+    </style>
 {% endblock %}
