@@ -6,66 +6,68 @@
 {% endblock %}
 
 {% block beforeContent %}
-	{{ govukPhaseBanner({
+  {{ govukPhaseBanner({
     tag: {
       text: "Alpha"
     },
     html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
   }) }}
 
-	{{ govukBackLink({
+  {{ govukBackLink({
     text: "Back",
     href: "/v3/bulk-upload"
   }) }}
 {% endblock %}
 
 {% block content %}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-full">
-			<span class="govuk-caption-m">Bulk savings data upload</span>
-			<h1 class="govuk-heading-l">Check your uploaded savings data before submitting</h1>
-			<p class="govuk-body">This table version is designed for larger uploads where comparing multiple contracts at once is more important than step-by-step review.</p>
-			<p class="govuk-body govuk-!-margin-bottom-7">
-        Prefer a simpler page? <a class="govuk-link" href="/v3/bulk-upload-review">Use the compact check your answers version</a>.
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <span class="govuk-caption-m">Bulk savings data upload</span>
+      <h1 class="govuk-heading-l">Check your uploaded savings data before submitting</h1>
+      <p class="govuk-body">Review the contracts and savings data from your upload before applying changes.</p>
+      <!--
+	  <p class="govuk-body govuk-!-margin-bottom-7">
+        Prefer a simpler page? <a class="govuk-link" href="/v3/bulk-upload-review-compact">Use the compact check your answers version</a>.
       </p>
+	  -->
 
-			<form method="post" action="/v3/bulk-upload-review-confirm">
-				<div class="bulk-upload-review-table" role="region" aria-labelledby="bulk-upload-review-table-title" tabindex="0">
-					<table class="govuk-table">
-						<caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden" id="bulk-upload-review-table-title">
+      <form method="post" action="/v3/bulk-upload-review-confirm">
+        <div class="bulk-upload-review-table" role="region" aria-labelledby="bulk-upload-review-table-title" tabindex="0">
+          <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden" id="bulk-upload-review-table-title">
               Uploaded savings data review table
             </caption>
-						<thead class="govuk-table__head">
-							<tr class="govuk-table__row">
-								<th scope="col" class="govuk-table__header">Contract</th>
-								<th scope="col" class="govuk-table__header">OCID</th>
-								<th scope="col" class="govuk-table__header">Cashable saving type</th>
-								<th scope="col" class="govuk-table__header">Baseline approach</th>
-								<th scope="col" class="govuk-table__header govuk-table__header--numeric">Baseline value</th>
-								<th scope="col" class="govuk-table__header govuk-table__header--numeric">Cashable savings</th>
-								<th scope="col" class="govuk-table__header govuk-table__header--numeric">Benefit savings</th>
-							</tr>
-						</thead>
-						<tbody class="govuk-table__body">
-							{% for item in reviewItems %}
-								<tr class="govuk-table__row">
-									<th scope="row" class="govuk-table__header">{{ item.title }}</th>
-									<td class="govuk-table__cell">{{ item.ocid }}</td>
-									<td class="govuk-table__cell">{{ item.cashableSavingType }}</td>
-									<td class="govuk-table__cell">{{ item.baselineApproach }}</td>
-									<td class="govuk-table__cell govuk-table__cell--numeric">{{ item.baselineValue | poundsWithCommas }}</td>
-									<td class="govuk-table__cell govuk-table__cell--numeric">{{ item.cashableSavings | poundsWithCommas }}</td>
-									<td class="govuk-table__cell govuk-table__cell--numeric">{{ item.otherValueBenefits | poundsWithCommas if item.otherValueBenefits else "None added" }}</td>
-								</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-				</div>
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Contract</th>
+                <th scope="col" class="govuk-table__header">OCID</th>
+                <th scope="col" class="govuk-table__header">Cashable saving type</th>
+                <th scope="col" class="govuk-table__header">Baseline approach</th>
+                <th scope="col" class="govuk-table__header govuk-table__header--numeric">Baseline value</th>
+                <th scope="col" class="govuk-table__header govuk-table__header--numeric">Cashable savings</th>
+                <th scope="col" class="govuk-table__header govuk-table__header--numeric">Benefit savings</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              {% for item in reviewItems %}
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header">{{ item.title }}</th>
+                  <td class="govuk-table__cell">{{ item.ocid }}</td>
+                  <td class="govuk-table__cell">{{ item.cashableSavingType }}</td>
+                  <td class="govuk-table__cell">{{ item.baselineApproach }}</td>
+                  <td class="govuk-table__cell govuk-table__cell--numeric">{{ item.baselineValue | poundsWithCommas }}</td>
+                  <td class="govuk-table__cell govuk-table__cell--numeric">{{ item.cashableSavings | poundsWithCommas }}</td>
+                  <td class="govuk-table__cell govuk-table__cell--numeric">{{ item.otherValueBenefits | poundsWithCommas if item.otherValueBenefits else "None added" }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
 
-				{{ govukButton({
+        {{ govukButton({
           text: "Continue"
         }) }}
-			</form>
-		</div>
-	</div>
+      </form>
+    </div>
+  </div>
 {% endblock %}

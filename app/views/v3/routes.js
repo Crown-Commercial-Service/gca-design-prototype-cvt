@@ -447,10 +447,14 @@ router.get('/v3/bulk-upload-review', (req, res) => {
 		return res.redirect('/v3/bulk-upload')
 	}
 
-	return res.render('v3/bulk-upload-review', { reviewItems })
+	return res.render('v3/bulk-upload-review-table', { reviewItems })
 })
 
 router.get('/v3/bulk-upload-review-table', (req, res) => {
+	res.redirect('/v3/bulk-upload-review')
+})
+
+router.get('/v3/bulk-upload-review-compact', (req, res) => {
 	const sessionData = getSessionData(req)
 	const reviewItems = Array.isArray(sessionData.bulkUploadReviewItems) ? sessionData.bulkUploadReviewItems : []
 
