@@ -15,9 +15,9 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">Dashboard</h1>
+      <h1 class="govuk-heading-l">Commercial value dashboard</h1>
       <p>This dashboard shows savings and benefits recorded by your organisation. It does not show individual contributions.</p>
-      <p>You can add savings data and view insights comparing your organisation's contract performance against its peers.</p>
+      <p>Add more savings data or view detailed insights comparing your organisation's contract performance against its peers.</p>
     </div>
   </div>
   <div class="ccs-dashboard-section">
@@ -57,6 +57,10 @@
 						href: "/v3/contracts-completed",
 						classes: "govuk-button--secondary"
 					}) }}
+          {{ govukButton({
+                  text: "Calculate pre-procurement",
+                  href: "/v3/pre-procurement/cpv-code"
+                }) }}
         </div>
       </div>
     </div>

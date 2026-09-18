@@ -40,33 +40,36 @@
               value: "Improved how services are delivered",
               text: "Improved how services are delivered",
               hint: {
-                text: "You made a service faster, better, or more reliable for the existing budget."
+                text: "You made a service faster, better or more reliable without spending more money."
               }
             },
             {
               value: "Saved staff time or resources",
               text: "Saved staff time or resources",
               hint: {
-                text: "The contract reduces the need for extra headcount or physical infrastructure."
+                text: "You reduced the time staff spend on a task, or avoided the need to hire more people or buy equipment."
               }
             },
             {
               value: "Met official rules or policies",
               text: "Met official rules or policies",
               hint: {
-                text: "You fulfilled a legal requirement, government directive, or wider policy goal (like sustainability)."
+                text: "You met a legal requirement or supported a wider government goal, like improving sustainability."
               }
             },
             {
               value: "Boosted reputation or user satisfaction",
               text: "Boosted reputation or user satisfaction",
               hint: {
-                text: "You changed how you buy things so you only pay for what you actually need"
+                text: "You provided a better experience for the people using your service, or improved public trust in your organisation."
               }
             },
             {
               value: "Other",
-              text: "Other"
+              text: "Other",
+              conditional: {
+                html: '<label class="govuk-label govuk-label--s" for="non-monetisable-type-other">Enter the type of benefit</label><input class="govuk-input govuk-!-width-two-thirds" id="non-monetisable-type-other" name="non-monetisable-type-other" type="text">'
+              }
             }
           ]
         }) }}

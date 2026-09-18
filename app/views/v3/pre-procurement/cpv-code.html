@@ -1,0 +1,16 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+{% block pageTitle %}Do you have a CPV code? - {{ serviceName }}
+{% endblock %}
+{% block beforeContent %}{{ govukBackLink({ text: "Back", href: "/v3/dashboard" }) }}
+{% endblock %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="/v3/pre-procurement/cpv-code">
+        {{ govukRadios({ name: "cpvChoice", fieldset: { legend: { text: "Do you have a CPV code?", isPageHeading: true, classes: "govuk-fieldset__legend--l" } }, items: [ { value: "yes", text: "Yes" }, { value: "no", text: "No" } ] }) }}
+        {{ govukButton({ text: "Continue" }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

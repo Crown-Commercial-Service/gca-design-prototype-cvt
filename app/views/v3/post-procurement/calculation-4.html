@@ -1,0 +1,292 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = false %}
+
+{% block pageTitle %}Potential savings estimate - {{ serviceName }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({ tag: { text: "Alpha" }, html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.' }) }}
+  {{ govukBackLink({ text: "Back", href: "/v3/start" }) }}
+{% endblock %}
+
+{% block content %}
+  {% if contract %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <span class="govuk-caption-m">Potential savings estimate</span>
+        <h1 class="govuk-heading-xl">You could create value of up to {{ calculationMetrics.potentialTotalValue | poundsWithCommas }}</h1>
+        <p class="govuk-body-l">Similar organisations have achieved these levels of cash savings and other value benefits on contracts like yours.</p>
+        <p>These are indicative estimates, not a prediction or a guarantee. The value you achieve will depend on how you run and manage your contract.</p>
+
+        <div class="potential-result govuk-!-margin-top-6 govuk-!-margin-bottom-7">
+          <h2 class="govuk-heading-m">Your potential value</h2>
+          <div class="potential-result__items">
+            <div>
+              <p class="govuk-body-s govuk-!-margin-bottom-1">Potential cash savings</p>
+              <p class="potential-result__value">{{ calculationMetrics.potentialCashSavings | poundsWithCommas }}</p>
+              <p class="govuk-body-s">Around 10% of your contract value, based on similar procurements.</p>
+            </div>
+            <div>
+              <p class="govuk-body-s govuk-!-margin-bottom-1">Potential other benefits</p>
+              <p class="potential-result__value">{{ calculationMetrics.potentialOtherBenefits | poundsWithCommas }}</p>
+              <p class="govuk-body-s">An indicative estimate of benefits such as price protections and performance improvements.</p>
+            </div>
+          </div>
+        </div>
+
+        <section class="calculation-visual-section">
+          <h2 class="govuk-heading-m">How similar organisations have performed</h2>
+          <p>These comparisons are indicative. They show reported cash savings rates for similar procurements, rather than a promise of what your contract will achieve.</p>
+
+          <div class="potential-comparison-grid">
+            <div class="potential-comparison">
+              <h3 class="benchmark-plot__heading">By region</h3>
+              <p class="govuk-body-s">Similar organisations in {{ potentialInputs.region }} have reported a higher average cash savings rate.</p>
+              <div class="benchmark-plot" aria-hidden="true">
+                <div class="benchmark-axis">
+                  <span></span>
+                  <div>
+                    <span>0%</span>
+                    <span>5%</span>
+                    <span>10%</span>
+                    <span>15%</span>
+                    <span>20%</span></div>
+                </div>
+                <div class="benchmark-chart-area">
+                  <div class="benchmark-bar">
+                    <div class="benchmark-bar__label">All similar</div>
+                    <div class="benchmark-bar__track">
+                      <span class="benchmark-bar__fill benchmark-bar__fill--average" style="width: calc({{ calculationMetrics.peerAverageSavingsPercentageValue }}% * 5);">
+                        <strong>{{ calculationMetrics.peerAverageSavingsPercentage }}</strong></span></div>
+                  </div>
+                  <div class="benchmark-bar">
+                    <div class="benchmark-bar__label">{{ potentialInputs.region }}</div>
+                    <div class="benchmark-bar__track">
+                      <span class="benchmark-bar__fill benchmark-bar__fill--contract" style="width: calc({{ calculationMetrics.regionalSavingsPercentageValue }}% * 5);">
+                        <strong>{{ calculationMetrics.regionalSavingsPercentageValue }}%</strong></span></div>
+                  </div>
+                </div>
+              </div>
+              <p class="govuk-body-s">At this rate, a {{ calculationMetrics.contractValue | poundsWithCommas }} contract could potentially deliver {{ calculationMetrics.regionalSavingsValue | poundsWithCommas }} in cash savings.</p>
+            </div>
+
+            <div class="potential-comparison">
+              <h3 class="benchmark-plot__heading">By organisation type</h3>
+              <p class="govuk-body-s">{{ potentialInputs.organisationType }} organisations have reported a higher average cash savings rate.</p>
+              <div class="benchmark-plot" aria-hidden="true">
+                <div class="benchmark-axis">
+                  <span></span>
+                  <div>
+                    <span>0%</span>
+                    <span>5%</span>
+                    <span>10%</span>
+                    <span>15%</span>
+                    <span>20%</span></div>
+                </div>
+                <div class="benchmark-chart-area">
+                  <div class="benchmark-bar">
+                    <div class="benchmark-bar__label">All similar</div>
+                    <div class="benchmark-bar__track">
+                      <span class="benchmark-bar__fill benchmark-bar__fill--average" style="width: calc({{ calculationMetrics.peerAverageSavingsPercentageValue }}% * 5);">
+                        <strong>{{ calculationMetrics.peerAverageSavingsPercentage }}</strong></span></div>
+                  </div>
+                  <div class="benchmark-bar">
+                    <div class="benchmark-bar__label">{{ potentialInputs.organisationType }}</div>
+                    <div class="benchmark-bar__track">
+                      <span class="benchmark-bar__fill benchmark-bar__fill--contract" style="width: calc({{ calculationMetrics.organisationTypeSavingsPercentageValue }}% * 5);">
+                        <strong>{{ calculationMetrics.organisationTypeSavingsPercentageValue }}%</strong></span></div>
+                  </div>
+                </div>
+              </div>
+              <p class="govuk-body-s">At this rate, a {{ calculationMetrics.contractValue | poundsWithCommas }} contract could potentially deliver {{ calculationMetrics.organisationTypeSavingsValue | poundsWithCommas }} in cash savings.</p>
+            </div>
+          </div>
+        </section>
+
+        <h2 class="govuk-heading-m">Your contract details</h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-7">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">CPV code</dt>
+            <dd class="govuk-summary-list__value">{{ contract.cpvCode }}
+              {% if contract.cpvDescription %} - {{ contract.cpvDescription }}
+              {% endif %}
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Region</dt>
+            <dd class="govuk-summary-list__value">{{ potentialInputs.region }}</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Organisation type</dt>
+            <dd class="govuk-summary-list__value">{{ potentialInputs.organisationType }}</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Contract dates</dt>
+            <dd class="govuk-summary-list__value">{{ contract.startDate }} to {{ contract.endDate }}</dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Contract value</dt>
+            <dd class="govuk-summary-list__value">{{ calculationMetrics.contractValue | poundsWithCommas }}</dd>
+          </div>
+        </dl>
+
+        <h2 class="govuk-heading-m">How this estimate was calculated</h2>
+        <p>We used the contract value and compared it with reported results from similar public sector procurements in the same category. The cash savings estimate uses the average reported cash savings rate. Other benefits are shown as a separate indicative estimate.</p>
+        <p>As more organisations share their results, these estimates may change.</p>
+
+        <section class="calculation-visual-section">
+          <h2 class="govuk-heading-m">What top-performing procurements did</h2>
+          <p>Over time, you will be able to explore the procurements behind these results and see how they created value.</p>
+          <div class="potential-procurement-grid">
+            <div class="potential-procurement">
+              <p class="govuk-body-s govuk-!-margin-bottom-1">Environmental monitoring services</p>
+              <h3 class="govuk-heading-s">Air quality sensor network expansion</h3>
+              <p class="govuk-body-s">Reported cash savings: 15.7%</p>
+              <p class="govuk-body-s govuk-!-margin-bottom-0">Competition between 3 organisations · Framework</p>
+            </div>
+            <div class="potential-procurement">
+              <p class="govuk-body-s govuk-!-margin-bottom-1">Natural resource management</p>
+              <h3 class="govuk-heading-s">Peatland restoration feasibility study</h3>
+              <p class="govuk-body-s">Reported cash savings: 12.9%</p>
+              <p class="govuk-body-s govuk-!-margin-bottom-0">Renewed contract · Scope optimisation</p>
+            </div>
+          </div>
+        </section>
+
+        <div class="govuk-button-group govuk-!-margin-top-7">
+          {% if not isPreProcurement %}
+            {{ govukButton({ text: "Start recording your savings", href: "/v3/cashable-savings/" + contract.ocid }) }}
+          {% endif %}
+          {{ govukButton({ text: "Start again", href: "/v3/start", classes: "govuk-button--secondary" }) }}
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <h1 class="govuk-heading-l">Potential savings estimate</h1>
+    <p class="govuk-body">We could not find the selected contract.</p>
+  {% endif %}
+
+  <style>
+    .potential-result {
+      background: #e7f2fb;
+      border-left: 8px solid #1d70b8;
+      padding: 28px;
+    }
+    .potential-result__items {
+      display: grid;
+      gap: 32px;
+      grid-template-columns: 1fr 1fr;
+    }
+    .potential-result__value {
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin: 0 0 8px;
+    }
+    .potential-comparison-grid,
+    .potential-procurement-grid {
+      display: grid;
+      gap: 32px;
+      grid-template-columns: 1fr 1fr;
+    }
+    .potential-comparison,
+    .potential-procurement {
+      border-top: 4px solid #158187;
+      padding-top: 20px;
+    }
+    .potential-procurement {
+      border: 1px solid #b1b4b6;
+      border-top: 4px solid #ca357c;
+      padding: 20px;
+    }
+    .calculation-visual-section {
+      border-top: 6px solid #158187;
+      margin: 0 0 48px;
+      padding: 32px 0 0;
+    }
+    .benchmark-plot {
+      margin: 24px 0;
+    }
+    .benchmark-plot__heading {
+      font-size: 24px;
+      line-height: 1.25;
+      margin: 0 0 16px;
+    }
+    .benchmark-axis {
+      align-items: end;
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      margin-bottom: 8px;
+    }
+    .benchmark-axis > div {
+      display: flex;
+      justify-content: space-between;
+    }
+    .benchmark-axis span {
+      font-size: 16px;
+    }
+    .benchmark-chart-area {
+      position: relative;
+    }
+    .benchmark-chart-area::before {
+      background-image: linear-gradient(to right, #b1b4b6 1px, transparent 1px);
+      background-size: 25% 100%;
+      content: "";
+      inset: 24px 0 10px 100px;
+      pointer-events: none;
+      position: absolute;
+      z-index: 0;
+    }
+    .benchmark-bar {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .benchmark-bar__label {
+      align-self: center;
+      padding-right: 12px;
+      text-align: right;
+    }
+    .benchmark-bar__track {
+      height: 32px;
+      position: relative;
+    }
+    .benchmark-bar__fill {
+      align-items: center;
+      box-sizing: border-box;
+      color: #ffffff;
+      display: flex;
+      height: 100%;
+      justify-content: flex-end;
+      min-width: max-content;
+      padding: 0 8px;
+    }
+    .benchmark-bar__fill--average {
+      background: #505a5f;
+    }
+    .benchmark-bar__fill--contract {
+      background: #ca357c;
+    }
+    @media (max-width: 40.0525em) {
+      .potential-result {
+        padding: 20px;
+      }
+      .potential-result__items {
+        grid-template-columns: 1fr;
+      }
+      .potential-comparison-grid,
+      .potential-procurement-grid {
+        grid-template-columns: 1fr;
+      }
+      .benchmark-axis,
+      .benchmark-bar {
+        grid-template-columns: 84px 1fr;
+      }
+      .benchmark-chart-area::before {
+        left: 84px;
+      }
+    }
+  </style>
+{% endblock %}

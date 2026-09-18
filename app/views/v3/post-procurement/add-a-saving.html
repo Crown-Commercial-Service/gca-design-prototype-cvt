@@ -24,7 +24,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l">How do you want to add your savings data?</h1>
-      <p class="govuk-body">For each contract, you can record a cash saving and any other benefits achieved, such as price protections or performance benefits.</p>
+      <p class="govuk-body">For each contract, you can record a cash saving and other benefits such as price protections or performance benefits.</p>
       <!--<p class="govuk-body">Choose the option that best matches the number of contracts you need to add.</p>-->
 
       <form method="post" action="/v3/add-a-saving">
@@ -41,14 +41,14 @@
               value: "single-contract",
               text: "Add savings for a single contract",
               hint: {
-                text: "Enter the savings for each contract online. This is useful when you add savings as you complete a contract."
+                text: "Enter the savings for each contract individually. This is useful for adding savings as you complete a contract."
               }
             },
             {
               value: "bulk-upload",
               text: "Add savings for many contracts at once",
               hint: {
-                text: "Upload a spreadsheet of savings data. You can download a template on the next page."
+                text: "Upload a spreadsheet of savings data for multiple contracts. You can download a template on the next page."
               }
             }
           ]

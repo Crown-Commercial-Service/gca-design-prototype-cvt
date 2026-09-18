@@ -1,0 +1,81 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+{% block pageTitle %}Select region - {{ serviceName }}
+{% endblock %}
+{% block beforeContent %}{{ govukBackLink({ text: "Back", href: "/v3/pre-procurement/country" }) }}
+{% endblock %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="/v3/pre-procurement/region">
+        {% if country == "Scotland" %}
+          {% set regions = [
+            {
+              value: "East Scotland",
+              text: "East Scotland"
+            }, {
+              value: "West Scotland",
+              text: "West Scotland"
+            }, {
+              value: "North Scotland",
+              text: "North Scotland"
+            }
+          ] %}
+        {% elif country == "Wales" %}
+          {% set regions = [
+            {
+              value: "North Wales",
+              text: "North Wales"
+            }, {
+              value: "Mid Wales",
+              text: "Mid Wales"
+            }, {
+              value: "South Wales",
+              text: "South Wales"
+            }
+          ] %}
+        {% elif country == "Northern Ireland" %}
+          {% set regions = [
+            {
+              value: "Northern Ireland",
+              text: "Northern Ireland"
+            }
+          ] %}
+        {% else %}
+          {% set regions = [
+            {
+              value: "North East",
+              text: "North East"
+            }, {
+              value: "North West",
+              text: "North West"
+            }, {
+              value: "Yorkshire and the Humber",
+              text: "Yorkshire and the Humber"
+            }, {
+              value: "East Midlands",
+              text: "East Midlands"
+            }, {
+              value: "West Midlands",
+              text: "West Midlands"
+            }, {
+              value: "East of England",
+              text: "East of England"
+            }, {
+              value: "London",
+              text: "London"
+            }, {
+              value: "South East",
+              text: "South East"
+            }, {
+              value: "South West",
+              text: "South West"
+            }
+          ] %}
+        {% endif %}
+        {{ govukRadios({ name: "region", fieldset: { legend: { text: "Select region", isPageHeading: true, classes: "govuk-fieldset__legend--l" } }, items: regions }) }}
+        {{ govukButton({ text: "Continue" }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+{% block pageTitle %}Enter CPV code - {{ serviceName }}
+{% endblock %}
+{% block beforeContent %}{{ govukBackLink({ text: "Back", href: "/v3/pre-procurement/cpv-code" }) }}
+{% endblock %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="/v3/pre-procurement/enter-cpv-code">
+        {{ govukInput({ id: "cpv-code", name: "cpvCode", label: { text: "Enter the CPV code", isPageHeading: true, classes: "govuk-label--l" }, hint: { text: "For example, 72000000-5" }, classes: "govuk-input--width-10" }) }}
+        {{ govukButton({ text: "Continue" }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -40,33 +40,36 @@
               value: "Prevented a price rise",
               text: "Prevented a price rise",
               hint: {
-                text: "You stopped a supplier from putting prices up, or avoided extra fees"
+                text: "You stopped a supplier from raising their prices, or you avoided paying extra fees."
               }
             },
             {
               value: "Got more for the same budget",
               text: "Got more for the same budget",
               hint: {
-                text: "You negotiated extra features, goods, or services for no extra cost"
+                text: "You negotiated extra goods, services or features without spending more money."
               }
             },
             {
               value: "Froze prices over time",
               text: "Froze prices over time",
               hint: {
-                text: "You locked in a set price so it won't go up with inflation next year"
+                text: "You locked in a price so it will not increase with inflation or market changes."
               }
             },
             {
-              value: "Managed demand better",
-              text: "Managed demand better",
+              value: "Only bought what you needed",
+              text: "Only bought what you needed",
               hint: {
-                text: "You changed how you buy things so you only pay for what you actually need"
+                text: "You changed how your organisation uses or buys things, so you only pay for what you actually need."
               }
             },
             {
               value: "Other",
-              text: "Other"
+              text: "Other",
+              conditional: {
+                html: '<label class="govuk-label govuk-label--s" for="non-cashable-type-other">Enter the type of benefit</label><input class="govuk-input govuk-!-width-two-thirds" id="non-cashable-type-other" name="non-cashable-type-other" type="text">'
+              }
             }
           ]
         }) }}

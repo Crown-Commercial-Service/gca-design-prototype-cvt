@@ -1,0 +1,67 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}Commercial value dashboard - {{ serviceName }}{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: { text: "Alpha" },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l">Your organisation</span>
+      <h1 class="govuk-heading-xl">Commercial value dashboard</h1>
+      <p class="govuk-body-l">Record savings, understand your organisation's performance and estimate value before you start a procurement.</p>
+    </div>
+  </div>
+
+  {{ govukInsetText({
+    html: '<strong>Organisation view</strong><br>This dashboard shows data submitted by your organisation. It does not show individual contributions. Contract data comes from the Central Digital Platform across your organisation.'
+  }) }}
+
+  <h2 class="govuk-heading-m">At a glance</h2>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Contracts with savings data</h3>
+      <p class="govuk-heading-xl govuk-!-margin-bottom-1">12</p>
+      <p class="govuk-body-s">Contracts where savings or benefits have been submitted.</p>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Total cash saved</h3>
+      <p class="govuk-heading-xl govuk-!-margin-bottom-1">£142,000</p>
+      <p class="govuk-body-s">Savings against the original contract budget.</p>
+      <p><a href="#cash-savings">How this is calculated</a></p>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-1">Other benefits</h3>
+      <p class="govuk-heading-xl govuk-!-margin-bottom-1">£18,200</p>
+      <p class="govuk-body-s">Estimated value of benefits such as price protection or improved performance.</p>
+      <p><a href="#other-benefits">How this is calculated</a></p>
+    </div>
+  </div>
+
+  <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+  <h2 class="govuk-heading-m">What do you want to do?</h2>
+  <div class="govuk-button-group">
+    {{ govukButton({ text: "Add savings data", href: "/v3/add-a-saving" }) }}
+    {{ govukButton({ text: "View insights and reports", href: "/v3/contracts-completed", classes: "govuk-button--secondary" }) }}
+    {{ govukButton({ text: "Calculate pre-procurement value", href: "/v3/pre-procurement/cpv-code", classes: "govuk-button--secondary" }) }}
+  </div>
+
+  <h2 class="govuk-heading-m govuk-!-margin-top-7">How to read these figures</h2>
+  <dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row" id="cash-savings">
+      <dt class="govuk-summary-list__key">Total cash saved</dt>
+      <dd class="govuk-summary-list__value">The difference between the original budget and the final cost reported for completed contracts.</dd>
+    </div>
+    <div class="govuk-summary-list__row" id="other-benefits">
+      <dt class="govuk-summary-list__key">Other benefits</dt>
+      <dd class="govuk-summary-list__value">The estimated value of non-cash benefits reported by your organisation. These are shown separately from cash savings.</dd>
+    </div>
+  </dl>
+{% endblock %}

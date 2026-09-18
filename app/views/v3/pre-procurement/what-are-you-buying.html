@@ -1,0 +1,14 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+{% block pageTitle %}What are you buying? - {{ serviceName }}
+{% endblock %}
+{% block beforeContent %}{{ govukBackLink({ text: "Back", href: "/v3/pre-procurement/cpv-code" }) }}
+{% endblock %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">What are you buying?</h1>
+      <p>This part of the pre-procurement flow will be added next.</p>
+    </div>
+  </div>
+{% endblock %}

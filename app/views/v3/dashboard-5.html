@@ -1,0 +1,71 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}Commercial value dashboard - {{ serviceName }}{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: { text: "Alpha" },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l">Central government organisation</span>
+      <h1 class="govuk-heading-xl">Commercial value</h1>
+      <p class="govuk-body-l">See what your organisation has achieved, add the results of a completed contract, or estimate the potential value of a procurement you are planning.</p>
+    </div>
+  </div>
+
+  {{ govukInsetText({
+    html: '<strong>Organisation data</strong><br>These figures combine submissions from across your organisation. They do not represent your personal totals or just your team\'s data.'
+  }) }}
+
+  <section aria-labelledby="value-story-heading">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m" id="value-story-heading">Your value story</h2>
+        <p>So far, <a href="/v3/contracts-completed">12 completed contracts have savings data</a>.</p>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row govuk-!-margin-bottom-7">
+      <div class="govuk-grid-column-one-half">
+        <div style="border-top: 8px solid #ca357c; padding: 20px 0 0; margin-bottom: 28px;">
+          <p class="govuk-body-s govuk-!-margin-bottom-1"><strong>Cash savings reported</strong></p>
+          <p class="govuk-heading-xl govuk-!-margin-bottom-1">£142,000</p>
+          <p class="govuk-body">The reported reduction between original contract budgets and final costs.</p>
+          <p class="govuk-body-s govuk-!-margin-bottom-0">This is separate from the value of other benefits.</p>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <div style="border-top: 8px solid #54319f; padding: 20px 0 0; margin-bottom: 28px;">
+          <p class="govuk-body-s govuk-!-margin-bottom-1"><strong>Other benefits reported</strong></p>
+          <p class="govuk-heading-xl govuk-!-margin-bottom-1">£18,200</p>
+          <p class="govuk-body">An estimated value for benefits such as price protection and improved performance.</p>
+          <p class="govuk-body-s govuk-!-margin-bottom-0">These benefits do not reduce the contract cost directly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="actions-heading">
+    <h2 class="govuk-heading-m" id="actions-heading">What do you want to do?</h2>
+    <div class="govuk-grid-row govuk-!-margin-bottom-7">
+      <div class="govuk-grid-column-one-third">
+        <h3 class="govuk-heading-s"><a href="/v3/add-a-saving">Add savings data</a></h3>
+        <p>Submit savings or benefits for a completed contract.</p>
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <h3 class="govuk-heading-s"><a href="/v3/contracts-completed">View insights and reports</a></h3>
+        <p>Compare completed contracts with peer organisations.</p>
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <h3 class="govuk-heading-s"><a href="/v3/pre-procurement/cpv-code">Calculate pre-procurement value</a></h3>
+        <p>Estimate potential value before you start a procurement.</p>
+      </div>
+    </div>
+  </section>
+{% endblock %}

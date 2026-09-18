@@ -1,0 +1,16 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+{% block pageTitle %}Contract length - {{ serviceName }}
+{% endblock %}
+{% block beforeContent %}{{ govukBackLink({ text: "Back", href: "/v3/pre-procurement/contract-start-date" }) }}
+{% endblock %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="/v3/pre-procurement/contract-length">
+        {{ govukInput({ id: "contract-length", name: "contractLength", label: { text: "How long will the contract last?", isPageHeading: true, classes: "govuk-label--l" }, suffix: { text: "years" }, classes: "govuk-input--width-5", inputmode: "numeric" }) }}
+        {{ govukButton({ text: "Continue" }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

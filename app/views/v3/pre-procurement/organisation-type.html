@@ -1,0 +1,16 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+{% block pageTitle %}Select your organisation type - {{ serviceName }}
+{% endblock %}
+{% block beforeContent %}{{ govukBackLink({ text: "Back", href: "/v3/pre-procurement/confirm-cpv-code" }) }}
+{% endblock %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="/v3/pre-procurement/organisation-type">
+        {{ govukRadios({ name: "organisationType", fieldset: { legend: { text: "Select your organisation type", isPageHeading: true, classes: "govuk-fieldset__legend--l" } }, items: [ { value: "Local authority", text: "Local authority" }, { value: "Combined authority", text: "Combined authority" }, { value: "Central government", text: "Central government" } ] }) }}
+        {{ govukButton({ text: "Continue" }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

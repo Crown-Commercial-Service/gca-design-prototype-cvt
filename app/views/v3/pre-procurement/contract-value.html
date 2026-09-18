@@ -1,0 +1,16 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+{% block pageTitle %}Value of contract - {{ serviceName }}
+{% endblock %}
+{% block beforeContent %}{{ govukBackLink({ text: "Back", href: "/v3/pre-procurement/region" }) }}
+{% endblock %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="/v3/pre-procurement/contract-value">
+        {{ govukInput({ id: "contract-value", name: "contractValue", label: { text: "What is the value of the contract?", isPageHeading: true, classes: "govuk-label--l" }, prefix: { text: "£" }, classes: "govuk-input--width-10", inputmode: "numeric" }) }}
+        {{ govukButton({ text: "Continue" }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

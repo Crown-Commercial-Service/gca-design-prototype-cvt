@@ -1,0 +1,74 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}Commercial value workspace - {{ serviceName }}{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: { text: "Alpha" },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body govuk-!-margin-bottom-1"><strong>GCA commercial value workspace</strong></p>
+      <h1 class="govuk-heading-xl">Make your next procurement count</h1>
+      <p class="govuk-body-l">See what your organisation has achieved, add the results of a completed contract, or test the potential value of a procurement you are planning.</p>
+    </div>
+  </div>
+
+  <div style="border-left: 8px solid #158187; background: #f3f2f1; padding: 24px; margin-bottom: 40px;">
+    <p class="govuk-body-s govuk-!-margin-bottom-1"><strong>VIEWING ORGANISATION DATA</strong></p>
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Central government organisation</h2>
+    <p class="govuk-body govuk-!-margin-bottom-0">Figures include data submitted across the organisation through the Central Digital Platform. They do not represent your personal or team-only activity.</p>
+  </div>
+
+  <div class="govuk-grid-row govuk-!-margin-bottom-7">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m">Your value story</h2>
+      <div style="border-top: 8px solid #ca357c; padding: 20px 0 0; margin-bottom: 28px;">
+        <p class="govuk-body-s govuk-!-margin-bottom-1">CASH SAVINGS REPORTED</p>
+        <p class="govuk-heading-xl govuk-!-margin-bottom-1">£142,000</p>
+        <p class="govuk-body">The reported reduction against original contract budgets.</p>
+        <p><a href="#cash-method">See how cash savings are calculated</a></p>
+      </div>
+      <div style="border-top: 8px solid #54319f; padding: 20px 0 0;">
+        <p class="govuk-body-s govuk-!-margin-bottom-1">VALUE OF OTHER BENEFITS</p>
+        <p class="govuk-heading-xl govuk-!-margin-bottom-1">£18,200</p>
+        <p class="govuk-body">A separate estimate for benefits such as price protection and improved performance.</p>
+        <p><a href="#benefit-method">See how other benefits are calculated</a></p>
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <div style="background: #e7f2fb; padding: 24px;">
+        <h2 class="govuk-heading-m">12</h2>
+        <p class="govuk-body govuk-!-margin-bottom-0">contracts with savings data</p>
+        <p class="govuk-body-s govuk-!-margin-top-4"><a href="/v3/contracts-completed">Explore completed contracts</a></p>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="govuk-heading-m">Choose your next move</h2>
+  <div class="govuk-grid-row govuk-!-margin-bottom-7">
+    <div class="govuk-grid-column-one-third">
+      <a class="govuk-button" href="/v3/add-a-saving">Add savings data</a>
+      <p class="govuk-body-s">Record what happened on a completed contract.</p>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <a class="govuk-button govuk-button--secondary" href="/v3/contracts-completed">View insights</a>
+      <p class="govuk-body-s">Understand how your organisation compares with peers.</p>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <a class="govuk-button govuk-button--secondary" href="/v3/pre-procurement/cpv-code">Plan a procurement</a>
+      <p class="govuk-body-s">Estimate potential value before you begin.</p>
+    </div>
+  </div>
+
+  <h2 class="govuk-heading-m">Definitions</h2>
+  <dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row" id="cash-method"><dt class="govuk-summary-list__key">Cash savings</dt><dd class="govuk-summary-list__value">The difference between the original contract budget and final reported cost.</dd></div>
+    <div class="govuk-summary-list__row" id="benefit-method"><dt class="govuk-summary-list__key">Other benefits</dt><dd class="govuk-summary-list__value">A separate estimate of non-cash benefits. It is not added to cash savings.</dd></div>
+  </dl>
+{% endblock %}

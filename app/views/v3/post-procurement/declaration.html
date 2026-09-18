@@ -1,0 +1,72 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+	{{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.go(-1);"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" action="/v3/declaration">
+				<input type="hidden" name="ocid" value="{{ ocid or contract.ocid }}">
+
+				<span class="govuk-caption-m">Add a saving</span>
+				<h1 class="govuk-heading-l">Confirm how we will use your data</h1>
+
+				<p>Before you save this information, you must agree to how it will be stored and shared with other public sector organisations.</p>
+
+				<h2 class="govuk-heading-m">Confirm your data is accurate</h2>
+
+				<p>By continuing, you confirm that:</p>
+				<ul class="govuk-list govuk-list--bullet">
+					<li>your costs and savings figures are as accurate as possible</li>
+					<li>you have calculated them using standard methods (like budget allocations, market rates, or previous contract prices)</li>
+				</ul>
+
+				<h2 class="govuk-heading-m">How we use your data</h2>
+
+				<p>We share data to help public sector organisations compare their performance.</p>
+
+				<p>To do this, we will:</p>
+				<ul class="govuk-list govuk-list--bullet">
+					<li>group your figures with others to calculate sector and regional averages</li>
+					<li>hide your individual contract details so data is compared fairly</li>
+					<li>check for irregular figures to make sure the data is reliable</li>
+				</ul>
+
+				<p>By continuing, you confirm that the data you have provided is accurate and you agree to how it will be used.</p>
+
+				<div class="govuk-button-group">
+  					{{ govukButton({
+  					      text: "Agree and continue"
+  					    }) }}
+
+  					{{ govukButton({
+  					  text: "Back to start",
+  					  classes: "govuk-button--secondary"
+  					}) }}
+				</div>
+
+				
+
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

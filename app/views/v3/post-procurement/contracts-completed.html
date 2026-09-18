@@ -24,7 +24,7 @@
 {% block content %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-full">
-			<h1 class="govuk-heading-l">View awarded contract insights</h1>
+			<h1 class="govuk-heading-l">Insight reports for your awarded contracts</h1>
 			<p>These are your awarded contracts where you have added savings data.</p>
 			<p>You can add more savings data to an awarded contract on the insights page.</p>
 
@@ -59,7 +59,7 @@
 							<td class="govuk-table__cell">{{ contract.endDate }}</td>
 							<td class="govuk-table__cell">
 								<!--<a class="govuk-link govuk-link--no-visited-state" href="/v3/cashable-savings-category/{{ contract.ocid }}">Add savings</a>-->
-								<a class="govuk-link govuk-link--no-visited-state" href="/v3/calculation/{{ contract.ocid }}">View</a>
+								<a class="govuk-link govuk-link--no-visited-state" href="/v3/calculation/{{ contract.ocid }}">View insights</a>
 							</td>
 						</tr>
 					{% endfor %}

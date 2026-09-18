@@ -75,7 +75,7 @@
           rows: [
             {
               key: {
-                text: "How did you make a saving?"
+                text: "How did you make the cash saving?"
               },
               value: {
                 html: data['cashable-savings-type']
@@ -92,24 +92,7 @@
             },
             {
               key: {
-                text: "How did you calculate what this procurement would have cost?"
-              },
-              value: {
-                html: data['baseline-approach']
-              },
-              actions: {
-                items: [
-                  {
-                    href: "#",
-                    text: "Change",
-                    visuallyHiddenText: "baseline approach"
-                  }
-                ]
-              }
-            },
-            {
-              key: {
-                text: "What would this procurement have cost without these savings?"
+                text: "How much cash did you save?"
               },
               value: {
                 html: data['baseline-value'] | poundsWithCommas or ("£6")
@@ -120,6 +103,23 @@
                     href: "#",
                     text: "Change",
                     visuallyHiddenText: "baseline value"
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                text: "How did you calculate this saving?"
+              },
+              value: {
+                html: data['baseline-approach']
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "baseline approach"
                   }
                 ]
               }
@@ -138,7 +138,7 @@
           rows: [
             {
               key: {
-                text: "Which other budget protection or benefits do you want to add?"
+                text: "Benefit type"
               },
               value: {
                 html: data['strategic-value']
@@ -155,7 +155,7 @@
             },
             {
               key: {
-                text: "What benefit did you achieve?"
+                text: "Benefit achieved"
               },
               value: {
                 html: data['non-cashable-type']
@@ -200,7 +200,7 @@
             }
           },
           hint: {
-            html: "<p>This includes things like budget protections, social benefits, or policy targets.</p>"
+            html: "<p>This includes things like budget protections or policy targets.</p>"
           },
           items: [
             {

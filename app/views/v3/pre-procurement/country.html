@@ -1,0 +1,16 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+{% block pageTitle %}Select country - {{ serviceName }}
+{% endblock %}
+{% block beforeContent %}{{ govukBackLink({ text: "Back", href: "/v3/pre-procurement/organisation-type" }) }}
+{% endblock %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="/v3/pre-procurement/country">
+        {{ govukRadios({ name: "country", fieldset: { legend: { text: "Select country", isPageHeading: true, classes: "govuk-fieldset__legend--l" } }, items: [ { value: "England", text: "England" }, { value: "Scotland", text: "Scotland" }, { value: "Wales", text: "Wales" }, { value: "Northern Ireland", text: "Northern Ireland" } ] }) }}
+        {{ govukButton({ text: "Continue" }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

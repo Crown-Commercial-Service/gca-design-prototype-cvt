@@ -1,0 +1,114 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+	{{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.go(-1);"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" action="/v3/baseline-approach">
+				<span class="govuk-caption-m">Add a saving</span>
+				<h1 class="govuk-heading-l">Details about your cash savings</h1>
+
+        {{ govukInsetText({
+          html: 'Contract value: ' + (contract.value | poundsWithCommas)
+        }) }}
+
+        {{ govukInput({
+            id: "baseline-value",
+            name: "baseline-value",
+            label: {
+              text: "How much cash did you save?",
+              classes: "govuk-label--m",
+              isPageHeading: false
+            },
+            prefix: {
+              text: "£"
+            },
+            classes: "govuk-input--width-10",
+            spellcheck: false
+        }) }}
+
+				{{ govukRadios({
+          name: "baseline-approach",
+          fieldset: {
+            legend: {
+              text: "How did you calculate this saving?",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: "Used our original budget allocation",
+              text: "Used our original budget allocation",
+              hint: {
+                text: "You calculated the saving against the amount of money you originally set aside for this work."
+              }
+            },
+            {
+              value: "Compared with industry standards",
+              text: "Compared with industry standards",
+              hint: {
+                text: "You used recognised industry benchmarks or standard prices to work out your expected costs."
+              }
+            },
+            {
+              value: "Researched current market rates",
+              text: "Researched current market rates",
+              hint: {
+                text: "You looked at current market prices to find out what suppliers are actively charging right now."
+              }
+            },
+            {
+              value: "Used the median of all competitive bids",
+              text: "Used the median of all competitive bids",
+              hint: {
+                text: "You calculated the saving against the middle price (the median) of all the supplier bids you received."
+              }
+            },
+            {
+              value: "Compared with our last contract",
+              text: "Compared with our last contract",
+              hint: {
+                text: "You calculated the saving by comparing the new price against what you paid the last time you bought these goods or services."
+              }
+            },
+            {
+              value: "Detailed cost modelling",
+              text: "Detailed cost modelling",
+              hint: {
+                text: "You built a detailed breakdown of costs (such as materials, labour, and overheads) to estimate the expected price."
+              }
+            }
+          ]
+        }) }}
+
+				
+
+				{{ govukButton({
+        text: "Continue"
+        }) }}
+
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

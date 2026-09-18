@@ -134,17 +134,17 @@ const persistJourneyDataToContract = (req) => {
 
 // Unique: loads contract data for the list
 router.get('/v3/contracts', (req, res) => {
-	res.render('v3/contracts', { contracts })
+	res.render('v3/post-procurement/contracts', { contracts })
 })
 
 // Unique: loads contract data for the list
 router.get('/v3/contracts-completed', (req, res) => {
-	res.render('v3/contracts-completed', { contracts: getContractsByStatus('Completed') })
+	res.render('v3/post-procurement/contracts-completed', { contracts: getContractsByStatus('Completed') })
 })
 
 // Unique: loads contract data for the list
 router.get('/v3/contracts-in-progress', (req, res) => {
-	res.render('v3/contracts-in-progress', { contracts: getContractsByStatus('In progress') })
+	res.render('v3/post-procurement/contracts-in-progress', { contracts: getContractsByStatus('In progress') })
 })
 
 // Unique: looks up a specific contract by ocid
@@ -154,7 +154,7 @@ router.get('/v3/calculation/:ocid', (req, res) => {
 	const contract = findContractByOcid(ocid)
 
 	if (!contract) {
-		return res.status(404).render('v3/calculation', { contract: null, ocid })
+		return res.status(404).render('v3/post-procurement/calculation', { contract: null, ocid })
 	}
 
 	const contractValue = toNumber(contract.contractValueDisplay || contract.value)
@@ -172,6 +172,13 @@ router.get('/v3/calculation/:ocid', (req, res) => {
 
 	const cashableShareOfTotal = getPercentage(cashableSavings, totalSavings)
 	const nonCashableShareOfTotal = getPercentage(nonCashableSavings, totalSavings)
+	const potentialCashSavings = Math.round(contractValue * (peerAverageSavingsPercentageValue / 100))
+	const potentialOtherBenefits = Math.round(contractValue * 0.03)
+	const sessionData = getSessionData(req)
+	const potentialInputs = {
+		region: sessionData.region || contract.region || 'North West',
+		organisationType: sessionData.organisationType || contract.organisationType || 'Central government'
+	}
 
 	const calculationMetrics = {
 		contractValue,
@@ -194,14 +201,21 @@ router.get('/v3/calculation/:ocid', (req, res) => {
 		cashableShareOfTotal: formatPercentage(cashableShareOfTotal),
 		nonCashableShareOfTotal: formatPercentage(nonCashableShareOfTotal),
 		cashableShareOfTotalWidth: cashableShareOfTotal.toFixed(1),
-		nonCashableShareOfTotalWidth: nonCashableShareOfTotal.toFixed(1)
+		nonCashableShareOfTotalWidth: nonCashableShareOfTotal.toFixed(1),
+		potentialCashSavings,
+		potentialOtherBenefits,
+		potentialTotalValue: potentialCashSavings + potentialOtherBenefits,
+		regionalSavingsPercentageValue: 12,
+		organisationTypeSavingsPercentageValue: 11,
+		regionalSavingsValue: Math.round(contractValue * 0.12),
+		organisationTypeSavingsValue: Math.round(contractValue * 0.11)
 	}
 
-	const calculationView = ['1', '2', '3'].includes(req.query.view)
-		? `v3/calculation-${req.query.view}`
-		: 'v3/calculation'
+	const calculationView = ['1', '2', '3', '4'].includes(req.query.view)
+		? `v3/post-procurement/calculation-${req.query.view}`
+		: 'v3/post-procurement/calculation'
 
-	return res.render(calculationView, { contract, calculationMetrics })
+	return res.render(calculationView, { contract, calculationMetrics, potentialInputs })
 })
 
 router.get('/v3/calculation-1/:ocid', (req, res) => {
@@ -214,6 +228,10 @@ router.get('/v3/calculation-2/:ocid', (req, res) => {
 
 router.get('/v3/calculation-3/:ocid', (req, res) => {
 	res.redirect(`/v3/calculation/${req.params.ocid}?view=3`)
+})
+
+router.get('/v3/calculation-4/:ocid', (req, res) => {
+	res.redirect(`/v3/calculation/${req.params.ocid}?view=4`)
 })
 
 router.get('/v3/calculation', (req, res) => {
@@ -233,10 +251,10 @@ router.get('/v3/cashable-savings/:ocid', (req, res) => {
 	const contract = findContractByOcid(ocid)
 
 	if (!contract) {
-		return res.status(404).render('v3/cashable-savings', { contract: null, ocid })
+		return res.status(404).render('v3/post-procurement/cashable-savings', { contract: null, ocid })
 	}
 
-	return res.render('v3/cashable-savings', { contract, ocid })
+	return res.render('v3/post-procurement/cashable-savings', { contract, ocid })
 })
 
 router.get('/v3/cashable-savings', (req, res) => {
@@ -247,7 +265,7 @@ router.get('/v3/cashable-savings', (req, res) => {
 		return res.redirect('/v3/contracts-in-progress')
 	}
 
-	return res.render('v3/cashable-savings', { contract, ocid })
+	return res.render('v3/post-procurement/cashable-savings', { contract, ocid })
 })
 
 // Backwards compatibility for older links
@@ -263,7 +281,7 @@ router.get('/v3/procurement-savings-summary', (req, res) => {
 		return res.redirect('/v3/contracts-in-progress')
 	}
 
-	return res.render('v3/procurement-savings-summary', { contract, ocid })
+	return res.render('v3/post-procurement/procurement-savings-summary', { contract, ocid })
 })
 
 router.post('/v3/procurement-savings-summary', (req, res) => {
@@ -293,7 +311,7 @@ router.get('/v3/strategic-value-summary', (req, res) => {
 		return res.redirect('/v3/contracts-in-progress')
 	}
 
-	return res.render('v3/strategic-value-summary', { contract, ocid })
+	return res.render('v3/post-procurement/strategic-value-summary', { contract, ocid })
 })
 
 router.get('/v3/dashboard', (req, res) => {
@@ -301,6 +319,196 @@ router.get('/v3/dashboard', (req, res) => {
 	const inProgressCount = getContractsByStatus('In progress').length
 
 	return res.render('v3/dashboard', { completedCount, inProgressCount })
+})
+
+router.get('/v3/dashboard-1', (req, res) => {
+	return res.render('v3/dashboard-1')
+})
+
+router.get('/v3/dashboard-2', (req, res) => {
+	return res.render('v3/dashboard-2')
+})
+
+router.get('/v3/dashboard-3', (req, res) => {
+	return res.render('v3/dashboard-3')
+})
+
+router.get('/v3/dashboard-4', (req, res) => {
+	return res.render('v3/dashboard-4')
+})
+
+router.get('/v3/dashboard-5', (req, res) => {
+	return res.render('v3/dashboard-5')
+})
+
+router.get('/v3/dashboard-6', (req, res) => {
+	return res.render('v3/dashboard-6')
+})
+
+router.get('/v3/pre-procurement/cpv-code', (req, res) => {
+	res.render('v3/pre-procurement/cpv-code')
+})
+
+router.post('/v3/pre-procurement/cpv-code', (req, res) => {
+	const sessionData = getSessionData(req)
+
+	if (req.body.cpvChoice === 'no') {
+		return res.redirect('/v3/pre-procurement/what-are-you-buying')
+	}
+
+	sessionData.cpvCode = req.body.cpvCode || ''
+	return res.redirect('/v3/pre-procurement/enter-cpv-code')
+})
+
+router.get('/v3/pre-procurement/enter-cpv-code', (req, res) => {
+	res.render('v3/pre-procurement/enter-cpv-code')
+})
+
+router.post('/v3/pre-procurement/enter-cpv-code', (req, res) => {
+	const sessionData = getSessionData(req)
+	sessionData.cpvCode = req.body.cpvCode || ''
+	sessionData.cpvDescription = req.body.cpvDescription || 'Description to be confirmed'
+	return res.redirect('/v3/pre-procurement/confirm-cpv-code')
+})
+
+router.get('/v3/pre-procurement/confirm-cpv-code', (req, res) => {
+	const sessionData = getSessionData(req)
+	res.render('v3/pre-procurement/confirm-cpv-code', { cpv: sessionData })
+})
+
+router.get('/v3/pre-procurement/organisation-type', (req, res) => {
+	res.render('v3/pre-procurement/organisation-type')
+})
+
+router.post('/v3/pre-procurement/confirm-cpv-code', (req, res) => {
+	return res.redirect('/v3/pre-procurement/organisation-type')
+})
+
+router.post('/v3/pre-procurement/organisation-type', (req, res) => {
+	getSessionData(req).organisationType = req.body.organisationType
+	return res.redirect('/v3/pre-procurement/country')
+})
+
+router.get('/v3/pre-procurement/country', (req, res) => {
+	res.render('v3/pre-procurement/country')
+})
+
+router.post('/v3/pre-procurement/country', (req, res) => {
+	getSessionData(req).country = req.body.country
+	return res.redirect('/v3/pre-procurement/region')
+})
+
+router.get('/v3/pre-procurement/region', (req, res) => {
+	res.render('v3/pre-procurement/region', { country: getSessionData(req).country })
+})
+
+router.post('/v3/pre-procurement/region', (req, res) => {
+	getSessionData(req).region = req.body.region
+	return res.redirect('/v3/pre-procurement/contract-value')
+})
+
+router.get('/v3/pre-procurement/contract-value', (req, res) => {
+	res.render('v3/pre-procurement/contract-value')
+})
+
+router.post('/v3/pre-procurement/contract-value', (req, res) => {
+	getSessionData(req).contractValue = req.body.contractValue
+	return res.redirect('/v3/pre-procurement/contract-start-date')
+})
+
+router.get('/v3/pre-procurement/contract-start-date', (req, res) => {
+	res.render('v3/pre-procurement/contract-start-date')
+})
+
+router.post('/v3/pre-procurement/contract-start-date', (req, res) => {
+	const sessionData = getSessionData(req)
+	sessionData.contractStartDate = [req.body.contractStartDateDay, req.body.contractStartDateMonth, req.body.contractStartDateYear].filter(Boolean).join('/')
+	return res.redirect('/v3/pre-procurement/contract-length')
+})
+
+router.get('/v3/pre-procurement/contract-length', (req, res) => {
+	res.render('v3/pre-procurement/contract-length')
+})
+
+router.post('/v3/pre-procurement/contract-length', (req, res) => {
+	getSessionData(req).contractLength = req.body.contractLength
+	return res.redirect('/v3/pre-procurement/calculation')
+})
+
+router.get('/v3/pre-procurement/calculation', (req, res) => {
+	const sessionData = getSessionData(req)
+	const contractValue = toNumber(sessionData.contractValue)
+	const potentialCashSavings = Math.round(contractValue * 0.1)
+	const potentialOtherBenefits = Math.round(contractValue * 0.03)
+	const contract = {
+		ocid: 'pre-procurement',
+		cpvCode: sessionData.cpvCode || 'Not provided',
+		cpvDescription: sessionData.cpvDescription || 'Description to be confirmed',
+		startDate: sessionData.contractStartDate || 'Not provided',
+		endDate: 'Not provided'
+	}
+	const calculationMetrics = {
+		contractValue,
+		potentialCashSavings,
+		potentialOtherBenefits,
+		potentialTotalValue: potentialCashSavings + potentialOtherBenefits,
+		peerAverageSavingsPercentageValue: 10,
+		peerAverageSavingsPercentage: '10.0%',
+		regionalSavingsPercentageValue: 12,
+		organisationTypeSavingsPercentageValue: 11,
+		regionalSavingsValue: Math.round(contractValue * 0.12),
+		organisationTypeSavingsValue: Math.round(contractValue * 0.11)
+	}
+	const potentialInputs = {
+		region: sessionData.region || 'Not provided',
+		organisationType: sessionData.organisationType || 'Not provided'
+	}
+
+	return res.render('v3/post-procurement/calculation-4', { contract, calculationMetrics, potentialInputs, isPreProcurement: true })
+})
+
+router.get('/v3/add-a-saving', (req, res) => {
+	res.render('v3/post-procurement/add-a-saving')
+})
+
+router.get('/v3/add-a-benefit', (req, res) => {
+	res.render('v3/post-procurement/add-a-benefit')
+})
+
+router.get('/v3/baseline-value', (req, res) => {
+	res.render('v3/post-procurement/baseline-value')
+})
+
+router.get('/v3/bulk-upload', (req, res) => {
+	res.render('v3/post-procurement/bulk-upload')
+})
+
+router.get('/v3/bulk-upload-processing', (req, res) => {
+	res.render('v3/post-procurement/bulk-upload-processing')
+})
+
+router.get('/v3/cashable-savings-type', (req, res) => {
+	res.render('v3/post-procurement/cashable-savings-type')
+})
+
+router.get('/v3/declaration', (req, res) => {
+	res.render('v3/post-procurement/declaration')
+})
+
+router.get('/v3/declaration-bulk', (req, res) => {
+	res.render('v3/post-procurement/declaration-bulk')
+})
+
+router.get('/v3/non-cashable-savings-value', (req, res) => {
+	res.render('v3/post-procurement/non-cashable-savings-value')
+})
+
+router.get('/v3/non-cashable-type', (req, res) => {
+	res.render('v3/post-procurement/non-cashable-type')
+})
+
+router.get('/v3/non-monetisable-type', (req, res) => {
+	res.render('v3/post-procurement/non-monetisable-type')
 })
 
 // Form submissions — redirect to next page
@@ -334,6 +542,17 @@ router.post('/v3/cashable-savings/', (req, res) => {
 
 router.post('/v3/cashable-savings-type', (req, res) => {
 	res.redirect(`/v3/baseline-approach`)
+})
+
+router.get('/v3/baseline-approach', (req, res) => {
+	const ocid = getActiveContractOcid(req)
+	const contract = ocid ? findContractByOcid(ocid) : null
+
+	if (!ocid || !contract) {
+		return res.redirect('/v3/contracts-in-progress')
+	}
+
+	return res.render('v3/post-procurement/baseline-approach', { contract, ocid })
 })
 
 router.post('/v3/baseline-approach', (req, res) => {
@@ -436,7 +655,7 @@ router.get('/v3/bulk-upload-error', (req, res) => {
 	const sessionData = getSessionData(req)
 	const uploadErrors = Array.isArray(sessionData.bulkUploadErrors) ? sessionData.bulkUploadErrors : []
 
-	return res.render('v3/bulk-upload-error', { uploadErrors })
+	return res.render('v3/post-procurement/bulk-upload-error', { uploadErrors })
 })
 
 router.get('/v3/bulk-upload-review', (req, res) => {
@@ -447,7 +666,7 @@ router.get('/v3/bulk-upload-review', (req, res) => {
 		return res.redirect('/v3/bulk-upload')
 	}
 
-	return res.render('v3/bulk-upload-review-table', { reviewItems })
+	return res.render('v3/post-procurement/bulk-upload-review-table', { reviewItems })
 })
 
 router.get('/v3/bulk-upload-review-table', (req, res) => {
@@ -462,7 +681,7 @@ router.get('/v3/bulk-upload-review-compact', (req, res) => {
 		return res.redirect('/v3/bulk-upload')
 	}
 
-	return res.render('v3/bulk-upload-review-table', { reviewItems })
+	return res.render('v3/post-procurement/bulk-upload-review-table', { reviewItems })
 })
 
 router.post('/v3/bulk-upload-review-confirm', (req, res) => {
@@ -504,7 +723,7 @@ router.get('/v3/bulk-upload-success', (req, res) => {
 		? sessionData.bulkUploadUpdatedContracts
 		: []
 
-	return res.render('v3/bulk-upload-success', { appliedCount, updatedContracts })
+	return res.render('v3/post-procurement/bulk-upload-success', { appliedCount, updatedContracts })
 })
 
 router.post('/v3/export', (req, res) => {
