@@ -554,7 +554,13 @@ router.post('/v3/cashable-savings/', (req, res) => {
 })
 
 router.post('/v3/cashable-savings-type', (req, res) => {
-	res.redirect(`/v3/baseline-approach`)
+	const ocid = getActiveContractOcid(req) || (req.body && req.body.ocid)
+
+	if (ocid) {
+		setActiveContractOcid(req, ocid)
+	}
+
+	return res.redirect('/v3/baseline-approach')
 })
 
 router.get('/v3/baseline-approach', (req, res) => {
