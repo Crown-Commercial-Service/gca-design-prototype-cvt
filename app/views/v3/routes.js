@@ -132,6 +132,12 @@ const persistJourneyDataToContract = (req) => {
 	return updates
 }
 
+// Real, navigable "Back" link target so tools that record link hotspots (e.g. Useberry)
+// can follow it - a javascript: href isn't a trackable navigation.
+router.get('/v3/back', (req, res) => {
+	res.redirect(req.get('Referrer') || '/v3/dashboard')
+})
+
 // Unique: loads contract data for the list
 router.get('/v3/contracts', (req, res) => {
 	res.render('v3/post-procurement/contracts', { contracts })
