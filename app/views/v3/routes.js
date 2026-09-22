@@ -300,7 +300,7 @@ router.post('/v3/procurement-savings-summary', (req, res) => {
 		return res.redirect('/v3/contracts')
 	}
 
-	return res.redirect(`/v3/declaration`)
+	return res.redirect(`/v3/calculation`)
 })
 
 router.get('/v3/strategic-value-summary', (req, res) => {
@@ -491,6 +491,19 @@ router.get('/v3/cashable-savings-type', (req, res) => {
 	res.render('v3/post-procurement/cashable-savings-type')
 })
 
+// Unique: loads contract for declaration page reached at the start of the add-a-saving flow
+router.get('/v3/declaration/:ocid', (req, res) => {
+	const { ocid } = req.params
+	setActiveContractOcid(req, ocid)
+	const contract = findContractByOcid(ocid)
+
+	if (!contract) {
+		return res.status(404).render('v3/post-procurement/declaration', { contract: null, ocid })
+	}
+
+	return res.render('v3/post-procurement/declaration', { contract, ocid })
+})
+
 router.get('/v3/declaration', (req, res) => {
 	res.render('v3/post-procurement/declaration')
 })
@@ -593,7 +606,7 @@ router.post('/v3/strategic-value-summary', (req, res) => {
 		return res.redirect('/v3/contracts')
 	}
 
-	return res.redirect(`/v3/declaration`)
+	return res.redirect(`/v3/calculation`)
 })
 
 router.post('/v3/add-a-benefit', (req, res) => {
@@ -619,7 +632,14 @@ router.post('/v3/non-cashable-savings-value', (req, res) => {
 })
 
 router.post('/v3/declaration/', (req, res) => {
-	return res.redirect(`/v3/calculation/`)
+	const ocid = getActiveContractOcid(req) || (req.body && req.body.ocid)
+
+	if (ocid) {
+		setActiveContractOcid(req, ocid)
+		return res.redirect(`/v3/cashable-savings/${ocid}`)
+	}
+
+	return res.redirect('/v3/contracts-in-progress')
 })
 
 router.post('/v3/calculation/:ocid', (req, res) => {
