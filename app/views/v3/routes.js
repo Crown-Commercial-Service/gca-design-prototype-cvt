@@ -651,13 +651,7 @@ router.post('/v3/dashboard', (req, res) => {
 })
 
 router.post('/v3/add-a-saving', (req, res) => {
-	if (req.session.data['savings-data-method'] === 'single-contract') {
-		return res.redirect('/v3/contracts-in-progress')
-	} else if (req.session.data['savings-data-method'] === 'bulk-upload') {
-		return res.redirect('/v3/bulk-upload')
-	}
-
-	//res.redirect('/v3/dashboard')
+	return res.redirect('/v3/contracts-in-progress')
 })
 
 router.post('/v3/bulk-upload', (req, res) => {
