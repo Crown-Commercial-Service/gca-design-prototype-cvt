@@ -24,6 +24,7 @@
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			<form method="post" action="/v3/non-cashable-savings-value">
+				<input type="hidden" name="ocid" value="{{ ocid or contract.ocid }}">
 				<span class="govuk-caption-m">Add a saving</span>
 				{% set savingsQuestionText = data['non-cashable-type'] | nonCashableSavingsQuestion %}
 

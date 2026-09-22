@@ -24,6 +24,7 @@
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			<form method="post" action="/v3/add-a-benefit">
+				<input type="hidden" name="ocid" value="{{ ocid or contract.ocid }}">
 
 				{{ govukRadios({
           name: "strategic-value",

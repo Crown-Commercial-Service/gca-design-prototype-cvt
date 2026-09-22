@@ -616,25 +616,44 @@ router.post('/v3/strategic-value-summary', (req, res) => {
 })
 
 router.post('/v3/add-a-benefit', (req, res) => {
-	//console.log("testing")
+	const ocid = getActiveContractOcid(req) || (req.body && req.body.ocid)
+	if (ocid) {
+		setActiveContractOcid(req, ocid)
+	}
+
 	const strategicValue = getSessionData(req)['strategic-value']
 	if (strategicValue === 'non-cashable') {
 		return res.redirect(`/v3/non-cashable-type`)
 	}
-	res.redirect(`/v3/non-monetisable-type`)
+	return res.redirect(`/v3/non-monetisable-type`)
 })
 
 router.post('/v3/non-cashable-type', (req, res) => {
-	res.redirect(`/v3/non-cashable-savings-value`)
+	const ocid = getActiveContractOcid(req) || (req.body && req.body.ocid)
+	if (ocid) {
+		setActiveContractOcid(req, ocid)
+	}
+
+	return res.redirect(`/v3/non-cashable-savings-value`)
 })
 
 router.post('/v3/non-monetisable-type', (req, res) => {
-	res.redirect(`/v3/strategic-value-summary`)
+	const ocid = getActiveContractOcid(req) || (req.body && req.body.ocid)
+	if (ocid) {
+		setActiveContractOcid(req, ocid)
+	}
+
+	return res.redirect(`/v3/strategic-value-summary`)
 })
 
 router.post('/v3/non-cashable-savings-value', (req, res) => {
+	const ocid = getActiveContractOcid(req) || (req.body && req.body.ocid)
+	if (ocid) {
+		setActiveContractOcid(req, ocid)
+	}
+
 	persistJourneyDataToContract(req)
-	res.redirect(`/v3/strategic-value-summary`)
+	return res.redirect(`/v3/strategic-value-summary`)
 })
 
 router.post('/v3/declaration/', (req, res) => {
