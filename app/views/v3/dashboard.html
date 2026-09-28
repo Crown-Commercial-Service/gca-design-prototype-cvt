@@ -15,15 +15,15 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">Commercial value dashboard</h1>
+      <h1 class="govuk-heading-l">Commercial value overview</h1>
       <p>Use this dashboard to view a summary of your organisation or department's total savings. You can also:</p>
-      <ul>
+      <ul class="govuk-list govuk-list--bullet">
         <li>add savings data to your awarded contracts</li>
         <li>compare your contract performance with similar organisations</li>
       </ul>
       <p>You must add your savings data before you can see comparisons.</p>
 
-      <div class="govuk-button-group">
+      <div class="govuk-button-group ">
           {{ govukButton({
 						text: "Add savings data",
 						href: "/v3/contracts-in-progress"
@@ -44,7 +44,7 @@
         <div class="govuk-grid-row ccs-dashboard-section__container">
           <div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
             <p class="ccs-dashboard-section__panel-title">Contracts with savings data</p>
-            <p class="ccs-dashboard-section__panel-description" style="font-size:2em;font-weight:600;">12</p>
+            <p class="ccs-dashboard-section__panel-description" style="font-size:2em;font-weight:600;">12 out of 20</p>
           </div>
           <div class="ccs-dashboard-section__panel govuk-grid-column-one-third">
             <p class="ccs-dashboard-section__panel-title">Cash savings</p>

@@ -6,14 +6,14 @@
 {% endblock %}
 
 {% block beforeContent %}
-	{{ govukPhaseBanner({
+  {{ govukPhaseBanner({
     tag: {
       text: "Alpha"
     },
     html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
   }) }}
 
-	{{ govukBackLink({
+  {{ govukBackLink({
     text: "Back",
     href: "/v3/back"
   }) }}
@@ -21,14 +21,17 @@
 {% endblock %}
 
 {% block content %}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-two-thirds">
-			<form method="post" action="/v3/baseline-approach">
-				<span class="govuk-caption-m">Add a saving</span>
-				<h1 class="govuk-heading-l">Details about your cash savings</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="post" action="/v3/baseline-approach">
+        <span class="govuk-caption-m">Add a saving</span>
+        <h1 class="govuk-heading-l">Details about your cash savings</h1>
 
         {{ govukInsetText({
-          html: 'Contract value: ' + (contract.value | poundsWithCommas)
+          html: 'Contract value: ' + (contract.value | poundsWithCommas) + '<br><strong>Your contract would have cost <span id="baseline-cost-preview">' + (contract.value | poundsWithCommas) + '</span></strong>',
+          attributes: {
+            'data-contract-value': contract.value
+          }
         }) }}
 
         {{ govukInput({
@@ -46,7 +49,30 @@
             spellcheck: false
         }) }}
 
-				{{ govukRadios({
+        <script>
+          (function () {
+            var insetText = document.querySelector('[data-contract-value]')
+            var baselineInput = document.getElementById('baseline-value')
+            var preview = document.getElementById('baseline-cost-preview')
+            if (!insetText || !baselineInput || !preview) 
+              return
+
+            var contractValue = Number(insetText.getAttribute('data-contract-value')) || 0
+
+            function formatPounds(value) {
+              return '£' + Math
+                .round(value)
+                .toLocaleString('en-GB')
+            }
+
+            baselineInput.addEventListener('input', function () {
+              var enteredValue = Number(baselineInput.value.replace(/[£,\s]/g, '')) || 0
+              preview.textContent = formatPounds(contractValue + enteredValue)
+            })
+          }())
+        </script>
+
+        {{ govukRadios({
           name: "baseline-approach",
           fieldset: {
             legend: {
@@ -54,6 +80,9 @@
               isPageHeading: false,
               classes: "govuk-fieldset__legend--m"
             }
+          },
+          hint: {
+            text: "You must be able to prove how you calculated the saving."
           },
           items: [
             {
@@ -101,14 +130,12 @@
           ]
         }) }}
 
-				
-
-				{{ govukButton({
+        {{ govukButton({
         text: "Continue"
         }) }}
 
-			</form>
-		</div>
-	</div>
+      </form>
+    </div>
+  </div>
 
 {% endblock %}

@@ -26,13 +26,13 @@
 			<form method="post" action="/v3/non-cashable-savings-value">
 				<input type="hidden" name="ocid" value="{{ ocid or contract.ocid }}">
 				<span class="govuk-caption-m">Add a saving</span>
-				{% set savingsQuestionText = data['non-cashable-type'] | nonCashableSavingsQuestion %}
+				{#{% set savingsQuestionText = data['non-cashable-type'] | nonCashableSavingsQuestion %}#}
 
 				{{ govukInput({
             id: "non-cashable-savings-value",
             name: "non-cashable-savings-value",
             label: {
-              text: savingsQuestionText,
+              text: "What is the estimated cash value of this benefit?",
               classes: "govuk-label--l",
               isPageHeading: true
             },

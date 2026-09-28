@@ -132,13 +132,13 @@
 				{{ govukSummaryList({
           card: {
             title: {
-              text: "Savings benefit 1"
+              text: "Benefit savings 1"
             }
           },
           rows: [
             {
               key: {
-                text: "Benefit type"
+                text: "Which benefit do you want to add?"
               },
               value: {
                 html: data['strategic-value']
@@ -155,7 +155,7 @@
             },
             {
               key: {
-                text: "Benefit achieved"
+                text: "Which budget or price protections did you achieve?"
               },
               value: {
                 html: data['non-cashable-type']
@@ -172,7 +172,7 @@
             },
             {
               key: {
-                text: savingsQuestionText
+                text: "What is the estimated cash value of this benefit?"
               },
               value: {
                 html: data['non-cashable-savings-value'] or "£10,000"
