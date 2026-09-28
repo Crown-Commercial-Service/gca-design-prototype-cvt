@@ -4,7 +4,7 @@ const path = require('path')
 const { chromium } = require('playwright')
 
 const BASE = 'http://localhost:3000'
-const OUT_DIR = path.join(__dirname, '..', 'screenshots', 'v3-3')
+const OUT_DIR = path.join(__dirname, '..', 'screenshots', 'v3-4')
 const IN_PROGRESS_OCID = 'ocds-b5fd17-c1a2b3c4-6666-4000-a000-000000000006'
 
 let n = 0
