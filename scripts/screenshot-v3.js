@@ -1,10 +1,16 @@
 // Standalone Playwright capture of the v3 prototype flow.
 // Run with: node scripts/screenshot-v3.js
 const path = require('path')
+const fs = require('fs')
 const { chromium } = require('playwright')
 
 const BASE = 'http://localhost:3000'
-const OUT_DIR = path.join(__dirname, '..', 'screenshots', 'v3-4')
+const SCREENSHOTS_DIR = path.join(__dirname, '..', 'screenshots')
+let outputIndex = 1
+while (fs.existsSync(path.join(SCREENSHOTS_DIR, `v3-${outputIndex}`))) {
+	outputIndex += 1
+}
+const OUT_DIR = path.join(SCREENSHOTS_DIR, `v3-${outputIndex}`)
 const IN_PROGRESS_OCID = 'ocds-b5fd17-c1a2b3c4-6666-4000-a000-000000000006'
 
 let n = 0
@@ -30,6 +36,7 @@ async function clickContinue (page) {
 }
 
 async function main () {
+	fs.mkdirSync(OUT_DIR, { recursive: true })
 	const browser = await chromium.launch({ channel: 'chrome', headless: true })
 	const page = await browser.newPage({ viewport: { width: 1280, height: 800 } })
 
