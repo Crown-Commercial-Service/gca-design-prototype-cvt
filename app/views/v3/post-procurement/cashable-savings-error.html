@@ -1,0 +1,78 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+    tag: {
+      text: "Alpha"
+    },
+    html: 'This is a new service. your <a href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+	{{ govukBackLink({
+    text: "Back",
+    href: "/v3/back"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+
+      {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{{ govukErrorSummary({
+  titleText: "There is a problem",
+  errorList: [
+    {
+      text: "Select yes if you want to add a cash saving",
+      href: "#"
+    }
+  ]
+}) }}
+			<form method="post" action="/v3/cashable-savings">
+				<input type="hidden" name="ocid" value="{{ ocid or contract.ocid }}">
+
+				<span class="govuk-caption-m">Add a saving</span>
+
+				{{ govukRadios({
+          name: "cashable-savings",
+          fieldset: {
+            legend: {
+              text: "Do you want to add a cash saving?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          errorMessage: {
+            text: "Select yes if you want to add a cash saving"
+          },
+          hint: {
+            html: "<p>A cash saving is when you spend less money than you had planned. It does not include delaying project costs to the next financial year.</p>"
+          },
+          items: [
+            {
+              value: "yes",
+              text: "Yes"
+            },
+            {
+              value: "no",
+              text: "No"
+            }
+          ]
+        }) }}
+
+				{{ govukButton({
+        text: "Continue"
+      }) }}
+
+			</form>
+		</div>
+	</div>
+
+{% endblock %}
