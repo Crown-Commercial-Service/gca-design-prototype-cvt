@@ -1,0 +1,43 @@
+{# Data lives here; peer figures are placeholders. Uses `calculationMetrics` from the page #}
+{% set yellow = "#ffc300" %}
+{% set blue = "#699aff" %}
+{% set peerByLocation = [
+  { label: "England", value: calculationMetrics.peerAverageSavingsPercentageValue | round(1), colour: yellow },
+  { label: "North West", value: calculationMetrics.regionalSavingsPercentageValue | round(1), colour: yellow },
+  { label: "Greater Manchester", value: 13.5, colour: yellow },
+  { label: "Your contract", value: calculationMetrics.cashablePercentageOfContractValue | round(1), colour: blue }
+] %}
+<div class="govuk-tabs" data-module="govuk-tabs" id="chart-peer-by-location">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#peer-location-chart">Chart</a></li>
+    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#peer-location-table">Data table</a></li>
+  </ul>
+  <div class="govuk-tabs__panel" id="peer-location-chart">
+    <p class="govuk-body">Your contract's cash savings rate is <strong>{{ calculationMetrics.cashablePercentageOfContract }}</strong>. Peer averages range from {{ peerByLocation[0].value }}% to {{ peerByLocation[2].value }}% depending on location.</p>
+    <h3 class="govuk-heading-s">Peer average cash savings rate by location</h3>
+    <div id="peer-location-svg"></div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="peer-location-table">
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">Peer average cash savings rate by location</caption>
+      <thead class="govuk-table__head"><tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Location</th>
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Cash savings rate (%)</th>
+      </tr></thead>
+      <tbody class="govuk-table__body">
+        {% for row in peerByLocation %}
+        <tr class="govuk-table__row"><th scope="row" class="govuk-table__header">{{ row.label }}</th><td class="govuk-table__cell govuk-table__cell--numeric">{{ row.value }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    drawOrganisationChart('#peer-location-svg', 'GcaBarChart', {{ peerByLocation | dump | safe }}, {
+      width: 400, height: 300, orientation: 'horizontal', format: 'percent', showValues: true,
+      margin: { top: 10, right: 50, bottom: 30, left: 140 },
+      label: 'Horizontal bar chart of peer average cash savings rate by location'
+    })
+  })
+</script>

@@ -1,0 +1,39 @@
+{# Data lives here; uses `calculationMetrics` from the page #}
+{% set blue = "#699aff" %}
+{% set crimson = "#930047" %}
+{% set valueSplit = [
+  { label: "Cash savings", value: calculationMetrics.cashableSavings, colour: crimson, textColour: "#ffffff" },
+  { label: "Other benefits", value: calculationMetrics.nonCashableSavings, colour: blue }
+] %}
+<div class="govuk-tabs" data-module="govuk-tabs" id="chart-value-split">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#value-split-chart">Chart</a></li>
+    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#value-split-table">Data table</a></li>
+  </ul>
+  <div class="govuk-tabs__panel" id="value-split-chart">
+    <p class="govuk-body"><strong>{{ calculationMetrics.cashableShareOfTotal }}</strong> of the total value is cash savings. The remaining {{ calculationMetrics.nonCashableShareOfTotal }} is the estimated value of other benefits.</p>
+    <h3 class="govuk-heading-s">What makes up the total value</h3>
+    <div id="value-split-svg"></div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="value-split-table">
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">What makes up the total value</caption>
+      <thead class="govuk-table__head"><tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Type</th>
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Value</th>
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Share</th>
+      </tr></thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row"><th scope="row" class="govuk-table__header">Cash savings</th><td class="govuk-table__cell govuk-table__cell--numeric">{{ calculationMetrics.cashableSavings | poundsWithCommas }}</td><td class="govuk-table__cell govuk-table__cell--numeric">{{ calculationMetrics.cashableShareOfTotal }}</td></tr>
+        <tr class="govuk-table__row"><th scope="row" class="govuk-table__header">Other benefits</th><td class="govuk-table__cell govuk-table__cell--numeric">{{ calculationMetrics.nonCashableSavings | poundsWithCommas }}</td><td class="govuk-table__cell govuk-table__cell--numeric">{{ calculationMetrics.nonCashableShareOfTotal }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    drawOrganisationChart('#value-split-svg', 'GcaDonutChart', {{ valueSplit | dump | safe }}, {
+      width: 400, height: 300, label: 'Donut chart showing the split between cash savings and other benefits'
+    })
+  })
+</script>

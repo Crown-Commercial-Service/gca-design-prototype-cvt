@@ -16,13 +16,13 @@
                 <span class="govuk-caption-m">{{ contract.title | truncate(50) }}</span>
                 <h1 class="govuk-heading-l">Calculation results</h1>
 
-                <div class="calculation-hero govuk-!-margin-bottom-7">
+                <div class="summary-hero govuk-!-margin-bottom-7">
                     <div>
                         <p class="govuk-body-s govuk-!-margin-bottom-1">Total value created</p>
-                        <p class="calculation-hero__value">{{ calculationMetrics.totalSavings | poundsWithCommas }}</p>
+                        <p class="summary-hero__value">{{ calculationMetrics.totalSavings | poundsWithCommas }}</p>
                         <p class="govuk-body">Across cash savings and other benefits on a {{ calculationMetrics.contractValue | poundsWithCommas }} contract.</p>
                     </div>
-                    <div class="calculation-hero__result">
+                    <div class="summary-hero__result">
                         <p class="govuk-body-s govuk-!-margin-bottom-1">Cash savings compared with peer organisations</p>
                         <p class="govuk-heading-m govuk-!-margin-bottom-1">{{ calculationMetrics.cashablePercentageOfContract }} compared with {{ calculationMetrics.peerAverageSavingsPercentage }}</p>
                         <p class="govuk-body-s govuk-!-margin-bottom-0">{{ calculationMetrics.savingsDifferenceValue | poundsWithCommas }} more than the average similar procurement</p>
@@ -144,24 +144,6 @@
     {% endif %}
 
     <style>
-        .calculation-hero {
-            background: #e7f2fb;
-            border-left: 8px solid #1d70b8;
-            display: grid;
-            gap: 24px;
-            grid-template-columns: 1.2fr 1fr;
-            padding: 28px;
-        }
-        .calculation-hero__value {
-            font-size: 48px;
-            font-weight: 700;
-            line-height: 1;
-            margin: 0 0 16px;
-        }
-        .calculation-hero__result {
-            border-left: 1px solid #b1b4b6;
-            padding-left: 24px;
-        }
         .value-breakdown-chart {
             display: flex;
             height: 28px;
@@ -291,20 +273,8 @@
             margin-bottom: 0;
         }
         @media (max-width: 40.0525em) {
-            .calculation-hero {
-                grid-template-columns: 1fr;
-            }
-            .calculation-hero__result {
-                border-left: 0;
-                border-top: 1px solid #b1b4b6;
-                padding-left: 0;
-                padding-top: 24px;
-            }
             .calculation-filter-grid {
                 grid-template-columns: 1fr;
-            }
-            .calculation-hero__value {
-                font-size: 40px;
             }
             .calculation-filter-panel {
                 padding-left: 20px;

@@ -356,3 +356,99 @@
 .bulk-upload-review-table .govuk-table__cell:first-child {
     min-width: 220px;
 }
+
+// Organisation overview charts
+.gca-axis path,
+.gca-axis line {
+    fill: none;
+    stroke: #b1b4b6;
+    shape-rendering: crispEdges;
+}
+
+.gca-axis text {
+    font-family: "GDS Transport", arial, sans-serif;
+    font-size: 12px;
+    fill: #0b0c0c;
+}
+
+.gca-chart-panel {
+    border: 1px solid #b1b4b6;
+    padding: govuk-spacing(3);
+}
+
+.summary-hero {
+    background: #e7f2fb;
+    border-left: 8px solid #1d70b8;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1.2fr 1fr;
+    padding: 28px;
+}
+
+.summary-hero__value {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+    margin: 0 0 16px;
+}
+
+.summary-hero__result {
+    border-left: 1px solid #b1b4b6;
+    padding-left: 24px;
+}
+
+@media (max-width: 40.0525em) {
+    .summary-hero {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-hero__result {
+        border-left: 0;
+        border-top: 1px solid #b1b4b6;
+        padding-left: 0;
+        padding-top: 24px;
+    }
+
+    .summary-hero__value {
+        font-size: 40px;
+    }
+}
+
+// Dashboard value cards
+.gca-value-card {
+    background-color: #f3f2f1;
+    border: 1px solid #b1b4b6;
+    border-top-width: 8px;
+    padding: govuk-spacing(6);
+    margin-bottom: govuk-spacing(6);
+}
+
+.gca-value-card--cash { border-top-color: #930047; }
+.gca-value-card--benefits { border-top-color: #699aff; }
+
+.gca-value-card__title {
+    @include govuk-font($size: 19, $weight: bold);
+    margin: 0 0 govuk-spacing(2);
+    text-transform: uppercase;
+}
+
+.gca-value-card__value {
+    @include govuk-font($size: 36, $weight: bold);
+    margin: 0 0 govuk-spacing(2);
+}
+
+// Chart value and donut labels
+.gca-bar-value,
+.gca-donut-share,
+.gca-donut-name {
+    font-family: "GDS Transport", arial, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    fill: #0b0c0c;
+}
+
+.gca-donut-leader {
+    fill: none;
+    stroke: #0b0c0c;
+    stroke-width: 1;
+}

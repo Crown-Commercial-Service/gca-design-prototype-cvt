@@ -1,0 +1,43 @@
+{# Data lives here; peer figures are placeholders. Uses `calculationMetrics` from the page #}
+{% set yellow = "#ffc300" %}
+{% set blue = "#699aff" %}
+{% set peerByOrganisationType = [
+  { label: "Local authority", value: calculationMetrics.organisationTypeSavingsPercentageValue | round(1), colour: yellow },
+  { label: "Combined authority", value: 9.5, colour: yellow },
+  { label: "Central government", value: 8, colour: yellow },
+  { label: "Your contract", value: calculationMetrics.cashablePercentageOfContractValue | round(1), colour: blue }
+] %}
+<div class="govuk-tabs" data-module="govuk-tabs" id="chart-peer-by-organisation-type">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#peer-type-chart">Chart</a></li>
+    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#peer-type-table">Data table</a></li>
+  </ul>
+  <div class="govuk-tabs__panel" id="peer-type-chart">
+    <p class="govuk-body">Your contract's cash savings rate is <strong>{{ calculationMetrics.cashablePercentageOfContract }}</strong>. Peer averages range from {{ peerByOrganisationType[2].value }}% to {{ peerByOrganisationType[0].value }}% depending on organisation type.</p>
+    <h3 class="govuk-heading-s">Peer average cash savings rate by organisation type</h3>
+    <div id="peer-type-svg"></div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="peer-type-table">
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">Peer average cash savings rate by organisation type</caption>
+      <thead class="govuk-table__head"><tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Organisation type</th>
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Cash savings rate (%)</th>
+      </tr></thead>
+      <tbody class="govuk-table__body">
+        {% for row in peerByOrganisationType %}
+        <tr class="govuk-table__row"><th scope="row" class="govuk-table__header">{{ row.label }}</th><td class="govuk-table__cell govuk-table__cell--numeric">{{ row.value }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    drawOrganisationChart('#peer-type-svg', 'GcaBarChart', {{ peerByOrganisationType | dump | safe }}, {
+      width: 400, height: 300, orientation: 'horizontal', format: 'percent', showValues: true,
+      margin: { top: 10, right: 50, bottom: 30, left: 140 },
+      label: 'Horizontal bar chart of peer average cash savings rate by organisation type'
+    })
+  })
+</script>

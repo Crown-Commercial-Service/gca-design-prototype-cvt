@@ -1,4 +1,6 @@
 const govukPrototypeKit = require('govuk-prototype-kit')
+const path = require('path')
+const express = require(require.resolve('express', { paths: [require.resolve('govuk-prototype-kit')] }))
 const router = govukPrototypeKit.requests.setupRouter()
 const contracts = require('../../data/contracts.json')
 
@@ -134,6 +136,9 @@ const persistJourneyDataToContract = (req) => {
 
 // Real, navigable "Back" link target so tools that record link hotspots (e.g. Useberry)
 // can follow it - a javascript: href isn't a trackable navigation.
+router.use('/vendor/d3', express.static(path.join(__dirname, '../../../node_modules/d3')))
+router.use('/vendor/d3.chart', express.static(path.join(__dirname, '../../../node_modules/d3.chart')))
+
 router.get('/v3/back', (req, res) => {
 	res.redirect(req.get('Referrer') || '/v3/dashboard')
 })
@@ -160,7 +165,7 @@ router.get('/v3/calculation/:ocid', (req, res) => {
 	const contract = findContractByOcid(ocid)
 
 	if (!contract) {
-		return res.status(404).render('v3/post-procurement/calculation', { contract: null, ocid })
+		return res.status(404).render('v3/post-procurement/calculation-5', { contract: null, ocid })
 	}
 
 	const contractValue = toNumber(contract.contractValueDisplay || contract.value)
@@ -217,9 +222,9 @@ router.get('/v3/calculation/:ocid', (req, res) => {
 		organisationTypeSavingsValue: Math.round(contractValue * 0.11)
 	}
 
-	const calculationView = ['1', '2', '3', '4'].includes(req.query.view)
+	const calculationView = ['1', '2', '3', '4', '5'].includes(req.query.view)
 		? `v3/post-procurement/calculation-${req.query.view}`
-		: 'v3/post-procurement/calculation'
+		: 'v3/post-procurement/calculation-5'
 
 	return res.render(calculationView, { contract, calculationMetrics, potentialInputs })
 })
@@ -238,6 +243,10 @@ router.get('/v3/calculation-3/:ocid', (req, res) => {
 
 router.get('/v3/calculation-4/:ocid', (req, res) => {
 	res.redirect(`/v3/calculation/${req.params.ocid}?view=4`)
+})
+
+router.get('/v3/calculation-5/:ocid', (req, res) => {
+	res.redirect(`/v3/calculation/${req.params.ocid}?view=5`)
 })
 
 router.get('/v3/calculation', (req, res) => {
@@ -349,6 +358,10 @@ router.get('/v3/dashboard-5', (req, res) => {
 
 router.get('/v3/dashboard-6', (req, res) => {
 	return res.render('v3/dashboard-6')
+})
+
+router.get('/v3/dashboard-7', (req, res) => {
+	return res.render('v3/dashboard-7')
 })
 
 router.get('/v3/pre-procurement/cpv-code', (req, res) => {

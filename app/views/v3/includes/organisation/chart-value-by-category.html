@@ -1,0 +1,43 @@
+{# Data lives here; replace with real figures later #}
+{% set green = "#a6b808" %}
+{% set valueByCategory = [
+  { label: "Fleet", value: 13, colour: green },
+  { label: "Food", value: 14, colour: green },
+  { label: "Financial services", value: 25, colour: green },
+  { label: "Facilities management", value: 20, colour: green },
+  { label: "Energy", value: 35, colour: green },
+  { label: "Construction", value: 20, colour: green }
+] %}
+<div class="govuk-tabs" data-module="govuk-tabs" id="chart-value-by-category">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#value-category-chart">Chart</a></li>
+    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#value-category-table">Data table</a></li>
+  </ul>
+  <div class="govuk-tabs__panel" id="value-category-chart">
+    <p class="govuk-body">Your organisation's <strong>largest contract spend was in energy with £35m</strong>. Your lowest was fleet with £13m.</p>
+    <h3 class="govuk-heading-s">Contract value by category</h3>
+    <div id="value-category-svg"></div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="value-category-table">
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">Contract value by category (£m)</caption>
+      <thead class="govuk-table__head"><tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Category</th>
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Value (£m)</th>
+      </tr></thead>
+      <tbody class="govuk-table__body">
+        {% for row in valueByCategory %}
+        <tr class="govuk-table__row"><th scope="row" class="govuk-table__header">{{ row.label }}</th><td class="govuk-table__cell govuk-table__cell--numeric">{{ row.value }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    drawOrganisationChart('#value-category-svg', 'GcaBarChart', {{ valueByCategory | dump | safe }}, {
+      width: 400, height: 300, orientation: 'horizontal', margin: { top: 10, right: 20, bottom: 30, left: 140 },
+      label: 'Horizontal bar chart of contract value by category'
+    })
+  })
+</script>

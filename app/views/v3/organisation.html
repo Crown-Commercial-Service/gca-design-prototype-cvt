@@ -1,0 +1,65 @@
+{% extends "v3/layouts/ccs.html" %}
+{% set isLoggedIn = true %}
+
+{% block pageTitle %}
+  Organisation overview – {{ serviceName }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: { text: "Alpha" },
+    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
+  {{ govukBackLink({ text: "Back", href: "/v3/dashboard" }) }}
+{% endblock %}
+
+{% block content %}
+  <span class="govuk-caption-l">Your organisation</span>
+  <h1 class="govuk-heading-l">Organisation overview</h1>
+
+  <div class="summary-hero govuk-!-margin-bottom-7">
+      <div>
+        <p class="govuk-body-s govuk-!-margin-bottom-1">Total contract value</p>
+        <p class="summary-hero__value">£3.2bn</p>
+        <p class="govuk-body govuk-!-margin-bottom-0">Across <strong>293 contracts</strong> recorded against your organisation from Apr 2024 – Mar 2025</p>
+      </div>
+      <div class="summary-hero__result">
+        <p class="govuk-body-s govuk-!-margin-bottom-1">Contract savings recorded</p>
+        <p class="govuk-heading-m govuk-!-margin-bottom-1">£60m</p>
+        <p class="govuk-body-s govuk-!-margin-bottom-0">74 (25%) out of 293 contracts have savings recorded.</p>
+      </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% include "v3/includes/organisation/chart-in-life-savings.html" %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      {% include "v3/includes/organisation/chart-contract-spend-value.html" %}
+    </div>
+    <div class="govuk-grid-column-one-half">
+      {% include "v3/includes/organisation/chart-value-by-category.html" %}
+    </div>
+  </div>
+
+  {{ govukDetails({
+    summaryText: "About this peer benchmark data",
+    text: "Peer benchmarks compare your organisation with similar organisations by size and sector."
+  }) }}
+
+  <h2 class="govuk-heading-s">Download or share</h2>
+  <div class="govuk-button-group">
+    {{ govukButton({ text: "Download PDF summary", href: "#" }) }}
+    {{ govukButton({ text: "Download Excel data", href: "#", classes: "govuk-button--secondary" }) }}
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="/vendor/d3/d3.min.js"></script>
+  <script src="/vendor/d3.chart/d3.chart.min.js"></script>
+  <script src="/public/javascripts/organisation-charts.js"></script>
+{% endblock %}

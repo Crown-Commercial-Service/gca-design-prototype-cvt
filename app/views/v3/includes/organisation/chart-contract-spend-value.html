@@ -1,0 +1,47 @@
+{# Data lives here; replace with real figures later #}
+{% set blue = "#699aff" %}
+{% set crimson = "#930047" %}
+{% set spendAndValue = [
+  { label: "Not completed", parts: [
+    { name: "Contract spend", value: 24, colour: crimson },
+    { name: "Value benefits", value: 11, colour: blue }
+  ] },
+  { label: "Framework call-off", parts: [
+    { name: "Contract spend", value: 24, colour: crimson },
+    { name: "Value benefits", value: 22, colour: blue }
+  ] }
+] %}
+<div class="govuk-tabs" data-module="govuk-tabs" id="chart-contract-spend-value">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#spend-value-chart">Chart</a></li>
+    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#spend-value-table">Data table</a></li>
+  </ul>
+  <div class="govuk-tabs__panel" id="spend-value-chart">
+    <p class="govuk-body">Your organisation gained <strong>200% more value benefits using a framework.</strong></p>
+    <h3 class="govuk-heading-s">Contract spend and value</h3>
+    <div id="spend-value-svg"></div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="spend-value-table">
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">Contract spend and value (£m)</caption>
+      <thead class="govuk-table__head"><tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Contract type</th>
+        {% for part in spendAndValue[0].parts %}<th scope="col" class="govuk-table__header govuk-table__header--numeric">{{ part.name }}</th>{% endfor %}
+      </tr></thead>
+      <tbody class="govuk-table__body">
+        {% for row in spendAndValue %}
+        <tr class="govuk-table__row"><th scope="row" class="govuk-table__header">{{ row.label }}</th>
+          {% for part in row.parts %}<td class="govuk-table__cell govuk-table__cell--numeric">{{ part.value }}</td>{% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    drawOrganisationChart('#spend-value-svg', 'GcaStackedChart', {{ spendAndValue | dump | safe }}, {
+      width: 400, height: 300, label: 'Stacked bar chart of contract spend and value'
+    })
+  })
+</script>

@@ -1,0 +1,42 @@
+{# Data lives here; replace with real figures later #}
+{% set yellow = "#ffc300" %}
+{% set blue = "#699aff" %}
+{% set inLifeSavings = [
+  { label: "Budget", value: 5, colour: yellow },
+  { label: "Previous price", value: 25, colour: yellow },
+  { label: "Market rate", value: 3, colour: yellow },
+  { label: "Median compliant bid", value: 20, colour: yellow },
+  { label: "In life savings", value: 41, colour: blue }
+] %}
+<div class="govuk-tabs" data-module="govuk-tabs" id="chart-in-life-savings">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#in-life-savings-chart">Chart</a></li>
+    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#in-life-savings-table">Data table</a></li>
+  </ul>
+  <div class="govuk-tabs__panel" id="in-life-savings-chart">
+    <p class="govuk-body">You have registered <strong>£41m worth of in life savings</strong>. This is higher than organisations like you, who typically record £18m of in life savings.</p>
+    <h3 class="govuk-heading-s">Comparing in life savings</h3>
+    <div id="in-life-savings-svg"></div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="in-life-savings-table">
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--s">Comparing in life savings (£m)</caption>
+      <thead class="govuk-table__head"><tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Type</th>
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Value (£m)</th>
+      </tr></thead>
+      <tbody class="govuk-table__body">
+        {% for row in inLifeSavings %}
+        <tr class="govuk-table__row"><th scope="row" class="govuk-table__header">{{ row.label }}</th><td class="govuk-table__cell govuk-table__cell--numeric">{{ row.value }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    drawOrganisationChart('#in-life-savings-svg', 'GcaBarChart', {{ inLifeSavings | dump | safe }}, {
+      width: 800, height: 300, label: 'Bar chart comparing in life savings'
+    })
+  })
+</script>
