@@ -452,3 +452,29 @@
     stroke: #0b0c0c;
     stroke-width: 1;
 }
+
+/* Calculation filter panel */
+.calculation-filter-panel {
+    background: #e7f2fb;
+    border-top: 6px solid #1d70b8;
+    margin: 0 0 32px;
+    padding: 32px 30px 16px;
+}
+.calculation-filter-grid {
+    align-items: end;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(3, max-content);
+}
+.calculation-filter-grid__button {
+    margin-bottom: 0;
+}
+@media (max-width: 40.0525em) {
+    .calculation-filter-grid {
+        grid-template-columns: 1fr;
+    }
+    .calculation-filter-panel {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}

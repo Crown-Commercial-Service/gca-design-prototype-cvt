@@ -38,29 +38,7 @@
                     </div>
                 </div>
 
-                <section class="calculation-filter-panel">
-                    <h2 class="govuk-heading-m">Refine the comparison</h2>
-                    <p class="govuk-body">A peer organisation is a similar public body. This comparison covers 24 comparable local authority procurements.</p>
-                    <form class="calculation-filter-grid">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="location">Location</label>
-                            <select class="govuk-select" id="location">
-                                <option>England</option>
-                                <option>England - North West</option>
-                                <option>England - North West - Greater Manchester</option>
-                            </select>
-                        </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="type">Organisation type</label>
-                            <select class="govuk-select" id="type">
-                                <option>Local authority</option>
-                                <option>Combined authority</option>
-                                <option>Central government</option>
-                            </select>
-                        </div>
-                        <div class="calculation-filter-grid__button">{{ govukButton({ text: "Update comparison", classes: "govuk-button--secondary" }) }}</div>
-                    </form>
-                </section>
+                {# {% include "v3/includes/calculation/filter-panel.html" %} #}
 
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-one-half">
@@ -87,32 +65,6 @@
         <p class="govuk-body">We could not find the selected contract.</p>
     {% endif %}
 
-    <style>
-        .calculation-filter-panel {
-            background: #e7f2fb;
-            border-top: 6px solid #1d70b8;
-            margin: 0 0 32px;
-            padding: 32px 30px 16px;
-        }
-        .calculation-filter-grid {
-            align-items: end;
-            display: grid;
-            gap: 16px;
-            grid-template-columns: repeat(3, max-content);
-        }
-        .calculation-filter-grid__button {
-            margin-bottom: 0;
-        }
-        @media (max-width: 40.0525em) {
-            .calculation-filter-grid {
-                grid-template-columns: 1fr;
-            }
-            .calculation-filter-panel {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-        }
-    </style>
 {% endblock %}
 
 {% block scripts %}

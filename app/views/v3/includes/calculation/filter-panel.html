@@ -1,0 +1,23 @@
+        <section class="calculation-filter-panel">
+      <h2 class="govuk-heading-m">Refine the comparison</h2>
+      <p class="govuk-body">A peer organisation is a similar public body. This comparison covers 24 comparable local authority procurements.</p>
+      <form class="calculation-filter-grid">
+          <div class="govuk-form-group">
+              <label class="govuk-label" for="location">Location</label>
+              <select class="govuk-select" id="location">
+                  <option>England</option>
+                  <option>England - North West</option>
+                  <option>England - North West - Greater Manchester</option>
+              </select>
+          </div>
+          <div class="govuk-form-group">
+              <label class="govuk-label" for="type">Organisation type</label>
+              <select class="govuk-select" id="type">
+                  <option>Local authority</option>
+                  <option>Combined authority</option>
+                  <option>Central government</option>
+              </select>
+          </div>
+          <div class="calculation-filter-grid__button">{{ govukButton({ text: "Update comparison", classes: "govuk-button--secondary" }) }}</div>
+      </form>
+  </section>

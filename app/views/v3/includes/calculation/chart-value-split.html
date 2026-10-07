@@ -1,8 +1,8 @@
 {# Data lives here; uses `calculationMetrics` from the page #}
 {% set blue = "#699aff" %}
-{% set crimson = "#930047" %}
+{% set crimson = "#a6b808" %}
 {% set valueSplit = [
-  { label: "Cash savings", value: calculationMetrics.cashableSavings, colour: crimson, textColour: "#ffffff" },
+  { label: "Cash savings", value: calculationMetrics.cashableSavings, colour: crimson },
   { label: "Other benefits", value: calculationMetrics.nonCashableSavings, colour: blue }
 ] %}
 <div class="govuk-tabs" data-module="govuk-tabs" id="chart-value-split">
