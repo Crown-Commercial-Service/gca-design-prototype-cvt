@@ -11,33 +11,37 @@
       <span class="govuk-caption-l">Commercial buying team - Department for Education</span>
       <h1 class="govuk-heading-l">Commercial Value overview</h1>
       <p class="govuk-body-l">Record savings, understand your organisation's performance and estimate value before you start a procurement.</p>
-
+{#
       <div class="govuk-inset-text">
         <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Organisation view</h2>
         This overview shows data submitted by your organisation. Contract data comes from the Central Digital Platform (CDP) across your organisation.
       </div>
-
-      <h2 class="govuk-heading-m">Your value story</h2>
+#}
+      <h2 class="govuk-heading-m">Your organisation at a glance</h2>
       <p class="govuk-body">Your organisation has recorded value from <a class="govuk-link" href="/v3/contracts-completed">{{ completedCount or 12 }} completed contracts</a>.</p>
     </div>
   </div>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
-      <div class="gca-value-card gca-value-card--cash">
+      <div class="gca-value-card gca-value-card--cash govuk-!-margin-bottom-2">
         <h3 class="gca-value-card__title">Cash savings</h3>
         <p class="gca-value-card__value">£142,000</p>
-        <p class="govuk-body-s">The reported reduction between original contract budgets and final costs.</p>
-        <p class="govuk-body-s govuk-!-margin-bottom-0"><a class="govuk-link" href="/v3/organisation">View more organisation cash savings</a></p>
+        <p class="govuk-body-s">The reported difference between your starting budget and the final price you actually paid.</p>
       </div>
     </div>
     <div class="govuk-grid-column-one-half">
-      <div class="gca-value-card gca-value-card--benefits">
+      <div class="gca-value-card gca-value-card--benefits govuk-!-margin-bottom-2">
         <h3 class="gca-value-card__title">Other benefits</h3>
         <p class="gca-value-card__value">£18,200</p>
         <p class="govuk-body-s">An estimated value for benefits such as price protection and improved performance.</p>
-        <p class="govuk-body-s govuk-!-margin-bottom-0"><a class="govuk-link" href="/v3/organisation">View more organisation benefits</a></p>
       </div>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row govuk-!-margin-bottom-2">
+    <div class="govuk-grid-column-one-half">
+      <p><a class="govuk-link" href="/v3/organisation">See detailed organisation overview</a></p>
     </div>
   </div>
 
