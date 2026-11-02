@@ -14,16 +14,16 @@
     <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#value-category-table">Data table</a></li>
   </ul>
   <div class="govuk-tabs__panel" id="value-category-chart">
-    <p class="govuk-body">Your organisation's <strong>largest contract spend was in energy with £35m</strong>. Your lowest was fleet with £13m.</p>
+    <p class="govuk-body">Your organisation's <strong>largest contract spend was in energy with £35 million</strong>. Your lowest was fleet with £13 million.</p>
     <h3 class="govuk-heading-s">Contract value by category</h3>
     <div id="value-category-svg"></div>
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="value-category-table">
     <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--s">Contract value by category (£m)</caption>
+      <caption class="govuk-table__caption govuk-table__caption--s">Contract value by category (£ million)</caption>
       <thead class="govuk-table__head"><tr class="govuk-table__row">
         <th scope="col" class="govuk-table__header">Category</th>
-        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Value (£m)</th>
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Value (£ million)</th>
       </tr></thead>
       <tbody class="govuk-table__body">
         {% for row in valueByCategory %}

@@ -429,7 +429,6 @@
 .gca-value-card__title {
     @include govuk-font($size: 19, $weight: bold);
     margin: 0 0 govuk-spacing(2);
-    text-transform: uppercase;
 }
 
 .gca-value-card__value {
