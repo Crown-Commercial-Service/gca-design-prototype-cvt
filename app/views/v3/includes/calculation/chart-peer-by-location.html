@@ -13,8 +13,8 @@
     <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#peer-location-table">Data table</a></li>
   </ul>
   <div class="govuk-tabs__panel" id="peer-location-chart">
-    <p class="govuk-body">Your contract's cash savings rate is <strong>{{ calculationMetrics.cashablePercentageOfContract }}</strong>. Peer averages range from {{ peerByLocation[0].value }}% to {{ peerByLocation[2].value }}% depending on location.</p>
-    <h3 class="govuk-heading-s">Peer average cash savings rate by location</h3>
+    <h3 class="gca-chart-title">Your savings rate exceeded all regional peer averages, which ranged from {{ peerByLocation[0].value }}% to {{ peerByLocation[2].value }}</h3>
+    <p class="gca-chart-subtitle">Cash savings rate by UK region compared to your contract (percentage)</p>
     <div id="peer-location-svg"></div>
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="peer-location-table">

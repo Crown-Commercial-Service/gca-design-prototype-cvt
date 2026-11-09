@@ -11,8 +11,8 @@
     <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#value-split-table">Data table</a></li>
   </ul>
   <div class="govuk-tabs__panel" id="value-split-chart">
-    <p class="govuk-body"><strong>{{ calculationMetrics.cashableShareOfTotal }}</strong> of the total value is cash savings. The remaining {{ calculationMetrics.nonCashableShareOfTotal }} is the estimated value of other benefits.</p>
-    <h3 class="govuk-heading-s">What makes up the total value</h3>
+    <h3 class="gca-chart-title">Cash savings make up {{ calculationMetrics.cashableShareOfTotal }}  of the total value created</h3>
+    <p class="gca-chart-subtitle">Proportion of total contract value by benefit type (percentage)</p>
     <div id="value-split-svg"></div>
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="value-split-table">

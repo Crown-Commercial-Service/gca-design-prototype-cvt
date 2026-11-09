@@ -13,8 +13,8 @@
     <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#peer-type-table">Data table</a></li>
   </ul>
   <div class="govuk-tabs__panel" id="peer-type-chart">
-    <p class="govuk-body">Your contract's cash savings rate is <strong>{{ calculationMetrics.cashablePercentageOfContract }}</strong>. Peer averages range from {{ peerByOrganisationType[2].value }}% to {{ peerByOrganisationType[0].value }}% depending on organisation type.</p>
-    <h3 class="govuk-heading-s">Peer average cash savings rate by organisation type</h3>
+    <h3 class="gca-chart-title">Your savings rate was higher than all organisation benchmarks, where averages peaked at {{ peerByOrganisationType[0].value }}%</h3>
+    <p class="gca-chart-subtitle">Cash savings rate by public sector organisation type compared to your contract (percentage)</p>
     <div id="peer-type-svg"></div>
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="peer-type-table">

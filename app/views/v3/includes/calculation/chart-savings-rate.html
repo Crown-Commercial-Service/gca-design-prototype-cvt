@@ -11,8 +11,8 @@
     <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#savings-rate-table">Data table</a></li>
   </ul>
   <div class="govuk-tabs__panel" id="savings-rate-chart">
-    <p class="govuk-body">Your contract's cash savings rate is <strong>{{ calculationMetrics.cashablePercentageOfContract }}</strong>. The peer average is {{ calculationMetrics.peerAverageSavingsPercentage }}.</p>
-    <h3 class="govuk-heading-s">Cash savings rate</h3>
+    <h3 class="gca-chart-title">Your contract achieved a {{ calculationMetrics.cashablePercentageOfContract }} cash savings rate, {{ (calculationMetrics.cashablePercentageOfContractValue - calculationMetrics.peerAverageSavingsPercentageValue) | round(1) }}% percentage points above peer average</h3>
+    <p class="gca-chart-subtitle">Contract cash savings rate compared to peer average (percentage)</p>
     <div id="savings-rate-svg"></div>
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="savings-rate-table">
