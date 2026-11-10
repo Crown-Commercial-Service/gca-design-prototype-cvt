@@ -222,8 +222,15 @@ router.get('/v3/calculation/:ocid', (req, res) => {
 		organisationTypeSavingsValue: Math.round(contractValue * 0.11)
 	}
 
+	const calculationViews = {
+		'1': 'v3/archive/post-procurement/calculation-1',
+		'2': 'v3/archive/post-procurement/calculation-2',
+		'3': 'v3/archive/post-procurement/calculation-3',
+		'4': 'v3/post-procurement/calculation-4',
+		'5': 'v3/post-procurement/calculation-5'
+	}
 	const calculationView = ['1', '2', '3', '4', '5'].includes(req.query.view)
-		? `v3/post-procurement/calculation-${req.query.view}`
+		? calculationViews[req.query.view]
 		: 'v3/post-procurement/calculation-5'
 
 	return res.render(calculationView, { contract, calculationMetrics, potentialInputs })
@@ -337,31 +344,31 @@ router.get('/v3/dashboard', (req, res) => {
 })
 
 router.get('/v3/dashboard-1', (req, res) => {
-	return res.render('v3/dashboard-1')
+	return res.render('v3/archive/dashboard/dashboard-1')
 })
 
 router.get('/v3/dashboard-2', (req, res) => {
-	return res.render('v3/dashboard-2')
+	return res.render('v3/archive/dashboard/dashboard-2')
 })
 
 router.get('/v3/dashboard-3', (req, res) => {
-	return res.render('v3/dashboard-3')
+	return res.render('v3/archive/dashboard/dashboard-3')
 })
 
 router.get('/v3/dashboard-4', (req, res) => {
-	return res.render('v3/dashboard-4')
+	return res.render('v3/archive/dashboard/dashboard-4')
 })
 
 router.get('/v3/dashboard-5', (req, res) => {
-	return res.render('v3/dashboard-5')
+	return res.render('v3/archive/dashboard/dashboard-5')
 })
 
 router.get('/v3/dashboard-6', (req, res) => {
-	return res.render('v3/dashboard-6')
+	return res.render('v3/archive/dashboard/dashboard-6')
 })
 
 router.get('/v3/dashboard-7', (req, res) => {
-	return res.render('v3/dashboard-7')
+	return res.render('v3/archive/dashboard/dashboard-7')
 })
 
 router.get('/v3/pre-procurement/cpv-code', (req, res) => {

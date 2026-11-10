@@ -55,13 +55,13 @@
 				{{ govukSummaryList({
           card: {
             title: {
-              text: "Your cashable savings data"
+              text: "Your cash savings data"
             }
           },
           rows: [
             {
               key: {
-                text: "How did you make the cash saving?"
+                text: "How did you make a saving?"
               },
               value: {
                 html: data['cashable-savings-type']
@@ -117,7 +117,7 @@
           name: "addStrategicValue",
           fieldset: {
             legend: {
-              text: "Do you want to add a value benefit that is not a direct cost saving?",
+              text: "Do you want to add a value benefit that is not a cash saving?",
               isPageHeading: true,
               classes: "govuk-fieldset__legend--m"
             }
