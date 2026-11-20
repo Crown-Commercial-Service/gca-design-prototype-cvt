@@ -30,6 +30,7 @@
       this.margin = { top: 10, right: 20, bottom: 40, left: 60 }
       this.axisX = this.base.append('g').attr('class', 'gca-axis gca-axis--x')
       this.axisY = this.base.append('g').attr('class', 'gca-axis gca-axis--y')
+      this.axisXLabel = this.base.append('g').attr('class', 'gca-axis-label gca-axis-label--x')
       this.plot = this.base.append('g')
 
       this.layer('bars', this.plot.append('g'), {
@@ -55,6 +56,7 @@
           }
         }
       })
+
     },
 
     // Bars are laid out in the chart's own scales; subclasses/instances set orientation
@@ -79,8 +81,18 @@
         this.axisY.call(d3.svg.axis().scale(linear).orient('left').ticks(5).tickFormat(this.format).tickSize(-width, 0))
       }
 
+      this.axisXLabel.selectAll('text').remove()
+      if (this.axisXLabelText) {
+        this.axisXLabel.append('text')
+          .attr('x', m.left + width / 2)
+          .attr('y', m.top + height + 35)
+          .attr('text-anchor', 'middle')
+          .attr('class', 'gca-axis-label-text')
+          .text(this.axisXLabelText)
+      }
+
       return data.map(function (d, i) {
-        var o = { label: d.label, value: d.value, colour: d.colour }
+        var o = { label: d.label, value: d.value, colour: d.colour, colourName: d.colourName }
         if (horizontal) {
           o.x = 0; o.y = band(d.label); o.w = linear(d.value); o.h = band.rangeBand()
         } else {
@@ -245,7 +257,7 @@
     var w = options.width
     var h = options.height
     var svg = d3.select(el).append('svg')
-      .attr('viewBox', '0 0 ' + w + ' ' + h)
+      .attr('viewBox', '0 0 ' + w + ' ' + (h + (options.axisLabel ? 20 : 0)))
       .attr('width', '100%')
       .attr('role', 'img')
       .attr('aria-label', options.label)
@@ -255,7 +267,24 @@
     if (options.orientation) chart.orientation = options.orientation
     if (options.format) chart.format = formats[options.format]
     if (options.showValues) chart.showValues = true
+    if (options.axisLabel) chart.axisXLabelText = options.axisLabel
     chart.draw(data)
+
+    var legendData = options.legend
+    if (options.showLegend) {
+      legendData = data.filter(function (item, index) {
+        return data.findIndex(function (other) { return other.colour === item.colour }) === index
+      }).map(function (item) {
+        return { label: item.colourName, colour: item.colour }
+      })
+    }
+    if (legendData) {
+      var legend = d3.select(el).append('ul').attr('class', 'gca-legend')
+      var items = legend.selectAll('li').data(legendData).enter().append('li').attr('class', 'gca-legend-item')
+      items.append('span').attr('class', 'gca-legend-swatch').attr('aria-hidden', 'true')
+        .style('background-color', function (d) { return d.colour })
+      items.append('span').text(function (d) { return d.label || d.name })
+    }
   }
 
   window.organisationColours = colours

@@ -2,10 +2,10 @@
 {% set yellow = "#ffc300" %}
 {% set blue = "#699aff" %}
 {% set peerByOrganisationType = [
-  { label: "Local authority", value: calculationMetrics.organisationTypeSavingsPercentageValue | round(1), colour: yellow },
-  { label: "Combined authority", value: 9.5, colour: yellow },
-  { label: "Central government", value: 8, colour: yellow },
-  { label: "Your contract", value: calculationMetrics.cashablePercentageOfContractValue | round(1), colour: blue }
+  { label: "Local authority", value: calculationMetrics.organisationTypeSavingsPercentageValue | round(1), colour: yellow, colourName: "Peer average" },
+  { label: "Combined authority", value: 9.5, colour: yellow, colourName: "Peer average" },
+  { label: "Central government", value: 8, colour: yellow, colourName: "Peer average" },
+  { label: "Your contract", value: calculationMetrics.cashablePercentageOfContractValue | round(1), colour: blue, colourName: "Your contract" }
 ] %}
 <div class="govuk-tabs" data-module="govuk-tabs" id="chart-peer-by-organisation-type">
   <ul class="govuk-tabs__list">
@@ -16,6 +16,7 @@
     <h3 class="gca-chart-title">Your savings rate was higher than all organisation benchmarks, where averages peaked at {{ peerByOrganisationType[0].value }}%</h3>
     <p class="gca-chart-subtitle">Cash savings rate by public sector organisation type compared to your contract (percentage)</p>
     <div id="peer-type-svg"></div>
+    <p class="govuk-body-s">The peer comparison uses data from 40 contracts.</p>
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="peer-type-table">
     <table class="govuk-table">
@@ -35,8 +36,9 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     drawOrganisationChart('#peer-type-svg', 'GcaBarChart', {{ peerByOrganisationType | dump | safe }}, {
-      width: 400, height: 300, orientation: 'horizontal', format: 'percent', showValues: true,
-      margin: { top: 10, right: 50, bottom: 30, left: 140 },
+      width: 400, height: 300, orientation: 'horizontal', format: 'percent', showValues: true, showLegend: true,
+      margin: { top: 20, right: 50, bottom: 30, left: 140 },
+      axisLabel: 'Cash savings rate (%)',
       label: 'Horizontal bar chart of peer average cash savings rate by organisation type'
     })
   })

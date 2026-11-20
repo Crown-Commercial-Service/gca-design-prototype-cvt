@@ -52,11 +52,8 @@
     text: "Peer benchmarks compare your organisation with similar organisations by size and sector."
   }) }}
 
-  <h2 class="govuk-heading-s">Download or share</h2>
-  <div class="govuk-button-group">
-    {{ govukButton({ text: "Download PDF summary", href: "#" }) }}
-    {{ govukButton({ text: "Download Excel data", href: "#", classes: "govuk-button--secondary" }) }}
-  </div>
+  {% set showReportAction = true %}
+  {% include "v3/includes/actions-panel.html" %}
 {% endblock %}
 
 {% block scripts %}

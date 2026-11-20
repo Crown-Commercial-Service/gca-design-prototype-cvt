@@ -33,7 +33,8 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     drawOrganisationChart('#value-split-svg', 'GcaDonutChart', {{ valueSplit | dump | safe }}, {
-      width: 400, height: 300, label: 'Donut chart showing the split between cash savings and other benefits'
+      width: 400, height: 300, legend: {{ valueSplit | dump | safe }},
+      label: 'Donut chart showing the split between cash savings and other benefits'
     })
   })
 </script>

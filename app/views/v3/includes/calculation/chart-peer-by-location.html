@@ -2,10 +2,10 @@
 {% set yellow = "#ffc300" %}
 {% set blue = "#699aff" %}
 {% set peerByLocation = [
-  { label: "England", value: calculationMetrics.peerAverageSavingsPercentageValue | round(1), colour: yellow },
-  { label: "North West", value: calculationMetrics.regionalSavingsPercentageValue | round(1), colour: yellow },
-  { label: "Greater Manchester", value: 13.5, colour: yellow },
-  { label: "Your contract", value: calculationMetrics.cashablePercentageOfContractValue | round(1), colour: blue }
+  { label: "England", value: calculationMetrics.peerAverageSavingsPercentageValue | round(1), colour: yellow, colourName: "Peer average" },
+  { label: "North West", value: calculationMetrics.regionalSavingsPercentageValue | round(1), colour: yellow, colourName: "Peer average" },
+  { label: "Greater Manchester", value: 13.5, colour: yellow, colourName: "Peer average" },
+  { label: "Your contract", value: calculationMetrics.cashablePercentageOfContractValue | round(1), colour: blue, colourName: "Your contract" }
 ] %}
 <div class="govuk-tabs" data-module="govuk-tabs" id="chart-peer-by-location">
   <ul class="govuk-tabs__list">
@@ -16,6 +16,7 @@
     <h3 class="gca-chart-title">Your savings rate exceeded all regional peer averages, which ranged from {{ peerByLocation[0].value }}% to {{ peerByLocation[2].value }}</h3>
     <p class="gca-chart-subtitle">Cash savings rate by UK region compared to your contract (percentage)</p>
     <div id="peer-location-svg"></div>
+    <p class="govuk-body-s">The peer comparison uses data from 120 contracts.</p>
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="peer-location-table">
     <table class="govuk-table">
@@ -35,8 +36,9 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     drawOrganisationChart('#peer-location-svg', 'GcaBarChart', {{ peerByLocation | dump | safe }}, {
-      width: 400, height: 300, orientation: 'horizontal', format: 'percent', showValues: true,
-      margin: { top: 10, right: 50, bottom: 30, left: 140 },
+      width: 400, height: 300, orientation: 'horizontal', format: 'percent', showValues: true, showLegend: true,
+      margin: { top: 20, right: 50, bottom: 30, left: 140 },
+      axisLabel: 'Cash savings rate (%)',
       label: 'Horizontal bar chart of peer average cash savings rate by location'
     })
   })

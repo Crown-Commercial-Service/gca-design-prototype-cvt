@@ -14,6 +14,7 @@
     <h3 class="gca-chart-title">Your contract achieved a {{ calculationMetrics.cashablePercentageOfContract }} cash savings rate, {{ (calculationMetrics.cashablePercentageOfContractValue - calculationMetrics.peerAverageSavingsPercentageValue) | round(1) }}% percentage points above peer average</h3>
     <p class="gca-chart-subtitle">Contract cash savings rate compared to peer average (percentage)</p>
     <div id="savings-rate-svg"></div>
+    <p class="govuk-body-s">The peer average is based on 75 contracts.</p>
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="savings-rate-table">
     <table class="govuk-table">
@@ -28,12 +29,14 @@
         <tr class="govuk-table__row"><th scope="row" class="govuk-table__header">Peer average</th><td class="govuk-table__cell govuk-table__cell--numeric">{{ calculationMetrics.peerAverageSavingsPercentage }}</td><td class="govuk-table__cell govuk-table__cell--numeric">{{ calculationMetrics.peerAverageSavingsValue | poundsWithCommas }}</td></tr>
       </tbody>
     </table>
+    
   </div>
 </div>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     drawOrganisationChart('#savings-rate-svg', 'GcaBarChart', {{ savingsRate | dump | safe }}, {
-      width: 400, height: 300, format: 'percent', showValues: true,
+      width: 400, height: 300, format: 'percent', showValues: true, legend: {{ savingsRate | dump | safe }},
       margin: { top: 28, right: 20, bottom: 40, left: 60 },
       label: 'Bar chart comparing your contract cash savings rate with the peer average'
     })

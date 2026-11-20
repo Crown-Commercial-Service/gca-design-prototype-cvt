@@ -39,7 +39,10 @@
                 </div>
 
                 {# {% include "v3/includes/calculation/filter-panel.html" %} #}
-
+                {#<h2 class="govuk-heading-m">Peer benchmarks</h2>
+                <p class="govuk-body">Compare your contract's performance with similar contracts based on location and organisation type.</p>
+                <p class="govuk-body">Our data includes 50 similar contracts.</p>
+                #}
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-one-half">
                         {% include "v3/includes/calculation/chart-peer-by-location.html" %}
@@ -53,11 +56,8 @@
                 <p>Peer results use checked, self-reported data for the same procurement category and baseline approach. We review and exclude unusual values before calculating the average.</p>
                 {% endcall %}
 
-                <h2 class="govuk-heading-m">Download or share</h2>
-                <div class="govuk-button-group">
-                    {{ govukButton({ text: "Download PDF summary", href: "#" }) }}
-                    {{ govukButton({ text: "Download Excel data", href: "#", classes: "govuk-button--secondary" }) }}
-                </div>
+                {% set showReportAction = true %}
+                {% include "v3/includes/actions-panel.html" %}
             </div>
         </div>
     {% else %}

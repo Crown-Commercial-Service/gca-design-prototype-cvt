@@ -8,6 +8,10 @@
   { label: "Median compliant bid", value: 20, colour: yellow },
   { label: "Total savings", value: 41, colour: blue }
 ] %}
+{% set inLifeSavingsLegend = [
+  { label: "Calculation method", colour: yellow },
+  { label: "Total savings", colour: blue }
+] %}
 <div class="govuk-tabs" data-module="govuk-tabs" id="chart-in-life-savings">
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#in-life-savings-chart">Chart</a></li>
@@ -36,7 +40,8 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     drawOrganisationChart('#in-life-savings-svg', 'GcaBarChart', {{ inLifeSavings | dump | safe }}, {
-      width: 800, height: 300, label: 'Bar chart comparing in life savings'
+      width: 800, height: 300, legend: {{ inLifeSavingsLegend | dump | safe }},
+      label: 'Bar chart comparing in life savings'
     })
   })
 </script>

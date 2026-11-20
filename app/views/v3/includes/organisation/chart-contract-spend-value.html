@@ -41,7 +41,8 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     drawOrganisationChart('#spend-value-svg', 'GcaStackedChart', {{ spendAndValue | dump | safe }}, {
-      width: 400, height: 300, label: 'Stacked bar chart of contract spend and value'
+      width: 400, height: 300, legend: {{ spendAndValue[0].parts | dump | safe }},
+      label: 'Stacked bar chart of contract spend and value'
     })
   })
 </script>
